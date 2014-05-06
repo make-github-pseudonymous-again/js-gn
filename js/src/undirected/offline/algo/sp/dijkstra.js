@@ -1,6 +1,6 @@
 
 
-var dijkstra_t = function(){
+var dijkstra_t = function(priority_queue_t){
 
 	var dijkstra = function(g, order, s){
 		var i, j, k, len, m, min;
@@ -19,7 +19,10 @@ var dijkstra_t = function(){
 			busy[i] = false;
 		}
 
-		var left = [];
+		var pred = function(a, b){ return dist[a[0]] < dist[b[0]]; };
+		var priority_queue = priority_queue_t(pred);
+		var left = new priority_queue();
+
 		used[s[0]] = true;
 		busy[s[0]] = true;
 
@@ -31,19 +34,7 @@ var dijkstra_t = function(){
 
 		while(left.length){
 
-			m = left[0];
-			min = dist[m[0]];
-			j = 0;
-
-			for(i = 1, len = left.length; i < len; ++i){
-				if(dist[left[i][0]] < min){
-					m = left[i];
-					min = dist[m[0]];
-					j = i;
-				}
-			}
-
-			left.splice(j, 1);
+			m = left.pop();
 			used[m[0]] = true;
 				
 			g.eitr(m, function(e){

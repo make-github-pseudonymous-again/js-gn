@@ -1,7 +1,7 @@
 [gn](http://aureooms.github.io/gn)
 ==
 
-gn (graphs and networks) algorithms / data structures templates for JavaScript
+gn (graphs and networks) algorithm / adt templates for JavaScript
 
 [![Build Status](https://drone.io/github.com/aureooms/gn/status.png)](https://drone.io/github.com/aureooms/gn/latest)
 [![Coverage Status](https://coveralls.io/repos/aureooms/gn/badge.png)](https://coveralls.io/r/aureooms/gn)

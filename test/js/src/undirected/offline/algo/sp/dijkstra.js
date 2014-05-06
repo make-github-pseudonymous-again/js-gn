@@ -1,29 +1,36 @@
 
+var algo = require('algo');
+
 var check = function(label, n, s, edges, prev, dist){
 
-test('dijkstra #' + label, function(assert){
+	test('dijkstra #' + label, function(assert){
 
-	var Graph = gn.dense_graph_t();
-	var dijkstra = gn.dijkstra_t();
+		var Graph = gn.dense_graph_t();
+		
+		var priority_queue_t = function(pred){
+			return algo.lazy_binomial_queue_t(pred, algo.opt_t);
+		};
 
-	var g = new Graph();
-	var i = n;
+		var dijkstra = gn.dijkstra_t(priority_queue_t);
 
-	var v = new Array(i);
+		var g = new Graph();
+		var i = n;
 
-	while(i--) v[n-i-1] = g.vadd();
+		var v = new Array(i);
 
-	for(var j = 0; j < edges.length; ++j){
-		var e = edges[j];
-		g.eadd(v[e[0]], v[e[1]], e[2]);		
-	}
+		while(i--) v[n-i-1] = g.vadd();
 
-	var sp = dijkstra(g, n, v[s]);
+		for(var j = 0; j < edges.length; ++j){
+			var e = edges[j];
+			g.eadd(v[e[0]], v[e[1]], e[2]);		
+		}
 
-	deepEqual(prev, sp[0], 'prev');
-	deepEqual(dist, sp[1], 'dist');
+		var sp = dijkstra(g, n, v[s]);
 
-});
+		deepEqual(prev, sp[0], 'prev');
+		deepEqual(dist, sp[1], 'dist');
+
+	});
 
 };
 
