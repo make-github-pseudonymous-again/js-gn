@@ -1,12 +1,18 @@
 
 var algo = require('algo');
 
-var check = function(label, n, s, edges, prev, dist){
+var check = function(label, n, s, edges){
 
-	test('dijkstra #' + label, function(assert){
+	test('floyd #' + label, function(assert){
+
+		var p, d, u, b;
 
 		var Graph = gn.dense_graph_t();
-		
+
+		var amat = gn.amat_t();
+
+		var floyd = gn.floyd_t();
+
 		var priority_queue_t = function(pred){
 			return algo.lazy_binomial_queue_t(pred, algo.opt_t);
 		};
@@ -25,14 +31,25 @@ var check = function(label, n, s, edges, prev, dist){
 			g.eadd(v[e[0]], v[e[1]], e[2]);
 		}
 
-		var p = gn.sqmat(1, n, v[s][0]);
-		var d = gn.sqmat(1, n, Infinity);
-		var u = gn.sqmat(1, n, false);
-		var b = gn.sqmat(1, n, false);
+		var dist = new Array(n);
+		i = n;
+		while(i--){
+			p = gn.sqmat(1, n, v[i][0]);
+			dist[i] = gn.sqmat(1, n, Infinity);
+			u = gn.sqmat(1, n, false);
+			b = gn.sqmat(1, n, false);
+			dijkstra(g, n, v[i], p, dist[i], u, b);
+			dist[i][i] = Infinity;
+			g.eitr([i], function(e){
+				dist[i][i] = Math.min(dist[i][i], e[1]*2);
+			});
+		}
 
-		dijkstra(g, n, v[s], p, d, u, b);
 
-		deepEqual(p, prev, 'prev');
+		d = gn.sqmat(2, n, Infinity);
+		amat(g, n, d);
+		floyd(g, n, d);
+
 		deepEqual(d, dist, 'dist');
 
 	});
@@ -54,9 +71,7 @@ var I = [
 		[2, 3, 1],
 		[9, 2, 6],
 		[4, 7, 6]
-	],
-	[1, 3, 9, 2, 3, 4, 1, 4, 9, 9],
-	[10, 9, 6, 7, 11, 14, 14, 17, Infinity, Infinity]
+	]
 ],
 
 [
@@ -68,9 +83,7 @@ var I = [
 		[1, 2, 7],
 		[2, 3, 2],
 		[0, 3, 7]
-	],
-	[0, 0, 3, 0],
-	[Infinity, 6, 9, 7]
+	]
 ],
 
 [
@@ -87,9 +100,7 @@ var I = [
 		[1, 7, 3],
 		[7, 8, 2],
 		[8, 3, 2]
-	],
-	[2, 2, 2, 2, 3, 3, 2, 8, 3],
-	[Infinity, 7, Infinity, 2, 3, 4, Infinity, 6, 4]
+	]
 ]
 
 
