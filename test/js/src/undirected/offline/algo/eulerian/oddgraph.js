@@ -1,61 +1,60 @@
 
-var algo = require('algo');
 
-var check = function(label, n, edges){
+var check = function(label, n, E){
 
-	test('sptreedfs #' + label, function(assert){
-
-		var p, d, u, b;
+	test('oddgraph #' + label, function(assert){
 
 		var Graph = gn.dense_graph_t();
 
 		var amat = gn.amat_t();
 
 		var floyd = gn.floyd_t();
-		var sptreedfs = gn.sptreedfs_t();
 
-		var priority_queue_t = function(pred){
-			return algo.lazy_binomial_queue_t(pred, algo.opt_t);
-		};
+		var oddgraph = gn.oddgraph_t();
 
-		var dijkstra = gn.dijkstra_t(priority_queue_t);
-
-		var g = new Graph();
+		var g = new Graph(), h = new Graph();
 		var i = n;
 
 		var v = new Array(i);
 
+		var degree = gn.sqmat(1, i, 0);
+
 		while(i--) v[n-i-1] = g.vadd();
 
-		for(var j = 0; j < edges.length; ++j){
-			var e = edges[j];
+		for(var j = 0; j < E.length; ++j){
+			var e = E[j];
 			g.eadd(v[e[0]], v[e[1]], e[2]);
+			++degree[e[0]];
+			++degree[e[1]];
 		}
 
-		var next = new Array(n);
 		i = n;
-		while(i--) next[i] = new Array(n);
-		i = n;
+		var einside = new Array(i);
+		var ainside = new Array(i);
 		while(i--){
-			p = gn.sqmat(1, n, v[i][0]);
-			d = gn.sqmat(1, n, Infinity);
-			u = gn.sqmat(1, n, false);
-			b = gn.sqmat(1, n, false);
-			dijkstra(g, n, v[i], p, d, u, b);
-			var j = n;
-			while(j--) next[j][i] = d[j] === Infinity ? -1 : p[j];
-			next[i][i] = -1;
+			einside[i] = degree[i] % 2;
+			ainside[i] = 0;
 		}
 
-		d = gn.sqmat(2, n, Infinity);
+
+		var d = gn.sqmat(2, n, Infinity);
 		amat(g, n, d);
 		floyd(n, d);
 
-		var s = gn.sqmat(2, n, -1);
-		sptreedfs(g, n, s, d);
 
+		oddgraph(g, d, h);
 
-		deepEqual(s, next, 'next');
+		h.vitr(function(v){
+			ok(degree[v[1][0]] % 2, v[1][0] + ' odd');
+			ainside[v[1][0]] = 1;
+			if(degree[v[1][0]] % 2){
+				h.eitr(v, function(e){
+					deepEqual(e[1], d[v[1][0]][e[0][1][0]], 'd['+v[1][0]+']['+e[0][1][0]+'] check');
+				});
+			}
+		});
+
+		deepEqual(ainside, einside, 'count all check')
 
 	});
 

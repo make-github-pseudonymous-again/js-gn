@@ -1,6 +1,6 @@
 {
   "name": "gn",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "gn (graphs and networks) algorithm / adt templates for JavaScript",
   "main": "js/index.js",
   "dependencies": {
@@ -10,7 +10,7 @@
     "qunit": "git://github.com/gotwarlost/node-qunit.git#istanbul-coverage",
     "coveralls": "^2.10.0",
     "optimist": "^0.6.1",
-    "algo": "^0.0.3"
+    "algo": "^0.0.4"
   },
   "scripts": {
     "test": "export DIR=node_modules/qunit/support/qunit/qunit && mkdir -p $DIR && cp support/qunit.js $DIR/ && node test/js/run.js"

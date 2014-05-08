@@ -1,7 +1,7 @@
 
 var algo = require('algo');
 
-var check = function(label, n, s, edges){
+var check = function(label, n, edges){
 
 	test('floyd #' + label, function(assert){
 
@@ -61,7 +61,6 @@ var I = [
 [
 	'1',
 	10,
-	9,
 	[
 		[0, 1, 1],
 		[3, 1, 2],
@@ -77,7 +76,6 @@ var I = [
 [
 	'http://stackoverflow.com/questions/14159424/dijkstras-algorithm-why-is-it-needed-to-find-minimum-distance-element-in-the-q#1',
 	4,
-	0,
 	[
 		[0, 1, 6],
 		[1, 2, 7],
@@ -89,7 +87,6 @@ var I = [
 [
 	'http://stackoverflow.com/questions/14159424/dijkstras-algorithm-why-is-it-needed-to-find-minimum-distance-element-in-the-q#2',
 	9,
-	2,
 	[
 		[1, 5, 6],
 		[5, 3, 2],

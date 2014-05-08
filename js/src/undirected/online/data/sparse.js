@@ -9,11 +9,11 @@ var sparse_graph_t = function(){
 
 	graph.prototype.vadd = function(h){
 
-		this.pt[1] = [h, this.pt, this.pt[2], [-1, -1, null, null]];
+		this.pt[2] = [h, this.pt, this.pt[2], [-1, -1, null, null]];
 
-		if(this.pt[1][2] !== null) this.pt[1][2][1] = this.pt[1];
+		if(this.pt[2][2] !== null) this.pt[2][2][1] = this.pt[2];
 
-		return this.pt[1];
+		return this.pt[2];
 	};
 
 	graph.prototype.vdel = function(i){

@@ -29,16 +29,18 @@ test('sparse', function(assert){
 
 	var k = v.length;
 	g.vitr(function(j){deepEqual(j, v[--k], 'vitr ' + k);});
-
+	deepEqual(k, 0, 'check vertex count before del');
 
 	var r = [0, 1, 4];
 
 	for(var l = 0; l < r.length; ++l){
 		var m = r[l];
 		k = e[m].length;
+		ok(k > 0, m + ' : check edge count before itr');
 		g.eitr(v[m], function(x){
 			deepEqual(x, e[m][--k][0], 'eitr ' + m + ' ' + k);
 		});
+		deepEqual(k, 0, m + ' : check edge count before del');
 	};
 
 	g.edel(e[1].splice(0, 1)[0]);
@@ -54,6 +56,7 @@ test('sparse', function(assert){
 		g.eitr(v[m], function(x){
 			deepEqual(x, e[m][--k][0], 'eitr ' + m + ' ' + k);
 		});
+		deepEqual(k, 0, m + ' : check edge count after del');
 	};
 
 	g.vdel(v.splice(3, 1)[0]);
