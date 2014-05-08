@@ -3,38 +3,38 @@ var sparse_graph_t = function(){
 
 	var graph = function(){
 
-		this.pt = [null, null];
+		this.pt = [null, null, null];
 
 	};
 
-	graph.prototype.vadd = function(){
+	graph.prototype.vadd = function(h){
 
-		this.pt[1] = [this.pt, this.pt[1], [-1, -1, null, null]];
+		this.pt[1] = [h, this.pt, this.pt[2], [-1, -1, null, null]];
 
-		if(this.pt[1][1] !== null) this.pt[1][1][0] = this.pt[1];
+		if(this.pt[1][2] !== null) this.pt[1][2][1] = this.pt[1];
 
 		return this.pt[1];
 	};
 
 	graph.prototype.vdel = function(i){
 
-		i[0][1] = i[1];
+		i[1][2] = i[2];
 
-		if(i[1] !== null) i[1][0] = i[0];
+		if(i[2] !== null) i[2][1] = i[1];
 
 	};
 
 	graph.prototype.eadd = function(i, j, w){
 
-		i[2][3] = [j, w, i[2], i[2][3]];
-		if(i[2][3][3] !== null) i[2][3][3][2] = i[2][3];
+		i[3][3] = [j, w, i[3], i[3][3]];
+		if(i[3][3][3] !== null) i[3][3][3][2] = i[3][3];
 
 		if(j !== i){
-			j[2][3] = [i, w, j[2], j[2][3]];
-			if(j[2][3][3] !== null) j[2][3][3][2] = j[2][3];
+			j[3][3] = [i, w, j[3], j[3][3]];
+			if(j[3][3][3] !== null) j[3][3][3][2] = j[3][3];
 		}
 
-		return [i[2][3], j[2][3]];
+		return [i[3][3], j[3][3]];
 
 	};
 
@@ -54,20 +54,20 @@ var sparse_graph_t = function(){
 
 	graph.prototype.vitr = function(fn){
 
-		var i = this.pt[1];
+		var i = this.pt[2];
 
 		while(i !== null){
 
 			if(fn(i)) break;
 
-			i = i[1];
+			i = i[2];
 		}
 
 	};
 
 	graph.prototype.eitr = function(i, fn){
 
-		var e = i[2][3];
+		var e = i[3][3];
 
 		while(e !== null){
 

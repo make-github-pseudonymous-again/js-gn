@@ -2,7 +2,7 @@
 
 var floyd_t = function(){
 
-	var floyd = function(g, order, dist){
+	var floyd = function(order, dist){
 		var i, j, k;
 
 		for(k = 0; k < order; ++k){

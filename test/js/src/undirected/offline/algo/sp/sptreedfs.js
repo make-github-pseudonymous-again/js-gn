@@ -49,7 +49,7 @@ var check = function(label, n, s, edges){
 
 		d = gn.sqmat(2, n, Infinity);
 		amat(g, n, d);
-		floyd(g, n, d);
+		floyd(n, d);
 
 		var s = gn.sqmat(2, n, -1);
 		sptreedfs(g, n, s, d);

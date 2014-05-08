@@ -48,7 +48,7 @@ var check = function(label, n, s, edges){
 
 		d = gn.sqmat(2, n, Infinity);
 		amat(g, n, d);
-		floyd(g, n, d);
+		floyd(n, d);
 
 		deepEqual(d, dist, 'dist');
 

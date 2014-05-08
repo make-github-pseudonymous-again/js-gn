@@ -8,10 +8,10 @@ var dense_graph_t = function(){
 
 	};
 
-	graph.prototype.vadd = function(){
+	graph.prototype.vadd = function(h){
 
 		var len = this.pt.length;
-		var ref = [len];
+		var ref = [len, h];
 
 		this.ad.push(ref);
 
@@ -41,11 +41,12 @@ var dense_graph_t = function(){
 
 	};
 
-	graph.prototype.eadd = function(i, j, w){
+	graph.prototype.eadd = function(u, v, w){
+		var i = u[0], j = v[0];
 
-		this.pt[i][j][0] = j;
+		this.pt[i][j][0] = v;
 		this.pt[i][j][1] = w;
-		this.pt[j][i][0] = i;
+		this.pt[j][i][0] = u;
 		this.pt[j][i][1] = w;
 
 		return [this.pt[i][j], this.pt[j][i]];
@@ -54,7 +55,7 @@ var dense_graph_t = function(){
 
 	graph.prototype.edel = function(e){
 
-		var i = e[0][0], j = e[1][0];
+		var i = e[0][0][0], j = e[1][0][0];
 
 		this.pt[i][j][0] = null;
 		this.pt[j][i][0] = null;
