@@ -35,6 +35,7 @@ var check = function(name, order, E){
 
 		var edgecounth = gn.sqmat(2, order, 0);
 		var edgecountg = gn.sqmat(2, order, 0);
+		var edgevalh = gn.sqmat(2, order, Infinity);
 
 		h.vitr(function(v){
 
@@ -43,9 +44,7 @@ var check = function(name, order, E){
 				var u = e[0];
 				var j = u[1][0];
 				edgecounth[i][j]++;
-
-
-				
+				edgevalh[i][j] = e[1];
 			});
 		});
 
@@ -57,7 +56,10 @@ var check = function(name, order, E){
 				var u = e[0];
 				var j = u[0];
 
-				if (i !== j) edgecountg[i][j] = 1;
+				if(i !== j){
+					edgecountg[i][j] = 1;
+					ok(edgevalh[i][j] <= e[1], 'check (' + i + ', ' + j + ')');
+				}
 
 			});
 		});
