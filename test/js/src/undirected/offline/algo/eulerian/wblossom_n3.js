@@ -1,6 +1,5 @@
 
 var check = function(key, alg, callback){
-	console.log('#$§', key);
 	test(key, function(assert){
 		callback(alg, assert);
 	});
@@ -106,7 +105,14 @@ var tests = {
 	}
 };
 
-var alg = gn.wblossom_n3_t(true, true, true);
+var alg = [
+	gn.wblossom_n3_t(true, true, true),
+	gn.wblossom_n3_t(false, false, false),
+	gn.wblossom_n3_t()
+];
 
-for(var key in tests) check(key, alg, tests[key]);
-// check('test33_nest_tnasty_expand', alg, tests['test33_nest_tnasty_expand']);
+
+for(var i = 0; i < alg.length; ++i){
+	for(var key in tests)
+		check(key, alg[i], tests[key]);
+}
