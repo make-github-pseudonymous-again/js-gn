@@ -30,10 +30,6 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
     if (CHECK_OPTIMUM === undefined) CHECK_OPTIMUM = true;
 
 
-    // For type checking
-    var integer_types = [typeof 0];
-
-
     // Compatibility
     var assert = function (condition) {
         if (!condition) throw "Assertion failed";
@@ -469,7 +465,7 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
                         if (inblossom[j] === b) {
                             tmp = i;
                             i = j;
-                            j = i;
+                            j = tmp;
                         }
 
                         bj = inblossom[j];
@@ -852,36 +848,43 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
             assert(bd === tbd);
         };
 
+        var b, d, t, v, augmented, kslack, base, deltatype, delta, deltaedge, deltablossom, wt, tmp;
+
         // Main loop: continue until no further improvement is possible.
-        for t in range(nvertex):
+        for (t = 0; t < nvertex; ++t) {
 
             // Each iteration of this loop is a "stage".
             // A stage finds an augmenting path and uses that to improve
             // the matching.
-            if (DEBUG) DEBUG('STAGE %d' % t);
+            if (DEBUG) DEBUG('STAGE ' + t);
 
             // Remove labels from top-level blossoms/vertices.
-            label[:] = (2 * nvertex) * [ 0 ]
+            i = 2 * nvertex;
+            while (i--) label[i] = 0;
 
             // Forget all about least-slack edges.
-            bestedge[:] = (2 * nvertex) * [ -1 ]
-            blossombestedges[nvertex:] = nvertex * [ null ]
+            i = 2 * nvertex;
+            while (i--) bestedge[i] = -1;
+            i = nvertex;
+            while (i--) blossombestedges[nvertex + i] = null;
 
             // Loss of labeling means that we can not be sure that currently
             // allowable edges remain allowable througout this stage.
-            allowedge[:] = nedge * [ false ]
+            i = nedge;
+            while (i--) allowedge[i] = false;
 
             // Make queue empty.
-            queue[:] = [ ]
+            queue = [];
      
             // Label single blossoms/vertices with S and put them in the queue.
-            for v in range(nvertex):
-                if mate[v] === -1 and label[inblossom[v]] === 0:
-                    assignLabel(v, 1, -1)
+            for (v = 0; v < nvertex; ++v) {
+                if (mate[v] === -1 && label[inblossom[v]] === 0)
+                    assignLabel(v, 1, -1);
+            }
 
             // Loop until we succeed in augmenting the matching.
-            augmented = 0
-            while 1:
+            augmented = 0;
+            while (true) {
 
                 // Each iteration of this loop is a "substage".
                 // A substage tries to find an augmenting path;
@@ -893,194 +896,236 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
 
                 // Continue labeling until all vertices which are reachable
                 // through an alternating path have got a label.
-                while queue and not augmented:
+                while (queue.length && !augmented) {
 
                     // Take an S vertex from the queue.
-                    v = queue.pop()
-                    if (DEBUG) DEBUG('POP v=%d' % v);
-                    assert(label[inblossom[v]] === 1
+                    v = queue.pop();
+                    if (DEBUG) DEBUG('POP v=' + v);
+                    assert(label[inblossom[v]] === 1);
 
                     // Scan its neighbours:
-                    for p in neighbend[v]:
-                        k = p // 2
-                        w = endpoint[p]
+                    len = neighbend[v].length;
+                    for (i = 0; i < len; ++i) {
+                        p = neighbend[v][i];
+                        k = Math.floor(p / 2);
+                        w = endpoint[p];
                         // w is a neighbour to v
-                        if inblossom[v] === inblossom[w]:
+                        if (inblossom[v] === inblossom[w]) {
                             // this edge is internal to a blossom; ignore it
-                            continue
-                        if not allowedge[k]:
-                            kslack = slack(k)
-                            if kslack <= 0:
+                            continue;
+                        }
+                        if (!allowedge[k]) {
+                            kslack = slack(k);
+                            if (kslack <= 0) {
                                 // edge k has zero slack => it is allowable
-                                allowedge[k] = true
-                        if allowedge[k]:
-                            if label[inblossom[w]] === 0:
+                                allowedge[k] = true;
+                            }
+                        }
+                        if (allowedge[k]) {
+                            if (label[inblossom[w]] === 0) {
                                 // (C1) w is a free vertex;
                                 // label w with T and label its mate with S (R12).
-                                assignLabel(w, 2, p ^ 1)
-                            else if label[inblossom[w]] === 1:
+                                assignLabel(w, 2, p ^ 1);
+                            }
+                            else if (label[inblossom[w]] === 1) {
                                 // (C2) w is an S-vertex (not in the same blossom);
                                 // follow back-links to discover either an
                                 // augmenting path or a new blossom.
-                                base = scanBlossom(v, w)
-                                if base >= 0:
+                                base = scanBlossom(v, w);
+                                if (base >= 0) {
                                     // Found a new blossom; add it to the blossom
                                     // bookkeeping and turn it into an S-blossom.
-                                    addBlossom(base, k)
-                                else:
+                                    addBlossom(base, k);
+                                }
+                                else {
                                     // Found an augmenting path; augment the
                                     // matching and end this stage.
-                                    augmentMatching(k)
-                                    augmented = 1
-                                    break
-                            else if label[w] === 0:
+                                    augmentMatching(k);
+                                    augmented = 1;
+                                    break;
+                                }
+                            }
+                            else if (label[w] === 0) {
                                 // w is inside a T-blossom, but w itthis has not
                                 // yet been reached from outside the blossom;
                                 // mark it as reached (we need this to relabel
                                 // during T-blossom expansion).
-                                assert(label[inblossom[w]] === 2
-                                label[w] = 2
-                                labelend[w] = p ^ 1
-                        else if label[inblossom[w]] === 1:
+                                assert(label[inblossom[w]] === 2);
+                                label[w] = 2;
+                                labelend[w] = p ^ 1;
+                            }
+                        }
+                        else if (label[inblossom[w]] === 1) {
                             // keep track of the least-slack non-allowable edge to
                             // a different S-blossom.
-                            b = inblossom[v]
-                            if bestedge[b] === -1 or kslack < slack(bestedge[b]):
-                                bestedge[b] = k
-                        else if label[w] === 0:
+                            b = inblossom[v];
+                            if (bestedge[b] === -1 || kslack < slack(bestedge[b]))
+                                bestedge[b] = k;
+                        }
+                        else if (label[w] === 0) {
                             // w is a free vertex (or an unreached vertex inside
                             // a T-blossom) but we can not reach it yet;
                             // keep track of the least-slack edge that reaches w.
-                            if bestedge[w] === -1 or kslack < slack(bestedge[w]):
-                                bestedge[w] = k
+                            if (bestedge[w] === -1 || kslack < slack(bestedge[w]))
+                                bestedge[w] = k;
+                        }
+                    }
+                }
 
-                if augmented:
-                    break
+                if (augmented) break;
 
                 // There is no augmenting path under these constraints;
                 // compute delta and reduce slack in the optimization problem.
                 // (Note that our vertex dual variables, edge slacks and delta's
                 // are pre-multiplied by two.)
-                deltatype = -1
-                delta = deltaedge = deltablossom = null
+                deltatype = -1;
+                delta = deltaedge = deltablossom = null;
 
                 // Verify data structures for delta2/delta3 computation.
-                if CHECK_DELTA:
-                    checkDelta2()
-                    checkDelta3()
+                if (CHECK_DELTA) {
+                    checkDelta2();
+                    checkDelta3();
+                }
 
                 // Compute delta1: the minumum value of any vertex dual.
-                if not maxcardinality:
-                    deltatype = 1
-                    delta = min(dualvar[:nvertex])
+                if (!maxcardinality) {
+                    deltatype = 1;
+                    delta = min(dualvar.slice(0, nvertex));
+                }
 
                 // Compute delta2: the minimum slack on any edge between
                 // an S-vertex and a free vertex.
-                for v in range(nvertex):
-                    if label[inblossom[v]] === 0 and bestedge[v] !== -1:
-                        d = slack(bestedge[v])
-                        if deltatype === -1 or d < delta:
-                            delta = d
-                            deltatype = 2
-                            deltaedge = bestedge[v]
+                for (v = 0; v < nvertex; ++v) {
+                    if (label[inblossom[v]] === 0 && bestedge[v] !== -1) {
+                        d = slack(bestedge[v]);
+                        if (deltatype === -1 || d < delta) {
+                            delta = d;
+                            deltatype = 2;
+                            deltaedge = bestedge[v];
+                        }
+                    }
+                }
 
                 // Compute delta3: half the minimum slack on any edge between
                 // a pair of S-blossoms.
-                for b in range(2 * nvertex):
-                    if ( blossomparent[b] === -1 and label[b] === 1 and
-                         bestedge[b] !== -1 ):
-                        kslack = slack(bestedge[b])
-                        if isinstance(kslack, integer_types):
-                            assert((kslack % 2) === 0
-                            d = kslack // 2
-                        else:
-                            d = kslack / 2
-                        if deltatype === -1 or d < delta:
-                            delta = d
-                            deltatype = 3
-                            deltaedge = bestedge[b]
+                for (b = 0; b < 2 * nvertex; ++b) {
+                    if ( blossomparent[b] === -1 && label[b] === 1 && bestedge[b] !== -1 ) {
+                        kslack = slack(bestedge[b]);
+                        d = kslack / 2;
+                        if (deltatype === -1 || d < delta) {
+                            delta = d;
+                            deltatype = 3;
+                            deltaedge = bestedge[b];
+                        }
+                    }
+                }
 
                 // Compute delta4: minimum z variable of any T-blossom.
-                for b in range(nvertex, 2*nvertex):
-                    if ( blossombase[b] >= 0 and blossomparent[b] === -1 and
-                         label[b] === 2 and
-                         (deltatype === -1 or dualvar[b] < delta) ):
-                        delta = dualvar[b]
-                        deltatype = 4
-                        deltablossom = b
+                for (b = nvertex; b < 2 * nvertex; ++b) {
+                    if ( blossombase[b] >= 0 && blossomparent[b] === -1 &&
+                         label[b] === 2 && (deltatype === -1 || dualvar[b] < delta) ) {
+                        delta = dualvar[b];
+                        deltatype = 4;
+                        deltablossom = b;
+                    }
+                }
 
-                if deltatype === -1:
+                if (deltatype === -1) {
                     // No further improvement possible; max-cardinality optimum
                     // reached. Do a final delta update to make the optimum
                     // verifyable.
-                    assert(maxcardinality
-                    deltatype = 1
-                    delta = max(0, min(dualvar[:nvertex]))
+                    assert(maxcardinality);
+                    deltatype = 1;
+                    delta = Math.max(0, min(dualvar.slice(0, nvertex)));
+                }
 
                 // Update dual variables according to delta.
-                for v in range(nvertex):
-                    if label[inblossom[v]] === 1:
+                for (v = 0; v < nvertex; ++v) {
+                    if (label[inblossom[v]] === 1) {
                         // S-vertex: 2*u = 2*u - 2*delta
-                        dualvar[v] -= delta
-                    else if label[inblossom[v]] === 2:
+                        dualvar[v] -= delta;
+                    }
+                    else if (label[inblossom[v]] === 2) {
                         // T-vertex: 2*u = 2*u + 2*delta
-                        dualvar[v] += delta
-                for b in range(nvertex, 2*nvertex):
-                    if blossombase[b] >= 0 and blossomparent[b] === -1:
-                        if label[b] === 1:
+                        dualvar[v] += delta;
+                    }
+                }
+                for (b = nvertex; b < 2 * nvertex; ++b) {
+                    if (blossombase[b] >= 0 && blossomparent[b] === -1){
+                        if (label[b] === 1) {
                             // top-level S-blossom: z = z + 2*delta
-                            dualvar[b] += delta
-                        else if label[b] === 2:
+                            dualvar[b] += delta;
+                        }
+                        else if (label[b] === 2){
                             // top-level T-blossom: z = z - 2*delta
-                            dualvar[b] -= delta
+                            dualvar[b] -= delta;
+                        }
+                    }
+                }
 
                 // Take action at the point where minimum delta occurred.
-                if (DEBUG) DEBUG('delta%d=%f' % (deltatype, delta));
-                if deltatype === 1: 
+                if (DEBUG) DEBUG('delta' + deltatype + '=' + delta);
+                if (deltatype === 1) {
                     // No further improvement possible; optimum reached.
-                    break
-                else if deltatype === 2:
+                    break;
+                }
+                else if (deltatype === 2) {
                     // Use the least-slack edge to continue the search.
-                    allowedge[deltaedge] = true
-                    (i, j, wt) = edges[deltaedge]
-                    if label[inblossom[i]] === 0:
-                        i, j = j, i
-                    assert(label[inblossom[i]] === 1
-                    queue.push(i)
-                else if deltatype === 3:
+                    allowedge[deltaedge] = true;
+                    i  = edges[deltaedge][0];
+                    j  = edges[deltaedge][1];
+                    wt = edges[deltaedge][2];
+                    if (label[inblossom[i]] === 0){
+                        tmp = i;
+                        i = j;
+                        j = tmp;
+                    }
+                    assert(label[inblossom[i]] === 1);
+                    queue.push(i);
+                }
+                else if (deltatype === 3) {
                     // Use the least-slack edge to continue the search.
-                    allowedge[deltaedge] = true
-                    (i, j, wt) = edges[deltaedge]
-                    assert(label[inblossom[i]] === 1
-                    queue.push(i)
-                else if deltatype === 4:
+                    allowedge[deltaedge] = true;
+                    i  = edges[deltaedge][0];
+                    j  = edges[deltaedge][1];
+                    wt = edges[deltaedge][2];
+                    assert(label[inblossom[i]] === 1);
+                    queue.push(i);
+                }
+                else if (deltatype === 4) {
                     // Expand the least-z blossom.
-                    expandBlossom(deltablossom, false)
+                    expandBlossom(deltablossom, false);
+                }
+            }
 
                 // End of a this substage.
 
             // Stop when no more augmenting path can be found.
-            if not augmented:
-                break
+            if (!augmented) break;
 
             // End of a stage; expand all S-blossoms which have dualvar = 0.
-            for b in range(nvertex, 2*nvertex):
-                if ( blossomparent[b] === -1 and blossombase[b] >= 0 and
-                     label[b] === 1 and dualvar[b] === 0 ):
-                    expandBlossom(b, true)
+            for (b = nvertex; b < 2 * nvertex; ++b) {
+                if ( blossomparent[b] === -1 && blossombase[b] >= 0 &&
+                     label[b] === 1 && dualvar[b] === 0 ) {
+                    expandBlossom(b, true);
+                }
+            }
+        }
 
         // Verify that we reached the optimum solution.
-        if CHECK_OPTIMUM:
-            verifyOptimum()
+        if (CHECK_OPTIMUM) verifyOptimum();
 
         // Transform mate[] such that mate[v] is the vertex to which v is paired.
-        for v in range(nvertex):
-            if mate[v] >= 0:
-                mate[v] = endpoint[mate[v]]
-        for v in range(nvertex):
-            assert(mate[v] === -1 or mate[mate[v]] === v
+        for (v = 0; v < nvertex; ++v) {
+            if (mate[v] >= 0) {
+                mate[v] = endpoint[mate[v]];
+            }
+        }
+        for (v = 0; v < nvertex; ++v) {
+            assert(mate[v] === -1 || mate[mate[v]] === v);
+        }
 
-        return mate
+        return mate;
 
     };
 
