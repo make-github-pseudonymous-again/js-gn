@@ -20,7 +20,7 @@
 var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
 
     // If assigned, DEBUG(str) is called with lots of debug messages.
-    var DEBUG = debug ? null : function(s){ console.log('DEBUG:', s); };
+    var DEBUG = debug ? function(s){ console.log('DEBUG:', s); } : null;
 
     // Check delta2/delta3 computation after every substage;
     // only works on integer weights, slows down the algorithm to O(n^4).
@@ -32,7 +32,7 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
 
     // Compatibility
     var assert = function (condition) {
-        if (!condition) throw "Assertion failed";
+        if (!condition) throw new Error("Assertion failed");
     };
 
     var min = function (a) {
@@ -131,12 +131,11 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
         // Not modified by the algorithm.
         i = nvertex;
         var neighbend = new Array(i);
-        while (i--) neighbend = [];
+        while (i--) neighbend[i] = [];
 
         for (k = 0; k < nedge; ++k) {
             i = edges[k][0];
             j = edges[k][1];
-            w = edges[k][2];
             neighbend[i].push(2 * k + 1);
             neighbend[j].push(2 * k);
         }
@@ -251,7 +250,7 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
         // be zero.
         i = nedge;
         var allowedge = new Array(i);
-        while (i--) allowedge = false;
+        while (i--) allowedge[i] = false;
 
         // Queue of newly discovered S-vertices.
         var queue = [];
@@ -266,7 +265,11 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
 
         // Generate the leaf vertices of a blossom.
         var blossomLeaves = function (b, fn) {
-            if (b < nvertex) fn(b);
+            console.log('blossomLeaves', b, blossomchilds.length);
+            if (b < nvertex){
+                if(fn(b)) return true;
+            console.log('blossomLeaves', b, blossomchilds.length);
+            }
             else {
                 var len, i, t;
                 len = blossomchilds[b].length;
@@ -274,9 +277,11 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
                     t = blossomchilds[b][i];
                     if (t < nvertex) {
                         if (fn(t)) return true;
+            console.log('blossomLeaves', b, blossomchilds.length);
                     }
                     else {
                         if (blossomLeaves(t, fn)) return true;
+            console.log('blossomLeaves', b, blossomchilds.length);
                     }
                 }
             }
@@ -437,6 +442,7 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
                 if (blossombestedges[bv] === null){
                     // This subblossom does not have a list of least-slack edges;
                     // get the information from the vertices.
+                    nblists = [];
                     blossomLeaves(bv, function(v){
                         j = neighbend[v].length;
                         tmp = new Array(j);
@@ -511,7 +517,7 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
         var expandBlossom = function(b, endstage) {
             if (DEBUG) DEBUG('expandBlossom(' + b + ',' + endstage + ') ' + blossomchilds[b]);
             // Convert sub-blossoms into top-level blossoms.
-            var i, j, len, s, p, entrychild, jstep, endptrick, bv;
+            var i, j, len, s, p, entrychild, jstep, endptrick, bv, stop, base;
 
             for (i = 0; i < blossomchilds[b].length; ++i) {
                 s = blossomchilds[b][i];
@@ -523,6 +529,7 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
                     expandBlossom(s, endstage);
                 }
                 else {
+                    console.log('HA');
                     blossomLeaves(s, function(v) {
                         inblossom[v] = s;
                     });
@@ -540,20 +547,24 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
                 entrychild = inblossom[endpoint[labelend[b] ^ 1]];
                 // Decide in which direction we will go round the blossom.
                 j = blossomchilds[b].indexOf(entrychild);
+                console.log('J', j, entrychild, blossomchilds[b]);
                 if (j & 1) {
-                    // Start index is odd; go forward and wrap.
-                    j -= blossomchilds[b].length;
+                    // Start index is odd; go forward.
                     jstep = 1;
                     endptrick = 0;
+                    stop = blossomchilds[b].length;
+                    base = 0;
                 }
                 else {
                     // Start index is even; go backward.
                     jstep = -1;
                     endptrick = 1;
+                    stop = 0;
+                    base = blossomchilds[b].length;
                 }
                 // Move along the blossom until we get to the base.
                 p = labelend[b];
-                while (j !== 0) {
+                while (j !== stop) {
                     // Relabel the T-sub-blossom.
                     label[endpoint[p ^ 1]] = 0;
                     label[endpoint[blossomendps[b][j-endptrick]^endptrick^1]] = 0;
@@ -561,30 +572,34 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
                     // Step to the next S-sub-blossom and note its forward endpoint.
                     allowedge[Math.floor(blossomendps[b][j-endptrick]/2)] = true;
                     j += jstep;
+                    console.log('J', j, entrychild, blossomchilds[b]);
                     p = blossomendps[b][j-endptrick] ^ endptrick;
                     // Step to the next T-sub-blossom.
                     allowedge[Math.floor(p/2)] = true;
                     j += jstep;
+                    console.log('J', j, entrychild, blossomchilds[b]);
                 }
                 // Relabel the base T-sub-blossom WITHOUT stepping through to
                 // its mate (so don't call assignLabel).
-                bv = blossomchilds[b][j];
+                bv = blossomchilds[b][0];
                 label[endpoint[p ^ 1]] = label[bv] = 2;
                 labelend[endpoint[p ^ 1]] = labelend[bv] = p;
                 bestedge[bv] = -1;
                 // Continue along the blossom until we get back to entrychild.
-                j += jstep;
+                j = base + jstep;
                 while (blossomchilds[b][j] !== entrychild) {
                     // Examine the vertices of the sub-blossom to see whether
                     // it is reachable from a neighbouring S-vertex outside the
                     // expanding blossom.
                     bv = blossomchilds[b][j];
+                    console.log('HEHHE', bv, j);
                     if (label[bv] === 1) {
                         // This sub-blossom just got label S through one of its
                         // neighbours; leave it.
                         j += jstep;
                         continue;
                     }
+                    console.log('BH', bv, j);
                     blossomLeaves(bv, function(v){
                         if (label[v] !== 0) {
                             // If the sub-blossom contains a reachable vertex, assign
@@ -664,6 +679,8 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
             // Rotate the list of sub-blossoms to put the new base at the front.
             rotate(blossomchilds[b], i);
             rotate(blossomendps[b], i);
+            console.log(blossomchilds);
+            console.log(blossomendps);
             blossombase[b] = blossombase[blossomchilds[b][0]];
             assert(blossombase[b] === v);
         };
@@ -679,12 +696,13 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
             var w = edges[k][1];
             var wt = edges[k][2];
 
-            if (DEBUG) DEBUG('augmentMatching(' + k + ') (v=' + v + ' w=' + m + ')');
+            if (DEBUG) DEBUG('augmentMatching(' + k + ') (v=' + v + ' w=' + w + ')');
             if (DEBUG) DEBUG('PAIR ' + v + ' ' + w + ' (k=' + k + ')');
 
             [[v, 2 * k + 1], [w, 2 * k]].forEach(function(e){
                 var s = e[0];
                 var p = e[1];
+                console.log(s, p);
                 // Match vertex s to remote endpoint p. Then trace back from s
                 // until we find a single vertex, swapping matched and unmatched
                 // edges as we go.
