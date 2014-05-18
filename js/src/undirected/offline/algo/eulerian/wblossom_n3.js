@@ -587,50 +587,61 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
             unusedblossoms.push(b);
         };
 
+        var rotate = function(a, n){
+            var head = a.splice(0, n);
+            for (var i = 0; i < n; ++i) {
+                a.push(head[i]);
+            }
+        };
+
         // Swap matched/unmatched edges over an alternating path through blossom b
         // between vertex v and the base vertex. Keep blossom bookkeeping consistent.
         var augmentBlossom = function(b, v){
-            if (DEBUG) DEBUG('augmentBlossom(%d,%d)' % (b, v));
+            if (DEBUG) DEBUG('augmentBlossom(' + b + ',' + v + ')');
             // Bubble up through the blossom tree from vertex v to an immediate
             // sub-blossom of b.
-            t = v
-            while blossomparent[t] !== b:
-                t = blossomparent[t]
+            var i, j, t, jstep, endptrick;
+            t = v;
+            while (blossomparent[t] !== b)
+                t = blossomparent[t];
             // Recursively deal with the first sub-blossom.
-            if t >= nvertex:
-                augmentBlossom(t, v)
+            if (t >= nvertex)
+                augmentBlossom(t, v);
             // Decide in which direction we will go round the blossom.
-            i = j = blossomchilds[b].index(t)
-            if i & 1:
+            i = j = blossomchilds[b].indexOf(t);
+            if (i & 1) {
                 // Start index is odd; go forward and wrap.
-                j -= len(blossomchilds[b])
-                jstep = 1
-                endptrick = 0
-            else:
+                j -= blossomchilds[b].length;
+                jstep = 1;
+                endptrick = 0;
+            }
+            else {
                 // Start index is even; go backward.
-                jstep = -1
-                endptrick = 1
+                jstep = -1;
+                endptrick = 1;
+            }
             // Move along the blossom until we get to the base.
-            while j !== 0:
+            while (j !== 0) {
                 // Step to the next sub-blossom and augment it recursively.
-                j += jstep
-                t = blossomchilds[b][j]
-                p = blossomendps[b][j-endptrick] ^ endptrick
-                if t >= nvertex:
-                    augmentBlossom(t, endpoint[p])
+                j += jstep;
+                t = blossomchilds[b][j];
+                p = blossomendps[b][j-endptrick] ^ endptrick;
+                if (t >= nvertex)
+                    augmentBlossom(t, endpoint[p]);
                 // Step to the next sub-blossom and augment it recursively.
-                j += jstep
-                t = blossomchilds[b][j]
-                if t >= nvertex:
-                    augmentBlossom(t, endpoint[p ^ 1])
+                j += jstep;
+                t = blossomchilds[b][j];
+                if (t >= nvertex)
+                    augmentBlossom(t, endpoint[p ^ 1]);
                 // Match the edge connecting those sub-blossoms.
-                mate[endpoint[p]] = p ^ 1
-                mate[endpoint[p ^ 1]] = p
-                if (DEBUG) DEBUG('PAIR %d %d (k=%d)' % (endpoint[p], endpoint[p^1], p//2));
+                mate[endpoint[p]] = p ^ 1;
+                mate[endpoint[p ^ 1]] = p;
+                if (DEBUG) DEBUG('PAIR ' + endpoint[p] + ' ' + endpoint[p^1] + ' (k=' + Math.floor(p/2) + ')');
+            }
             // Rotate the list of sub-blossoms to put the new base at the front.
-            blossomchilds[b] = blossomchilds[b][i:] + blossomchilds[b][:i]
-            blossomendps[b]  = blossomendps[b][i:]  + blossomendps[b][:i]
-            blossombase[b] = blossombase[blossomchilds[b][0]]
+            rotate(blossomchilds[b], i);
+            rotate(blossomendps[b], i);
+            blossombase[b] = blossombase[blossomchilds[b][0]];
             assert(blossombase[b] === v);
         };
 
