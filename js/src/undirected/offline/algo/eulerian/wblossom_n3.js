@@ -808,32 +808,47 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
         };
 
         // Check optimized delta3 against a trivial computation.
-        var checkDelta3 = function(){
-            bk = -1
-            bd = null
-            tbk = -1
-            tbd = null
-            for b in range(2 * nvertex):
-                if blossomparent[b] === -1 and label[b] === 1:
-                    for v in blossomLeaves(b):
-                        for p in neighbend[v]:
-                            k = p // 2
-                            w = endpoint[p]
-                            if inblossom[w] !== b and label[inblossom[w]] === 1:
-                                d = slack(k)
-                                if bk === -1 or d < bd:
-                                    bk = k
-                                    bd = d
-                    if bestedge[b] !== -1:
-                        (i, j, wt) = edges[bestedge[b]]
-                        assert(inblossom[i] === b or inblossom[j] === b
-                        assert(inblossom[i] !== b or inblossom[j] !== b
-                        assert(label[inblossom[i]] === 1 and label[inblossom[j]] === 1
-                        if tbk === -1 or slack(bestedge[b]) < tbd:
-                            tbk = bestedge[b]
-                            tbd = slack(bestedge[b])
-            if DEBUG and bd !== tbd:
-                DEBUG('bk=%d tbk=%d bd=%s tbd=%s' % (bk, tbk, repr(bd), repr(tbd)))
+        var checkDelta3 = function() {
+            var bk = -1;
+            var bd = null;
+            var tbk = -1;
+            var tbd = null;
+            for (var b = 0; b < 2 * nvertex; ++b) {
+                if (blossomparent[b] === -1 && label[b] === 1) {
+                    blossomLeaves(b, function(v){
+
+                        for (var x = 0; x < neighbend[v].length; ++x) {
+                            var p = neighbend[v][x];
+                            var k = Math.floor(p / 2);
+                            var w = endpoint[p];
+                            if (inblossom[w] !== b && label[inblossom[w]] === 1) {
+                                var d = slack(k);
+                                if (bk === -1 || d < bd) {
+                                    bk = k;
+                                    bd = d;
+                                }
+                            }
+                        }
+
+                    });
+
+                    if (bestedge[b] !== -1) {
+                        var i = edges[bestedge[b]][0];
+                        var j = edges[bestedge[b]][1];
+                        var wt = edges[bestedge[b]][2];
+
+                        assert(inblossom[i] === b || inblossom[j] === b);
+                        assert(inblossom[i] !== b || inblossom[j] !== b);
+                        assert(label[inblossom[i]] === 1 && label[inblossom[j]] === 1);
+                        if (tbk === -1 || slack(bestedge[b]) < tbd) {
+                            tbk = bestedge[b];
+                            tbd = slack(bestedge[b]);
+                        }
+                    }
+                }
+            }
+            if (DEBUG && bd !== tbd)
+                DEBUG('bk=' + bk + ' tbk=' + tbk + ' bd=' + bd + ' tbd=' + tbd);
             assert(bd === tbd);
         };
 
