@@ -40,7 +40,7 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
 
 
     var maxWeightMatching = function (edges, maxcardinality) {
-        var i, j, k, p, w, wt, len;
+        var i, j, k, p, w, len;
 
         if (maxcardinality === undefined) maxcardinality = false;
 
@@ -83,7 +83,7 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
         var maxweight = 0;
 
         len = nedge;
-        while(len--){
+        while (len--) {
             i = edges[len][0];
             j = edges[len][1];
             w = edges[len][2];
@@ -234,9 +234,9 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
 
         // Return 2 * slack of edge k (does not work inside blossoms).
         var slack = function (k) {
-            i = edges[k][0];
-            j = edges[k][1];
-            wt = edges[k][2];
+            var i = edges[k][0];
+            var j = edges[k][1];
+            var wt = edges[k][2];
             return dualvar[i] + dualvar[j] - 2 * wt;
         };
 
@@ -319,10 +319,10 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
                     w = tmp;
                 }
             }
-            
+
             // Remove breadcrumbs.
             i = path.length;
-            while(i--){
+            while (i--) {
                 b = path[i];
                 label[b] = 1;
             }
@@ -334,93 +334,149 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
         // Construct a new blossom with given base, containing edge k which
         // connects a pair of S vertices. Label the new blossom as S; set its dual
         // variable to zero; relabel its T-vertices to S and add them to the queue.
-        var addBlossom = function(base, k){
-            (v, w, wt) = edges[k]
-            bb = inblossom[base]
-            bv = inblossom[v]
-            bw = inblossom[w]
+        var addBlossom = function(base, k) {
+            var i, j, len, tmp, x, y, z, m, n, nblist, nblists, bestedgeto;
+            var v = edges[k][0];
+            var w = edges[k][1];
+            var wt = edges[k][2];
+            var bb = inblossom[base];
+            var bv = inblossom[v];
+            var bw = inblossom[w];
             // Create blossom.
-            b = unusedblossoms.pop()
-            if (DEBUG) DEBUG('addBlossom(%d,%d) (v=%d w=%d) -> %d' % (base, k, v, w, b));
-            blossombase[b] = base
-            blossomparent[b] = -1
-            blossomparent[bb] = b
+            var b = unusedblossoms.pop();
+            if (DEBUG) DEBUG('addBlossom(' + base + ',' + k + ') (v=' + v + ' w=' + w + ') -> ' + b);
+            blossombase[b] = base;
+            blossomparent[b] = -1;
+            blossomparent[bb] = b;
             // Make list of sub-blossoms and their interconnecting edge endpoints.
-            blossomchilds[b] = path = [ ]
-            blossomendps[b] = endps = [ ]
+            var path = blossomchilds[b] = [];
+            var endps = blossomendps[b] = [];
             // Trace back from v to base.
-            while bv != bb:
+            while (bv !== bb) {
                 // Add bv to the new blossom.
-                blossomparent[bv] = b
-                path.push(bv)
-                endps.push(labelend[bv])
-                assert (label[bv] == 2 or
-                        (label[bv] == 1 and labelend[bv] == mate[blossombase[bv]]))
+                blossomparent[bv] = b;
+                path.push(bv);
+                endps.push(labelend[bv]);
+                assert((label[bv] === 2 || (label[bv] === 1 && labelend[bv] === mate[blossombase[bv]])));
                 // Trace one step back.
-                assert labelend[bv] >= 0
-                v = endpoint[labelend[bv]]
-                bv = inblossom[v]
+                assert(labelend[bv] >= 0);
+                v = endpoint[labelend[bv]];
+                bv = inblossom[v];
+            }
             // Reverse lists, add endpoint that connects the pair of S vertices.
-            path.push(bb)
-            path.reverse()
-            endps.reverse()
-            endps.push(2*k)
+            path.push(bb);
+            path.reverse();
+            endps.reverse();
+            endps.push(2*k);
             // Trace back from w to base.
-            while bw != bb:
+            while (bw !== bb) {
                 // Add bw to the new blossom.
-                blossomparent[bw] = b
-                path.push(bw)
-                endps.push(labelend[bw] ^ 1)
-                assert (label[bw] == 2 or
-                        (label[bw] == 1 and labelend[bw] == mate[blossombase[bw]]))
+                blossomparent[bw] = b;
+                path.push(bw);
+                endps.push(labelend[bw] ^ 1);
+                assert((label[bw] === 2 || (label[bw] === 1 && labelend[bw] === mate[blossombase[bw]])));
                 // Trace one step back.
-                assert labelend[bw] >= 0
-                w = endpoint[labelend[bw]]
-                bw = inblossom[w]
+                assert(labelend[bw] >= 0);
+                w = endpoint[labelend[bw]];
+                bw = inblossom[w];
+            }
             // Set label to S.
-            assert label[bb] == 1
-            label[b] = 1
-            labelend[b] = labelend[bb]
+            assert(label[bb] === 1);
+            label[b] = 1;
+            labelend[b] = labelend[bb];
             // Set dual variable to zero.
-            dualvar[b] = 0
+            dualvar[b] = 0;
             // Relabel vertices.
-            for v in blossomLeaves(b):
-                if label[inblossom[v]] == 2:
+            blossomLeaves(b, function(v) {
+                if (label[inblossom[v]] === 2) {
                     // This T-vertex now turns into an S-vertex because it becomes
                     // part of an S-blossom; add it to the queue.
-                    queue.push(v)
-                inblossom[v] = b
+                    queue.push(v);
+                }
+                inblossom[v] = b;
+            });
+
             // Compute blossombestedges[b].
-            bestedgeto = (2 * nvertex) * [ -1 ]
-            for bv in path:
-                if blossombestedges[bv] is null:
+
+            z = 2 * nvertex;
+            bestedgeto = new Array(z);
+            while (z--) bestedgeto[z] = -1;
+
+            len = path.length;
+            for (z = 0; z < len; ++z) {
+                bv = path[z];
+
+                if (blossombestedges[bv] === null){
                     // This subblossom does not have a list of least-slack edges;
                     // get the information from the vertices.
-                    nblists = [ [ p // 2 for p in neighbend[v] ]
-                                for v in blossomLeaves(bv) ]
-                else:
+                    blossomLeaves(bv, function(v){
+                        j = neighbend[v].length;
+                        tmp = new Array(j);
+                        while (j--) {
+                            var p = neighbend[v][j];
+                            tmp[j] = Math.floor(p/2);
+                        }
+                        nblists.push(tmp);
+                    });
+                }
+                else {
                     // Walk this subblossom's least-slack edges.
-                    nblists = [ blossombestedges[bv] ]
-                for nblist in nblists:
-                    for k in nblist:
-                        (i, j, wt) = edges[k]
-                        if inblossom[j] == b:
-                            i, j = j, i
-                        bj = inblossom[j]
-                        if (bj != b and label[bj] == 1 and
-                            (bestedgeto[bj] == -1 or
-                             slack(k) < slack(bestedgeto[bj]))):
-                            bestedgeto[bj] = k
+                    nblists = [ blossombestedges[bv] ];
+                }
+
+                for (x = 0, m = nblists.length; x < m; ++x) {
+                    nblist = nblists[x];
+
+                    for (y = 0, n = nblist.length; y < n; ++y) {
+                        k = nblist[y];
+
+                        i = edges[k][0];
+                        j = edges[k][1];
+                        wt = edges[k][2];
+
+                        if (inblossom[j] === b) {
+                            tmp = i;
+                            i = j;
+                            j = i;
+                        }
+
+                        bj = inblossom[j];
+
+                        if (bj !== b && label[bj] === 1 &&
+                            (bestedgeto[bj] === -1 || slack(k) < slack(bestedgeto[bj]))) {
+                            bestedgeto[bj] = k;
+                        }
+                    }
+                }
                 // Forget about least-slack edges of the subblossom.
-                blossombestedges[bv] = null
-                bestedge[bv] = -1
-            blossombestedges[b] = [ k for k in bestedgeto if k != -1 ]
+                blossombestedges[bv] = null;
+                bestedge[bv] = -1;
+            }
+
+            
+            blossombestedges[b] = [];
+            len = bestedgeto.length;
+            for (i = 0; i < len; ++i) {
+                k = bestedgeto[i];
+                if (k !== -1) blossombestedges[b].push(k);
+            }
+
+
             // Select bestedge[b].
-            bestedge[b] = -1
-            for k in blossombestedges[b]:
-                if bestedge[b] == -1 or slack(k) < slack(bestedge[b]):
-                    bestedge[b] = k
-            if (DEBUG) DEBUG('blossomchilds[%d]=' % b + repr(blossomchilds[b]));
+           
+            len = blossombestedges[b].length;
+            if(len > 0) {
+                bestedge[b] = blossombestedges[b][0];
+                for (i = 1; i < len; ++i) {
+                    k = blossombestedges[b][i];
+                    if (slack(k) < slack(bestedge[b])) {
+                        bestedge[b] = k;
+                    }
+                }
+            }
+            else bestedge[b] = -1;
+
+            if (DEBUG) DEBUG('blossomchilds[' + b + blossomchilds[b] + ']=');
         };
 
         // Expand the given top-level blossom.
