@@ -638,7 +638,7 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
             if (DEBUG) DEBUG('augmentBlossom(' + b + ',' + v + ')');
             // Bubble up through the blossom tree from vertex v to an immediate
             // sub-blossom of b.
-            var i, j, t, jstep, endptrick;
+            var i, j, t, jstep, endptrick, stop, len;
             t = v;
             while (blossomparent[t] !== b)
                 t = blossomparent[t];
@@ -647,19 +647,21 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
                 augmentBlossom(t, v);
             // Decide in which direction we will go round the blossom.
             i = j = blossomchilds[b].indexOf(t);
+            len = blossomchilds[b].length;
             if (i & 1) {
-                // Start index is odd; go forward and wrap.
-                j -= blossomchilds[b].length;
+                // Start index is odd; go forward.
                 jstep = 1;
                 endptrick = 0;
+                stop = len;
             }
             else {
                 // Start index is even; go backward.
                 jstep = -1;
                 endptrick = 1;
+                stop = 0;
             }
             // Move along the blossom until we get to the base.
-            while (j !== 0) {
+            while (j !== stop) {
                 // Step to the next sub-blossom and augment it recursively.
                 j += jstep;
                 t = blossomchilds[b][j];
@@ -668,7 +670,7 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
                     augmentBlossom(t, endpoint[p]);
                 // Step to the next sub-blossom and augment it recursively.
                 j += jstep;
-                t = blossomchilds[b][j];
+                t = blossomchilds[b][j % len];
                 if (t >= nvertex)
                     augmentBlossom(t, endpoint[p ^ 1]);
                 // Match the edge connecting those sub-blossoms.
@@ -787,7 +789,8 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
             for (b = nvertex; b < 2 * nvertex; ++b) {
                 if (blossombase[b] >= 0 && dualvar[b] > 0) {
                     assert(blossomendps[b].length % 2 === 1);
-                    for (p = 1; p < blossomendps[b].length; p += 2) {
+                    for (i = 1; i < blossomendps[b].length; i += 2) {
+                        p = blossomendps[b][i];
                         assert(mate[endpoint[p]] === p ^ 1);
                         assert(mate[endpoint[p ^ 1]] === p);
                     }
