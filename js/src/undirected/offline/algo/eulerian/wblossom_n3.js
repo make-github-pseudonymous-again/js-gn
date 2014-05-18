@@ -587,7 +587,7 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
             unusedblossoms.push(b);
         };
 
-        var rotate = function(a, n){
+        var rotate = function (a, n) {
             var head = a.splice(0, n);
             for (var i = 0; i < n; ++i) {
                 a.push(head[i]);
@@ -648,44 +648,56 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
         // Swap matched/unmatched edges over an alternating path between two
         // single vertices. The augmenting path runs through edge k, which
         // connects a pair of S vertices.
-        var augmentMatching = function(k){
-            (v, w, wt) = edges[k]
-            if (DEBUG) DEBUG('augmentMatching(%d) (v=%d w=%d)' % (k, v, w));
-            if (DEBUG) DEBUG('PAIR %d %d (k=%d)' % (v, w, k));
-            for (s, p) in ((v, 2*k+1), (w, 2*k)):
+        var augmentMatching = function(k) {
+
+            var bs, t, bt, j;
+
+            var v = edges[k][0];
+            var w = edges[k][1];
+            var wt = edges[k][2];
+
+            if (DEBUG) DEBUG('augmentMatching(' + k + ') (v=' + v + ' w=' + m + ')');
+            if (DEBUG) DEBUG('PAIR ' + v + ' ' + w + ' (k=' + k + ')');
+
+            [[v, 2 * k + 1], [w, 2 * k]].forEach(function(e){
+                var s = e[0];
+                var p = e[1];
                 // Match vertex s to remote endpoint p. Then trace back from s
                 // until we find a single vertex, swapping matched and unmatched
                 // edges as we go.
-                while 1:
-                    bs = inblossom[s]
-                    assert(label[bs] === 1
-                    assert(labelend[bs] === mate[blossombase[bs]]
+                while (true) {
+                    bs = inblossom[s];
+                    assert(label[bs] === 1);
+                    assert(labelend[bs] === mate[blossombase[bs]]);
                     // Augment through the S-blossom from s to base.
-                    if bs >= nvertex:
-                        augmentBlossom(bs, s)
+                    if (bs >= nvertex)
+                        augmentBlossom(bs, s);
                     // Update mate[s]
-                    mate[s] = p
+                    mate[s] = p;
                     // Trace one step back.
-                    if labelend[bs] === -1:
+                    if (labelend[bs] === -1) {
                         // Reached single vertex; stop.
-                        break
-                    t = endpoint[labelend[bs]]
-                    bt = inblossom[t]
-                    assert(label[bt] === 2
+                        break;
+                    }
+                    t = endpoint[labelend[bs]];
+                    bt = inblossom[t];
+                    assert(label[bt] === 2);
                     // Trace one step back.
-                    assert(labelend[bt] >= 0
-                    s = endpoint[labelend[bt]]
-                    j = endpoint[labelend[bt] ^ 1]
+                    assert(labelend[bt] >= 0);
+                    s = endpoint[labelend[bt]];
+                    j = endpoint[labelend[bt] ^ 1];
                     // Augment through the T-blossom from j to base.
-                    assert(blossombase[bt] === t
-                    if bt >= nvertex:
-                        augmentBlossom(bt, j)
+                    assert(blossombase[bt] === t);
+                    if (bt >= nvertex)
+                        augmentBlossom(bt, j);
                     // Update mate[j]
-                    mate[j] = labelend[bt]
+                    mate[j] = labelend[bt];
                     // Keep the opposite endpoint;
                     // it will be assigned to mate[s] in the next step.
-                    p = labelend[bt] ^ 1
-                    if (DEBUG) DEBUG('PAIR %d %d (k=%d)' % (s, t, p//2));
+                    p = labelend[bt] ^ 1;
+                    if (DEBUG) DEBUG('PAIR ' + s + ' ' + t + ' (k=' + Math.floor(p/2) + ')');
+                }
+            });
         };
 
         // Verify that the optimum solution has been reached.
