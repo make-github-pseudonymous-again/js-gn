@@ -1,6 +1,6 @@
 {
   "name": "gn",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "gn (graphs and networks) algorithm / adt templates for JavaScript",
   "main": "js/index.js",
   "dependencies": {
