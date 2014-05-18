@@ -1,4 +1,5 @@
 // Adapted from http://jorisvr.nl/maximummatching.html
+// All credit for the implementation goes to Joris van Rantwijk [http://jorisvr.nl].
 
 // ** Original introduction below **
 
@@ -55,8 +56,8 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
          * one edge between any two vertices; no vertex has an edge to itthis.
          * Vertices are identified by consecutive, non-negative integers.
          *
-         * Return a list "mate", such that mate[i] == j if vertex i is
-         * matched to vertex j, and mate[i] == -1 if vertex i is not matched.
+         * Return a list "mate", such that mate[i] === j if vertex i is
+         * matched to vertex j, and mate[i] === -1 if vertex i is not matched.
          *
          * This function takes time O(n ** 3){
          */
@@ -141,7 +142,7 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
         // If b is a labeled top-level blossom,
         // labelend[b] is the remote endpoint of the edge through which b obtained
         // its label, or -1 if b's base vertex is single.
-        // If v is a vertex inside a T-blossom and label[v] == 2,
+        // If v is a vertex inside a T-blossom and label[v] === 2,
         // labelend[v] is the remote endpoint of the edge through which v is
         // reachable from outside the blossom.
         i = 2 * nvertex;
@@ -151,7 +152,7 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
         // If v is a vertex,
         // inblossom[v] is the top-level blossom to which v belongs.
         // If v is a top-level vertex, v is itthis a blossom (a trivial blossom)
-        // and inblossom[v] == v.
+        // and inblossom[v] === v.
         // Initially all vertices are top-level trivial blossoms.
         i = nvertex;
         var inblossom = new Array(i);
@@ -248,8 +249,12 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
                 len = blossomchilds[b].length;
                 for(i = 0; i < len; ++i){
                     t = blossomchilds[b][i];
-                    if (t < nvertex) fn(t);
-                    else blossomLeaves(t, fn);
+                    if (t < nvertex) {
+                        if (fn(t)) return true;
+                    }
+                    else {
+                        if (blossomLeaves(t, fn)) return true;
+                    }
                 }
             }
         };
@@ -480,90 +485,105 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
         };
 
         // Expand the given top-level blossom.
-        var expandBlossom = function(b, endstage){
-            if (DEBUG) DEBUG('expandBlossom(%d,%d) %s' % (b, endstage, repr(blossomchilds[b])));
+        var expandBlossom = function(b, endstage) {
+            if (DEBUG) DEBUG('expandBlossom(' + b + ',' + endstage + ') ' + blossomchilds[b]);
             // Convert sub-blossoms into top-level blossoms.
-            for s in blossomchilds[b]:
-                blossomparent[s] = -1
-                if s < nvertex:
-                    inblossom[s] = s
-                elif endstage and dualvar[s] == 0:
+            var i, j, len, s, p, entrychild, jstep, endptrick, bv;
+
+            for (i = 0; i < blossomchilds[b].length; ++i) {
+                s = blossomchilds[b][i];
+
+                blossomparent[s] = -1;
+                if (s < nvertex) inblossom[s] = s;
+                else if (endstage && dualvar[s] === 0) {
                     // Recursively expand this sub-blossom.
-                    expandBlossom(s, endstage)
-                else:
-                    for v in blossomLeaves(s):
-                        inblossom[v] = s
+                    expandBlossom(s, endstage);
+                }
+                else {
+                    blossomLeaves(s, function(v) {
+                        inblossom[v] = s;
+                    });
+                }
+            }
             // If we expand a T-blossom during a stage, its sub-blossoms must be
             // relabeled.
-            if (not endstage) and label[b] == 2:
+            if (!endstage && label[b] === 2) {
                 // Start at the sub-blossom through which the expanding
                 // blossom obtained its label, and relabel sub-blossoms untili
                 // we reach the base.
                 // Figure out through which sub-blossom the expanding blossom
                 // obtained its label initially.
-                assert labelend[b] >= 0
-                entrychild = inblossom[endpoint[labelend[b] ^ 1]]
+                assert(labelend[b] >= 0);
+                entrychild = inblossom[endpoint[labelend[b] ^ 1]];
                 // Decide in which direction we will go round the blossom.
-                j = blossomchilds[b].index(entrychild)
-                if j & 1:
+                j = blossomchilds[b].indexOf(entrychild);
+                if (j & 1) {
                     // Start index is odd; go forward and wrap.
-                    j -= len(blossomchilds[b])
-                    jstep = 1
-                    endptrick = 0
-                else:
+                    j -= blossomchilds[b].length;
+                    jstep = 1;
+                    endptrick = 0;
+                }
+                else {
                     // Start index is even; go backward.
-                    jstep = -1
-                    endptrick = 1
+                    jstep = -1;
+                    endptrick = 1;
+                }
                 // Move along the blossom until we get to the base.
-                p = labelend[b]
-                while j != 0:
+                p = labelend[b];
+                while (j !== 0) {
                     // Relabel the T-sub-blossom.
-                    label[endpoint[p ^ 1]] = 0
-                    label[endpoint[blossomendps[b][j-endptrick]^endptrick^1]] = 0
-                    assignLabel(endpoint[p ^ 1], 2, p)
+                    label[endpoint[p ^ 1]] = 0;
+                    label[endpoint[blossomendps[b][j-endptrick]^endptrick^1]] = 0;
+                    assignLabel(endpoint[p ^ 1], 2, p);
                     // Step to the next S-sub-blossom and note its forward endpoint.
-                    allowedge[blossomendps[b][j-endptrick]//2] = true
-                    j += jstep
-                    p = blossomendps[b][j-endptrick] ^ endptrick
+                    allowedge[Math.floor(blossomendps[b][j-endptrick]/2)] = true;
+                    j += jstep;
+                    p = blossomendps[b][j-endptrick] ^ endptrick;
                     // Step to the next T-sub-blossom.
-                    allowedge[p//2] = true
-                    j += jstep
+                    allowedge[Math.floor(p/2)] = true;
+                    j += jstep;
+                }
                 // Relabel the base T-sub-blossom WITHOUT stepping through to
                 // its mate (so don't call assignLabel).
-                bv = blossomchilds[b][j]
-                label[endpoint[p ^ 1]] = label[bv] = 2
-                labelend[endpoint[p ^ 1]] = labelend[bv] = p
-                bestedge[bv] = -1
+                bv = blossomchilds[b][j];
+                label[endpoint[p ^ 1]] = label[bv] = 2;
+                labelend[endpoint[p ^ 1]] = labelend[bv] = p;
+                bestedge[bv] = -1;
                 // Continue along the blossom until we get back to entrychild.
-                j += jstep
-                while blossomchilds[b][j] != entrychild:
+                j += jstep;
+                while (blossomchilds[b][j] !== entrychild) {
                     // Examine the vertices of the sub-blossom to see whether
                     // it is reachable from a neighbouring S-vertex outside the
                     // expanding blossom.
-                    bv = blossomchilds[b][j]
-                    if label[bv] == 1:
+                    bv = blossomchilds[b][j];
+                    if (label[bv] === 1) {
                         // This sub-blossom just got label S through one of its
                         // neighbours; leave it.
-                        j += jstep
-                        continue
-                    for v in blossomLeaves(bv):
-                        if label[v] != 0:
-                            break
-                    // If the sub-blossom contains a reachable vertex, assign
-                    // label T to the sub-blossom.
-                    if label[v] != 0:
-                        assert label[v] == 2
-                        assert inblossom[v] == bv
-                        label[v] = 0
-                        label[endpoint[mate[blossombase[bv]]]] = 0
-                        assignLabel(v, 2, labelend[v])
-                    j += jstep
+                        j += jstep;
+                        continue;
+                    }
+                    blossomLeaves(bv, function(v){
+                        if (label[v] !== 0) {
+                            // If the sub-blossom contains a reachable vertex, assign
+                            // label T to the sub-blossom.
+                            assert(label[v] === 2);
+                            assert(inblossom[v] === bv);
+                            label[v] = 0;
+                            label[endpoint[mate[blossombase[bv]]]] = 0;
+                            assignLabel(v, 2, labelend[v]);
+                            return true;
+                        }
+                    });
+
+                    j += jstep;
+                }
+            }
             // Recycle the blossom number.
-            label[b] = labelend[b] = -1
-            blossomchilds[b] = blossomendps[b] = null
-            blossombase[b] = -1
-            blossombestedges[b] = null
-            bestedge[b] = -1
+            label[b] = labelend[b] = -1;
+            blossomchilds[b] = blossomendps[b] = null;
+            blossombase[b] = -1;
+            blossombestedges[b] = null;
+            bestedge[b] = -1;
             unusedblossoms.push(b);
         };
 
@@ -574,7 +594,7 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
             // Bubble up through the blossom tree from vertex v to an immediate
             // sub-blossom of b.
             t = v
-            while blossomparent[t] != b:
+            while blossomparent[t] !== b:
                 t = blossomparent[t]
             // Recursively deal with the first sub-blossom.
             if t >= nvertex:
@@ -591,7 +611,7 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
                 jstep = -1
                 endptrick = 1
             // Move along the blossom until we get to the base.
-            while j != 0:
+            while j !== 0:
                 // Step to the next sub-blossom and augment it recursively.
                 j += jstep
                 t = blossomchilds[b][j]
@@ -627,26 +647,26 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
                 // edges as we go.
                 while 1:
                     bs = inblossom[s]
-                    assert label[bs] == 1
-                    assert labelend[bs] == mate[blossombase[bs]]
+                    assert(label[bs] === 1
+                    assert(labelend[bs] === mate[blossombase[bs]]
                     // Augment through the S-blossom from s to base.
                     if bs >= nvertex:
                         augmentBlossom(bs, s)
                     // Update mate[s]
                     mate[s] = p
                     // Trace one step back.
-                    if labelend[bs] == -1:
+                    if labelend[bs] === -1:
                         // Reached single vertex; stop.
                         break
                     t = endpoint[labelend[bs]]
                     bt = inblossom[t]
-                    assert label[bt] == 2
+                    assert(label[bt] === 2
                     // Trace one step back.
-                    assert labelend[bt] >= 0
+                    assert(labelend[bt] >= 0
                     s = endpoint[labelend[bt]]
                     j = endpoint[labelend[bt] ^ 1]
                     // Augment through the T-blossom from j to base.
-                    assert blossombase[bt] == t
+                    assert(blossombase[bt] === t
                     if bt >= nvertex:
                         augmentBlossom(bt, j)
                     // Update mate[j]
@@ -666,8 +686,8 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
             else:
                 vdualoffset = 0
             // 0. all dual variables are non-negative
-            assert min(dualvar[:nvertex]) + vdualoffset >= 0
-            assert min(dualvar[nvertex:]) >= 0
+            assert(min(dualvar[:nvertex]) + vdualoffset >= 0
+            assert(min(dualvar[nvertex:]) >= 0
             // 0. all edges have non-negative slack and
             // 1. all matched edges have zero slack;
             for k in range(nedge):
@@ -675,48 +695,48 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
                 s = dualvar[i] + dualvar[j] - 2 * wt
                 iblossoms = [ i ]
                 jblossoms = [ j ]
-                while blossomparent[iblossoms[-1]] != -1:
+                while blossomparent[iblossoms[-1]] !== -1:
                     iblossoms.push(blossomparent[iblossoms[-1]])
-                while blossomparent[jblossoms[-1]] != -1:
+                while blossomparent[jblossoms[-1]] !== -1:
                     jblossoms.push(blossomparent[jblossoms[-1]])
                 iblossoms.reverse()
                 jblossoms.reverse()
                 for (bi, bj) in zip(iblossoms, jblossoms):
-                    if bi != bj:
+                    if bi !== bj:
                         break
                     s += 2 * dualvar[bi]
-                assert s >= 0
-                if mate[i] // 2 == k or mate[j] // 2 == k:
-                    assert mate[i] // 2 == k and mate[j] // 2 == k
-                    assert s == 0
+                assert(s >= 0
+                if mate[i] // 2 === k or mate[j] // 2 === k:
+                    assert(mate[i] // 2 === k and mate[j] // 2 === k
+                    assert(s === 0
             // 2. all single vertices have zero dual value;
             for v in range(nvertex):
-                assert mate[v] >= 0 or dualvar[v] + vdualoffset == 0
+                assert(mate[v] >= 0 or dualvar[v] + vdualoffset === 0
             // 3. all blossoms with positive dual value are full.
             for b in range(nvertex, 2*nvertex):
                 if blossombase[b] >= 0 and dualvar[b] > 0:
-                    assert len(blossomendps[b]) % 2 == 1
+                    assert(len(blossomendps[b]) % 2 === 1
                     for p in blossomendps[b][1::2]:
-                        assert mate[endpoint[p]] == p ^ 1
-                        assert mate[endpoint[p ^ 1]] == p
+                        assert(mate[endpoint[p]] === p ^ 1
+                        assert(mate[endpoint[p ^ 1]] === p
             // Ok.
         };
 
         // Check optimized delta2 against a trivial computation.
         var checkDelta2 = function(){
             for v in range(nvertex):
-                if label[inblossom[v]] == 0:
+                if label[inblossom[v]] === 0:
                     bd = null
                     bk = -1
                     for p in neighbend[v]:
                         k = p // 2
                         w = endpoint[p]
-                        if label[inblossom[w]] == 1:
+                        if label[inblossom[w]] === 1:
                             d = slack(k)
-                            if bk == -1 or d < bd:
+                            if bk === -1 or d < bd:
                                 bk = k
                                 bd = d
-                    if DEBUG and (bestedge[v] != -1 or bk != -1) and (bestedge[v] == -1 or bd != slack(bestedge[v])):
+                    if DEBUG and (bestedge[v] !== -1 or bk !== -1) and (bestedge[v] === -1 or bd !== slack(bestedge[v])):
                         DEBUG('v=' + str(v) + ' bk=' + str(bk) + ' bd=' + str(bd) + ' bestedge=' + str(bestedge[v]) + ' slack=' + str(slack(bestedge[v])))
                     assert((bk === -1 && bestedge[v] === -1) || (bestedge[v] !== -1 && bd === slack(bestedge[v])));
         };
@@ -728,25 +748,25 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
             tbk = -1
             tbd = null
             for b in range(2 * nvertex):
-                if blossomparent[b] == -1 and label[b] == 1:
+                if blossomparent[b] === -1 and label[b] === 1:
                     for v in blossomLeaves(b):
                         for p in neighbend[v]:
                             k = p // 2
                             w = endpoint[p]
-                            if inblossom[w] != b and label[inblossom[w]] == 1:
+                            if inblossom[w] !== b and label[inblossom[w]] === 1:
                                 d = slack(k)
-                                if bk == -1 or d < bd:
+                                if bk === -1 or d < bd:
                                     bk = k
                                     bd = d
-                    if bestedge[b] != -1:
+                    if bestedge[b] !== -1:
                         (i, j, wt) = edges[bestedge[b]]
-                        assert inblossom[i] == b or inblossom[j] == b
-                        assert inblossom[i] != b or inblossom[j] != b
-                        assert label[inblossom[i]] == 1 and label[inblossom[j]] == 1
-                        if tbk == -1 or slack(bestedge[b]) < tbd:
+                        assert(inblossom[i] === b or inblossom[j] === b
+                        assert(inblossom[i] !== b or inblossom[j] !== b
+                        assert(label[inblossom[i]] === 1 and label[inblossom[j]] === 1
+                        if tbk === -1 or slack(bestedge[b]) < tbd:
                             tbk = bestedge[b]
                             tbd = slack(bestedge[b])
-            if DEBUG and bd != tbd:
+            if DEBUG and bd !== tbd:
                 DEBUG('bk=%d tbk=%d bd=%s tbd=%s' % (bk, tbk, repr(bd), repr(tbd)))
             assert(bd === tbd);
         };
@@ -775,7 +795,7 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
      
             // Label single blossoms/vertices with S and put them in the queue.
             for v in range(nvertex):
-                if mate[v] == -1 and label[inblossom[v]] == 0:
+                if mate[v] === -1 and label[inblossom[v]] === 0:
                     assignLabel(v, 1, -1)
 
             // Loop until we succeed in augmenting the matching.
@@ -797,14 +817,14 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
                     // Take an S vertex from the queue.
                     v = queue.pop()
                     if (DEBUG) DEBUG('POP v=%d' % v);
-                    assert label[inblossom[v]] == 1
+                    assert(label[inblossom[v]] === 1
 
                     // Scan its neighbours:
                     for p in neighbend[v]:
                         k = p // 2
                         w = endpoint[p]
                         // w is a neighbour to v
-                        if inblossom[v] == inblossom[w]:
+                        if inblossom[v] === inblossom[w]:
                             // this edge is internal to a blossom; ignore it
                             continue
                         if not allowedge[k]:
@@ -813,11 +833,11 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
                                 // edge k has zero slack => it is allowable
                                 allowedge[k] = true
                         if allowedge[k]:
-                            if label[inblossom[w]] == 0:
+                            if label[inblossom[w]] === 0:
                                 // (C1) w is a free vertex;
                                 // label w with T and label its mate with S (R12).
                                 assignLabel(w, 2, p ^ 1)
-                            elif label[inblossom[w]] == 1:
+                            else if label[inblossom[w]] === 1:
                                 // (C2) w is an S-vertex (not in the same blossom);
                                 // follow back-links to discover either an
                                 // augmenting path or a new blossom.
@@ -832,25 +852,25 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
                                     augmentMatching(k)
                                     augmented = 1
                                     break
-                            elif label[w] == 0:
+                            else if label[w] === 0:
                                 // w is inside a T-blossom, but w itthis has not
                                 // yet been reached from outside the blossom;
                                 // mark it as reached (we need this to relabel
                                 // during T-blossom expansion).
-                                assert label[inblossom[w]] == 2
+                                assert(label[inblossom[w]] === 2
                                 label[w] = 2
                                 labelend[w] = p ^ 1
-                        elif label[inblossom[w]] == 1:
+                        else if label[inblossom[w]] === 1:
                             // keep track of the least-slack non-allowable edge to
                             // a different S-blossom.
                             b = inblossom[v]
-                            if bestedge[b] == -1 or kslack < slack(bestedge[b]):
+                            if bestedge[b] === -1 or kslack < slack(bestedge[b]):
                                 bestedge[b] = k
-                        elif label[w] == 0:
+                        else if label[w] === 0:
                             // w is a free vertex (or an unreached vertex inside
                             // a T-blossom) but we can not reach it yet;
                             // keep track of the least-slack edge that reaches w.
-                            if bestedge[w] == -1 or kslack < slack(bestedge[w]):
+                            if bestedge[w] === -1 or kslack < slack(bestedge[w]):
                                 bestedge[w] = k
 
                 if augmented:
@@ -876,9 +896,9 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
                 // Compute delta2: the minimum slack on any edge between
                 // an S-vertex and a free vertex.
                 for v in range(nvertex):
-                    if label[inblossom[v]] == 0 and bestedge[v] != -1:
+                    if label[inblossom[v]] === 0 and bestedge[v] !== -1:
                         d = slack(bestedge[v])
-                        if deltatype == -1 or d < delta:
+                        if deltatype === -1 or d < delta:
                             delta = d
                             deltatype = 2
                             deltaedge = bestedge[v]
@@ -886,73 +906,73 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
                 // Compute delta3: half the minimum slack on any edge between
                 // a pair of S-blossoms.
                 for b in range(2 * nvertex):
-                    if ( blossomparent[b] == -1 and label[b] == 1 and
-                         bestedge[b] != -1 ):
+                    if ( blossomparent[b] === -1 and label[b] === 1 and
+                         bestedge[b] !== -1 ):
                         kslack = slack(bestedge[b])
                         if isinstance(kslack, integer_types):
-                            assert (kslack % 2) == 0
+                            assert((kslack % 2) === 0
                             d = kslack // 2
                         else:
                             d = kslack / 2
-                        if deltatype == -1 or d < delta:
+                        if deltatype === -1 or d < delta:
                             delta = d
                             deltatype = 3
                             deltaedge = bestedge[b]
 
                 // Compute delta4: minimum z variable of any T-blossom.
                 for b in range(nvertex, 2*nvertex):
-                    if ( blossombase[b] >= 0 and blossomparent[b] == -1 and
-                         label[b] == 2 and
-                         (deltatype == -1 or dualvar[b] < delta) ):
+                    if ( blossombase[b] >= 0 and blossomparent[b] === -1 and
+                         label[b] === 2 and
+                         (deltatype === -1 or dualvar[b] < delta) ):
                         delta = dualvar[b]
                         deltatype = 4
                         deltablossom = b
 
-                if deltatype == -1:
+                if deltatype === -1:
                     // No further improvement possible; max-cardinality optimum
                     // reached. Do a final delta update to make the optimum
                     // verifyable.
-                    assert maxcardinality
+                    assert(maxcardinality
                     deltatype = 1
                     delta = max(0, min(dualvar[:nvertex]))
 
                 // Update dual variables according to delta.
                 for v in range(nvertex):
-                    if label[inblossom[v]] == 1:
+                    if label[inblossom[v]] === 1:
                         // S-vertex: 2*u = 2*u - 2*delta
                         dualvar[v] -= delta
-                    elif label[inblossom[v]] == 2:
+                    else if label[inblossom[v]] === 2:
                         // T-vertex: 2*u = 2*u + 2*delta
                         dualvar[v] += delta
                 for b in range(nvertex, 2*nvertex):
-                    if blossombase[b] >= 0 and blossomparent[b] == -1:
-                        if label[b] == 1:
+                    if blossombase[b] >= 0 and blossomparent[b] === -1:
+                        if label[b] === 1:
                             // top-level S-blossom: z = z + 2*delta
                             dualvar[b] += delta
-                        elif label[b] == 2:
+                        else if label[b] === 2:
                             // top-level T-blossom: z = z - 2*delta
                             dualvar[b] -= delta
 
                 // Take action at the point where minimum delta occurred.
                 if (DEBUG) DEBUG('delta%d=%f' % (deltatype, delta));
-                if deltatype == 1: 
+                if deltatype === 1: 
                     // No further improvement possible; optimum reached.
                     break
-                elif deltatype == 2:
+                else if deltatype === 2:
                     // Use the least-slack edge to continue the search.
                     allowedge[deltaedge] = true
                     (i, j, wt) = edges[deltaedge]
-                    if label[inblossom[i]] == 0:
+                    if label[inblossom[i]] === 0:
                         i, j = j, i
-                    assert label[inblossom[i]] == 1
+                    assert(label[inblossom[i]] === 1
                     queue.push(i)
-                elif deltatype == 3:
+                else if deltatype === 3:
                     // Use the least-slack edge to continue the search.
                     allowedge[deltaedge] = true
                     (i, j, wt) = edges[deltaedge]
-                    assert label[inblossom[i]] == 1
+                    assert(label[inblossom[i]] === 1
                     queue.push(i)
-                elif deltatype == 4:
+                else if deltatype === 4:
                     // Expand the least-z blossom.
                     expandBlossom(deltablossom, false)
 
@@ -964,8 +984,8 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
 
             // End of a stage; expand all S-blossoms which have dualvar = 0.
             for b in range(nvertex, 2*nvertex):
-                if ( blossomparent[b] == -1 and blossombase[b] >= 0 and
-                     label[b] == 1 and dualvar[b] == 0 ):
+                if ( blossomparent[b] === -1 and blossombase[b] >= 0 and
+                     label[b] === 1 and dualvar[b] === 0 ):
                     expandBlossom(b, true)
 
         // Verify that we reached the optimum solution.
@@ -977,7 +997,7 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
             if mate[v] >= 0:
                 mate[v] = endpoint[mate[v]]
         for v in range(nvertex):
-            assert mate[v] == -1 or mate[mate[v]] == v
+            assert(mate[v] === -1 or mate[mate[v]] === v
 
         return mate
 
