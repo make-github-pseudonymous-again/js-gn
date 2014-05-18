@@ -35,6 +35,7 @@ var check = function(label, n, E){
 		eventour(g, v, E.length, free, tour);
 
 		deepEqual(tour.length, E.length, 'check length');
+		deepEqual(free, gn.sqmat(2, n, 0), 'check free');
 
 
 		i = tour.length;
