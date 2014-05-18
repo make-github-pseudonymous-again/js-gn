@@ -34,10 +34,37 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
     var integer_types = [typeof 0];
 
 
-    // To keep the use of assertions
+    // Compatibility
     var assert = function (condition) {
         if (!condition) throw "Assertion failed";
     };
+
+    var min = function (a) {
+
+        // Could use
+        // return a.reduce(function(u, v){ return u < v ? u : v; });
+
+        var i = a.length;
+        var o = a[0];
+
+        while (--i) {
+            if (a[i] < o) o = a[i];
+        }
+
+        return o;
+    };
+
+    var zip = function (args, fn) {
+        var shortest = args.length === 0 ? [] : args.reduce(function(a,b){
+            return a.length < b.length ? a : b;
+        });
+
+        shortest.map(function (_, i) {
+            if (fn.apply(null, args.map(function(array){ return array[i]; }))) return;
+        });
+    };
+
+
 
 
     var maxWeightMatching = function (edges, maxcardinality) {
@@ -700,48 +727,58 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
             });
         };
 
+
         // Verify that the optimum solution has been reached.
-        var verifyOptimum = function(){
-            if maxcardinality:
+        var verifyOptimum = function() {
+            var i, j, wt, v, b, p, k, s, vdualoffset;
+            if (maxcardinality) {
                 // Vertices may have negative dual;
                 // find a constant non-negative number to add to all vertex duals.
-                vdualoffset = max(0, -min(dualvar[:nvertex]))
-            else:
-                vdualoffset = 0
+                vdualoffset = Math.max(0, -min(dualvar.slice(0, nvertex)));
+            }
+            else vdualoffset = 0;
             // 0. all dual variables are non-negative
-            assert(min(dualvar[:nvertex]) + vdualoffset >= 0
-            assert(min(dualvar[nvertex:]) >= 0
+            assert(min(dualvar.slice(0, nvertex)) + vdualoffset >= 0);
+            assert(min(dualvar.slice(nvertex)) >= 0);
             // 0. all edges have non-negative slack and
             // 1. all matched edges have zero slack;
-            for k in range(nedge):
-                (i, j, wt) = edges[k]
-                s = dualvar[i] + dualvar[j] - 2 * wt
-                iblossoms = [ i ]
-                jblossoms = [ j ]
-                while blossomparent[iblossoms[-1]] !== -1:
-                    iblossoms.push(blossomparent[iblossoms[-1]])
-                while blossomparent[jblossoms[-1]] !== -1:
-                    jblossoms.push(blossomparent[jblossoms[-1]])
-                iblossoms.reverse()
-                jblossoms.reverse()
-                for (bi, bj) in zip(iblossoms, jblossoms):
-                    if bi !== bj:
-                        break
-                    s += 2 * dualvar[bi]
-                assert(s >= 0
-                if mate[i] // 2 === k or mate[j] // 2 === k:
-                    assert(mate[i] // 2 === k and mate[j] // 2 === k
-                    assert(s === 0
+            for (k = 0; k < nedge; ++k) {
+                i = edges[k][0];
+                j = edges[k][1];
+                wt = edges[k][2];
+
+                s = dualvar[i] + dualvar[j] - 2 * wt;
+                iblossoms = [i];
+                jblossoms = [j];
+                while (blossomparent[iblossoms[iblossoms.length - 1]] !== -1)
+                    iblossoms.push(blossomparent[iblossoms[iblossoms.length - 1]]);
+                while (blossomparent[jblossoms[jblossoms.length - 1]] !== -1)
+                    jblossoms.push(blossomparent[jblossoms[jblossoms.length - 1]]);
+                iblossoms.reverse();
+                jblossoms.reverse();
+                zip([iblossoms, jblossoms], function(bi, bj){
+                    if (bi !== bj) return true;
+                    s += 2 * dualvar[bi];
+                });
+                assert(s >= 0);
+                if (Math.floor(mate[i] / 2) === k || Math.floor(mate[j] / 2) === k) {
+                    assert(Math.floor(mate[i] / 2) === k && Math.floor(mate[j] / 2) === k);
+                    assert(s === 0);
+                }
+            }
             // 2. all single vertices have zero dual value;
-            for v in range(nvertex):
-                assert(mate[v] >= 0 or dualvar[v] + vdualoffset === 0
+            for (v = 0; v < nvertex; ++v)
+                assert(mate[v] >= 0 || dualvar[v] + vdualoffset === 0);
             // 3. all blossoms with positive dual value are full.
-            for b in range(nvertex, 2*nvertex):
-                if blossombase[b] >= 0 and dualvar[b] > 0:
-                    assert(len(blossomendps[b]) % 2 === 1
-                    for p in blossomendps[b][1::2]:
-                        assert(mate[endpoint[p]] === p ^ 1
-                        assert(mate[endpoint[p ^ 1]] === p
+            for (b = nvertex; b < 2 * nvertex; ++b) {
+                if (blossombase[b] >= 0 && dualvar[b] > 0) {
+                    assert(blossomendps[b].length % 2 === 1);
+                    for (p = 1; p < blossomendps[b].length; p += 2) {
+                        assert(mate[endpoint[p]] === p ^ 1);
+                        assert(mate[endpoint[p ^ 1]] === p);
+                    }
+                }
+            }
             // Ok.
         };
 
