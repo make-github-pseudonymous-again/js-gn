@@ -453,7 +453,7 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
                 bestedge[bv] = -1;
             }
 
-            
+
             blossombestedges[b] = [];
             len = bestedgeto.length;
             for (i = 0; i < len; ++i) {
@@ -476,7 +476,7 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
             }
             else bestedge[b] = -1;
 
-            if (DEBUG) DEBUG('blossomchilds[' + b + blossomchilds[b] + ']=');
+            if (DEBUG) DEBUG('blossomchilds[' + b + ']=' + blossomchilds[b]);
         };
 
         // Expand the given top-level blossom.
