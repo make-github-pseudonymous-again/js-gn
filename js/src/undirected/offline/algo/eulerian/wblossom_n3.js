@@ -784,21 +784,27 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
 
         // Check optimized delta2 against a trivial computation.
         var checkDelta2 = function(){
-            for v in range(nvertex):
-                if label[inblossom[v]] === 0:
-                    bd = null
-                    bk = -1
-                    for p in neighbend[v]:
-                        k = p // 2
-                        w = endpoint[p]
-                        if label[inblossom[w]] === 1:
-                            d = slack(k)
-                            if bk === -1 or d < bd:
-                                bk = k
-                                bd = d
-                    if DEBUG and (bestedge[v] !== -1 or bk !== -1) and (bestedge[v] === -1 or bd !== slack(bestedge[v])):
-                        DEBUG('v=' + str(v) + ' bk=' + str(bk) + ' bd=' + str(bd) + ' bestedge=' + str(bestedge[v]) + ' slack=' + str(slack(bestedge[v])))
+            for (var v = 0; v < nvertex; ++v) {
+                if (label[inblossom[v]] === 0) {
+                    var bd = null;
+                    var bk = -1;
+                    for (var i = 0; i < neighbend[v].length; ++i) {
+                        var p = neighbend[v][i];
+                        var k = Math.floor(p / 2);
+                        var w = endpoint[p];
+                        if (label[inblossom[w]] === 1) {
+                            var d = slack(k);
+                            if (bk === -1 || d < bd) {
+                                bk = k;
+                                bd = d;
+                            }
+                        }
+                    }
+                    if (DEBUG && (bestedge[v] !== -1 || bk !== -1) && (bestedge[v] === -1 || bd !== slack(bestedge[v])))
+                        DEBUG('v=' + v + ' bk=' + bk + ' bd=' + bd + ' bestedge=' + bestedge[v] + ' slack=' + slack(bestedge[v]));
                     assert((bk === -1 && bestedge[v] === -1) || (bestedge[v] !== -1 && bd === slack(bestedge[v])));
+                }
+            }
         };
 
         // Check optimized delta3 against a trivial computation.
