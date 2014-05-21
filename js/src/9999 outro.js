@@ -1,1 +1,1 @@
-})(typeof exports === 'undefined' ? this.neat = {} : exports);
+})(typeof exports === 'undefined' ? this.gn = {} : exports);
