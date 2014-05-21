@@ -18,6 +18,8 @@ var sparse_graph_t = function(){
 
 	graph.prototype.vdel = function(i){
 
+		this.eitr(i, function(e) { this.edel(e); });
+
 		i[1][2] = i[2];
 
 		if(i[2] !== null) i[2][1] = i[1];
