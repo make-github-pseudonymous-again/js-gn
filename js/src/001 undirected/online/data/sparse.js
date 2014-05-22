@@ -18,7 +18,14 @@ var sparse_graph_t = function(){
 
 	graph.prototype.vdel = function(i){
 
-		this.eitr(i, function(e) { this.edel(e); });
+		this.eitr(i, function(e) {
+			e[2][3] = e[3];
+			if(e[3] !== null) e[3][2] = e[2];
+			e = e[4];
+			if(e === null) return;
+			e[2][3] = e[3];
+			if(e[3] !== null) e[3][2] = e[2];
+		});
 
 		i[1][2] = i[2];
 
@@ -28,12 +35,14 @@ var sparse_graph_t = function(){
 
 	graph.prototype.eadd = function(i, j, w){
 
-		i[3][3] = [j, w, i[3], i[3][3]];
+		i[3][3] = [j, w, i[3], i[3][3], null];
 		if(i[3][3][3] !== null) i[3][3][3][2] = i[3][3];
 
 		if(j !== i){
-			j[3][3] = [i, w, j[3], j[3][3]];
+			j[3][3] = [i, w, j[3], j[3][3], i[3][3]];
 			if(j[3][3][3] !== null) j[3][3][3][2] = j[3][3];
+
+			i[3][3][4] = j[3][3];
 		}
 
 		return [i[3][3], j[3][3]];
@@ -60,7 +69,7 @@ var sparse_graph_t = function(){
 
 		while(i !== null){
 
-			if(fn(i)) break;
+			if(fn.call(this, i)) break;
 
 			i = i[2];
 		}
@@ -73,7 +82,7 @@ var sparse_graph_t = function(){
 
 		while(e !== null){
 
-			if(fn(e)) break;
+			if(fn.call(this, e)) break;
 
 			e = e[3];
 		}

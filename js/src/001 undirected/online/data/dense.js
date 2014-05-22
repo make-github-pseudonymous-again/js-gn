@@ -66,7 +66,7 @@ var dense_graph_t = function(){
 
 		for(var i = 0, len = this.ad.length; i < len; ++i){
 			
-			if(fn(this.ad[i])) break;
+			if(fn.call(this, this.ad[i])) break;
 
 		}
 
@@ -79,7 +79,7 @@ var dense_graph_t = function(){
 
 			if(this.pt[i][j][0] === null) continue;
 
-			if(fn(this.pt[i][j])) break;
+			if(fn.call(this, this.pt[i][j])) break;
 
 		}
 
