@@ -41,6 +41,7 @@ var eventour_t = function(){
 			j = 0;
 			while(j === 0){
 				++i;
+				if(V[i] === undefined) return;
 				j = tour.length;
 				while(--j){
 					if(tour[j] === V[i][0]) break;
