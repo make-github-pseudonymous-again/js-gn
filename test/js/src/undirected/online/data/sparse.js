@@ -1,5 +1,6 @@
 
 
+
 test('sparse', function(assert){
 	var Graph = gn.sparse_graph_t();
 
@@ -27,9 +28,12 @@ test('sparse', function(assert){
 	e[4] = [];
 	e[4][0] = g.eadd(v[4], v[7], 5);
 
-	var k = v.length;
-	g.vitr(function(j){deepEqual(j, v[--k], 'vitr ' + k);});
-	deepEqual(k, 0, 'check vertex count before del');
+	var k = 0;
+	g.vitr(function(j){
+		deepEqual(j, v[k], 'vitr ' + k);
+		++k;
+	});
+	deepEqual(k, v.length, 'check vertex count before del');
 
 	var r = [0, 1, 4];
 
@@ -61,8 +65,11 @@ test('sparse', function(assert){
 
 	g.vdel(v.splice(3, 1)[0]);
 
-	k = v.length;
-	g.vitr(function(j){deepEqual(j, v[--k], 'vitr ' + k);});
+	k = 0;
+	g.vitr(function(j){
+		deepEqual(j, v[k], 'vitr ' + k);
+		++k;
+	});
 
 
 	k = -1;
@@ -106,6 +113,7 @@ test('sparse', function(assert){
 
 
 
+
 test('sparse 2', function(assert){
 	var Graph = gn.sparse_graph_t();
 
@@ -133,9 +141,12 @@ test('sparse 2', function(assert){
 	e[4] = [];
 	e[4][0] = g.eadd(v[4], v[7], 5);
 
-	var k = v.length;
-	g.vitr(function(j){deepEqual(j, v[--k], 'vitr ' + k);});
-	deepEqual(k, 0, 'check vertex count before del');
+	var k = 0;
+	g.vitr(function(j){
+		deepEqual(j, v[k], 'vitr ' + k);
+		++k;
+	});
+	deepEqual(k, v.length, 'check vertex count before del');
 
 	var r = [0, 1, 4];
 
@@ -167,8 +178,11 @@ test('sparse 2', function(assert){
 
 	g.vdel(v.splice(3, 1)[0]);
 
-	k = v.length;
-	g.vitr(function(j){deepEqual(j, v[--k], 'vitr ' + k);});
+	k = 0;
+	g.vitr(function(j){
+		deepEqual(j, v[k], 'vitr ' + k);
+		++k;
+	});
 
 
 	k = -1;
@@ -198,3 +212,4 @@ test('sparse 2', function(assert){
 	});
 
 });
+
