@@ -1,1 +1,3 @@
 (function(exports){
+
+	'use strict';
