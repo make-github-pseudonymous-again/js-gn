@@ -26,8 +26,12 @@ test('dense', function(assert){
 	e[4] = [];
 	e[4][0] = g.eadd(v[4], v[7], 5);
 
-	var k = -1;
-	g.vitr(function(j){deepEqual(j, v[++k], 'vitr ' + k);});
+	var k = 0;
+	g.vitr(function(j){
+		deepEqual(j, v[k], 'vitr ' + k);
+		++k;
+	});
+	deepEqual(k, v.length, 'check vertex count before del');
 
 
 	var r = [0, 1, 4];
@@ -56,8 +60,11 @@ test('dense', function(assert){
 
 	g.vdel(v.splice(3, 1)[0]);
 
-	k = -1;
-	g.vitr(function(j){deepEqual(j, v[++k], 'vitr ' + k);});
+	k = 0;
+	g.vitr(function(j){
+		deepEqual(j, v[k], 'vitr ' + k);
+		++k;
+	});
 
 
 	k = -1;
