@@ -138,16 +138,18 @@ var sparse_graph_t = function(){
 
 	};
 
-	graph.prototype.eitr = function(i, fn){
+	graph.prototype.eitr = function(i, fn, e){
 
-		var e = i[3][3];
+		if(e === undefined) e = i[3][3];
 
 		while(e !== null){
 
-			if(fn.call(this, e)) break;
+			if(fn.call(this, e)) return e[3];
 
 			e = e[3];
 		}
+
+		return null;
 
 	};
 
