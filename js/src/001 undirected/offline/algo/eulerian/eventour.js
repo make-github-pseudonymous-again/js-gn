@@ -2,50 +2,53 @@
 
 var eventour_t = function(){
 
-	var eventour = function(g, V, n, free, tour){
-		if(n === 0) return;
-		
-		var u, i = 0, j = 0, t = -1;
+	/**
+	 * @param graph g
+	 * @param vertices V
+	 * @param index i node from where to start the search
+	 * @param square matrix free showing free edges
+	 * @param flag list done to label saturated edges
+	 * @param list tour the output tour 
+	 */
 
-		while(t !== i){
-			t = i;
-			g.eitr(V[i], function(){ --i; return true;});
-			++i;
-		}
+	var eventour = function(g, V, i, free, done, tour){
+		
+		var u, j, z = [i, 0];
+
+		var r = [];
 		
 		while(true){
+
+			while (done[z[0]]) {
+				if (!r.length) return;
+				z = r.pop();
+			}
+
+			i = z[0];
+			j = z[1];
 			u = V[i];
+			done[i] = true;
 
 			while(true){
 				var end = true;
 				g.eitr(u, function(e){
 					if(free[u[0]][e[0][0]] > 0){
 						tour.splice(j, 0, u[0]);
+
 						++j;
+						if (!done[e[0][0]]) r.push([e[0][0], j]);
+
 						--free[u[0]][e[0][0]];
 						--free[e[0][0]][u[0]];
-						u = e[0];
-						--n;
 						end = false;
+						u = e[0];
 						return true;
 					}
 				});
 
 				if(end) break;
 
-			}
 
-			if(n === 0) return;
-
-			i = 0;
-			j = 0;
-			while(j === 0){
-				++i;
-				if(V[i] === undefined) return;
-				j = tour.length;
-				while(--j){
-					if(tour[j] === V[i][0]) break;
-				}
 			}
 		}
 	};
