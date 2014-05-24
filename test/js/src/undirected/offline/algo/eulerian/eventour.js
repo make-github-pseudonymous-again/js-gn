@@ -43,7 +43,7 @@ var check = function(label, n, x, E, _E){
 		var it = gn.sqmat(1, n, undefined);
 		var tour = [];
 
-		eventour(g, v, x, free, done, it, tour);
+		eventour(g, v, x, free, done, it, tour, []);
 
 		deepEqual(tour.length, E.length, 'check length');
 		deepEqual(free, gn.sqmat(2, n, 0), 'check free');

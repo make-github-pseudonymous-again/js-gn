@@ -12,7 +12,7 @@ var eventour_t = function(){
 	 * @param list tour the output tour 
 	 */
 
-	var eventour = function(g, V, i, free, done, it, tour){
+	var eventour = function(g, V, i, free, done, it, tour, edges){
 		
 		var u, j, z = [i, 0];
 
@@ -32,9 +32,10 @@ var eventour_t = function(){
 
 			while(true){
 				var end = true;
-				it[i] = g.eitr(u, function(_, v){
+				it[i] = g.eitr(u, function(e, v){
 					if(free[i][v[0]] > 0){
 						tour.splice(j, 0, i);
+						edges.splice(j, 0, e);
 						u = v;
 
 						++j;
