@@ -16,16 +16,16 @@ var check = function(label, n, x, E, _E){
 
 		var v = new Array(i);
 
-		var free = gn.sqmat(2, n, 0);
+		var edges = [];
 
 
 		while(i--) v[n-i-1] = g.vadd(n-i-1);
 
 		for(j = 0; j < E.length; ++j){
 			e = E[j];
-			g.eadd(v[e[0]], v[e[1]], e[2]);
-			++free[e[0]][e[1]];
-			++free[e[1]][e[0]];
+			var tmp = g.eadd(v[e[0]], v[e[1]], e[2]);
+			edges.push(tmp);
+			tmp.free = true;
 		}
 
 
@@ -43,10 +43,16 @@ var check = function(label, n, x, E, _E){
 		var it = gn.sqmat(1, n, undefined);
 		var tour = [];
 
-		eventour(g, v, x, free, done, it, tour, []);
+		eventour(g, v, x, done, it, tour, []);
 
 		deepEqual(tour.length, E.length, 'check length');
-		deepEqual(free, gn.sqmat(2, n, 0), 'check free');
+
+		var free = [];
+		edges.forEach(function(e){
+			free.push(e.free);
+		});
+		
+		deepEqual(free, gn.sqmat(1, E.length, false), 'check free');
 
 
 		i = tour.length;

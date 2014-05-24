@@ -6,13 +6,13 @@ var eventour_t = function(){
 	 * @param graph g
 	 * @param vertices V
 	 * @param index i node from where to start the search
-	 * @param square matrix free showing free edges
 	 * @param flag list done to label saturated edges
 	 * @param iterator list it that stores info on already processed edges
-	 * @param list tour the output tour 
+	 * @param list tour the output tour vertex sequence
+	 * @param list edges the output tour edges
 	 */
 
-	var eventour = function(g, V, i, free, done, it, tour, edges){
+	var eventour = function(g, V, i, done, it, tour, edges){
 		
 		var u, j, z = [i, 0];
 
@@ -33,7 +33,7 @@ var eventour_t = function(){
 			while(true){
 				var end = true;
 				it[i] = g.eitr(u, function(e, v){
-					if(free[i][v[0]] > 0){
+					if(e.free){
 						tour.splice(j, 0, i);
 						edges.splice(j, 0, e);
 						u = v;
@@ -41,8 +41,7 @@ var eventour_t = function(){
 						++j;
 						if (!done[u[0]]) r.push([u[0], j]);
 
-						--free[i][u[0]];
-						--free[u[0]][i];
+						e.free = false;
 						end = false;
 						i = u[0];
 						return true;
