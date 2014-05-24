@@ -467,7 +467,7 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
 							j = tmp;
 						}
 
-						bj = inblossom[j];
+						var bj = inblossom[j];
 
 						if (bj !== b && label[bj] === 1 &&
 							(bestedgeto[bj] === -1 || slack(k) < slack(bestedgeto[bj]))) {
