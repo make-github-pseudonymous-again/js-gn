@@ -6,8 +6,7 @@ var copy_t = function(){
 
 
 		g.vitr(function(v){
-			v.copy = h.vadd();
-			v.copy.src = v;
+			v.copy = h.vadd(v);
 		});
 
 		g.aeitr(function(_, u, v, w){
