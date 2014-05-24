@@ -18,7 +18,7 @@ var sptreedfs_t = function(){
 
 	var sptreedfs = function(g, order, next, dist){
 
-		for(i = 0; i < order; ++i){
+		for(var i = 0; i < order; ++i){
 			dist[i][i] = 0;
 			dfs(g, next, dist, i, i);
 		}
