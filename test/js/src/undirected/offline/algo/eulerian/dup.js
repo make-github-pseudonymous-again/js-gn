@@ -41,7 +41,7 @@ var check = function(label, n, E, m){
 
 		var dup = gn.dup_t();
 
-		dup(h, V, m, s, d);
+		dup(h, V, m, s, d, []);
 
 		var count = [gn.sqmat(2, n, 0), gn.sqmat(2, n, 0)];
 

@@ -3,7 +3,7 @@
 
 var dup_t = function(){
 
-	var dup = function(g, V, m, next, dist){
+	var dup = function(g, V, m, next, dist, e){
 
 		var i = m.length;
 		var n = 0;
@@ -14,7 +14,7 @@ var dup_t = function(){
 
 			while(u !== v){
 				var t = next[u][v];
-				g.eadd(V[u], V[t], dist[u][t]);
+				e.push(g.eadd(V[u], V[t], dist[u][t]));
 				u = t;
 				++n;
 			}
