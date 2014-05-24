@@ -48,8 +48,8 @@ var check = function(label, n, E){
 			ok(degree[v[1][0]] % 2, v[1][0] + ' odd');
 			ainside[v[1][0]] = 1;
 			if(degree[v[1][0]] % 2){
-				h.eitr(v, function(e){
-					deepEqual(e[1], d[v[1][0]][e[0][1][0]], 'd['+v[1][0]+']['+e[0][1][0]+'] check');
+				h.eitr(v, function(_, u, w){
+					deepEqual(w, d[v[1][0]][u[1][0]], 'd['+v[1][0]+']['+u[1][0]+'] check');
 				});
 			}
 		});

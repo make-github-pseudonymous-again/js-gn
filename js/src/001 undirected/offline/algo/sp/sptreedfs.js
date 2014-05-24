@@ -4,10 +4,9 @@ var sptreedfs_t = function(){
 
 	var dfs = function(g, next, dist, s, t){
 
-		g.eitr([s], function(e){
-			var u = e[0][0];
-			var w = e[1];
-
+		g.eitr([s], function(_, u, w){
+			u = u[0];
+			
 			if(dist[u][t] === w + dist[s][t] && next[u][t] === -1){
 				next[u][t] = s;
 				dfs(g, next, dist, u, t);

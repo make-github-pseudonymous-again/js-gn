@@ -28,7 +28,7 @@ var check = function(name, order, E){
 
 		
 
-		var d = gn.sqmat(2, order, [0, Infinity]);
+		var d = gn.sqmat(2, order, Infinity);
 	
 		simplegraph(g, order, d, h);
 
@@ -40,11 +40,10 @@ var check = function(name, order, E){
 		h.vitr(function(v){
 
 			i = v[1][0];
-			h.eitr(v, function(e){
-				var u = e[0];
+			h.eitr(v, function(_, u, w){
 				var j = u[1][0];
 				edgecounth[i][j]++;
-				edgevalh[i][j] = e[1];
+				edgevalh[i][j] = w;
 			});
 		});
 
@@ -52,13 +51,12 @@ var check = function(name, order, E){
 		g.vitr(function(v){
 
 			i = v[0];
-			g.eitr(v, function(e){
-				var u = e[0];
+			g.eitr(v, function(_, u, w){
 				var j = u[0];
 
 				if(i !== j){
 					edgecountg[i][j] = 1;
-					ok(edgevalh[i][j] <= e[1], 'check (' + i + ', ' + j + ')');
+					ok(edgevalh[i][j] <= w, 'check (' + i + ', ' + j + ')');
 				}
 
 			});

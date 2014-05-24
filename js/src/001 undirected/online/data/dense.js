@@ -16,12 +16,14 @@ var dense_graph_t = function(){
 		this.ad.push(ref);
 
 		var j = len;
-		while(j--) this.pt[j].push([null, -1]);
+		while(j--) this.pt[j].push([null, null, -1]);
 
 		this.pt.push(new Array(len + 1));
 
-		j = len + 1;
-		while(j--) this.pt[len][j] = [null, -1];
+		j = len;
+		while(j--) this.pt[len][j] = this.pt[j][len];
+
+		this.pt[len][len] = [null, null, -1];
 
 		return ref;
 	};
@@ -44,21 +46,21 @@ var dense_graph_t = function(){
 	graph.prototype.eadd = function(u, v, w){
 		var i = u[0], j = v[0];
 
-		this.pt[i][j][0] = v;
-		this.pt[i][j][1] = w;
-		this.pt[j][i][0] = u;
-		this.pt[j][i][1] = w;
-
-		return [this.pt[i][j], this.pt[j][i]];
+		this.pt[i][j][0] = u;
+		this.pt[i][j][1] = v;
+		this.pt[i][j][2] = w;
+		
+		return this.pt[i][j];
 
 	};
 
 	graph.prototype.edel = function(e){
 
-		var i = e[0][0][0], j = e[1][0][0];
+		var i = e[0][0], j = e[1][0];
 
 		this.pt[i][j][0] = null;
-		this.pt[j][i][0] = null;
+		this.pt[i][j][1] = null;
+		this.pt[i][j][2] = -1;
 
 	};
 
@@ -79,7 +81,7 @@ var dense_graph_t = function(){
 
 			if(this.pt[i][j][0] === null) continue;
 
-			if(fn.call(this, this.pt[i][j])) break;
+			if(fn.call(this, this.pt[i][j], this.ad[j], this.pt[i][j][2])) break;
 
 		}
 

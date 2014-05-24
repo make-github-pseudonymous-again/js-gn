@@ -22,9 +22,10 @@ test('dense', function(assert){
 	e[0][2] = g.eadd(v[0], v[3], 5);
 	e[0][3] = g.eadd(v[0], v[1], 456);
 	e[0][4] = g.eadd(v[0], v[0], 5);
-	e[1][1] = [e[0][3][1], e[0][3][0]];
+	e[1][1] = e[0][3];
 	e[4] = [];
 	e[4][0] = g.eadd(v[4], v[7], 5);
+
 
 	var k = 0;
 	g.vitr(function(j){
@@ -39,7 +40,8 @@ test('dense', function(assert){
 		var m = r[l];
 		k = e[m].length;
 		g.eitr(v[m], function(x){
-			deepEqual(x, e[m][--k][0], 'eitr ' + m + ' ' + k);
+			--k;
+			deepEqual(x, e[m][k], 'eitr ' + m + ' ' + k);
 		});
 	};
 
@@ -54,7 +56,8 @@ test('dense', function(assert){
 		var m = r[l];
 		k = e[m].length;
 		g.eitr(v[m], function(x){
-			deepEqual(x, e[m][--k][0], 'eitr ' + m + ' ' + k);
+			--k;
+			deepEqual(x, e[m][k], 'eitr ' + m + ' ' + k);
 		});
 	};
 

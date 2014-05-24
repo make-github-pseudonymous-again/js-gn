@@ -40,8 +40,8 @@ var check = function(label, n, edges){
 			b = gn.sqmat(1, n, false);
 			dijkstra(g, n, v[i], p, dist[i], u, b);
 			dist[i][i] = Infinity;
-			g.eitr([i], function(e){
-				dist[i][i] = Math.min(dist[i][i], e[1]*2);
+			g.eitr([i], function(_, _, w){
+				dist[i][i] = Math.min(dist[i][i], w*2);
 			});
 		}
 

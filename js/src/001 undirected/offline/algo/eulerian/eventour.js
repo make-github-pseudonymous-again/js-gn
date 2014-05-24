@@ -32,10 +32,10 @@ var eventour_t = function(){
 
 			while(true){
 				var end = true;
-				it[i] = g.eitr(u, function(e){
-					if(free[i][e[0][0]] > 0){
+				it[i] = g.eitr(u, function(_, v){
+					if(free[i][v[0]] > 0){
 						tour.splice(j, 0, i);
-						u = e[0];
+						u = v;
 
 						++j;
 						if (!done[u[0]]) r.push([u[0], j]);

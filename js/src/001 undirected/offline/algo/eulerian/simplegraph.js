@@ -12,16 +12,14 @@ var simplegraph_t = function(){
 			i = v[0]; // indice of v in dist
 			V[i] = h.vadd(v);
 				
-			g.eitr(v, function(e){
+			g.eitr(v, function(_, u, w){
 
-				var u = e[0]; // dest
-				var w = e[1]; // weigth
 				j = u[0];
 
 				if(i >= j) return;
 
-				if (w < dist[i][j][1] ){
-					dist[i][j] = e;
+				if (w < dist[i][j] ){
+					dist[i][j] = w;
 				}
 			});
 		});
@@ -29,8 +27,8 @@ var simplegraph_t = function(){
 
 		for (i = 0; i < order; ++i){
 			for (j = i + 1; j < order; ++j){
-				if ( dist[i][j][1] < Infinity ){
-					h.eadd( V[i], V[j], dist[i][j][1] );
+				if ( dist[i][j] < Infinity ){
+					h.eadd( V[i], V[j], dist[i][j] );
 				}
 			}
 		}

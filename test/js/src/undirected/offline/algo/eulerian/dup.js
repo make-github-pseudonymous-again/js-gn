@@ -45,9 +45,9 @@ var check = function(label, n, E, m){
 
 		var count = [gn.sqmat(2, n, 0), gn.sqmat(2, n, 0)];
 
-		g.vitr(function(w){
-			g.eitr(w, function(e){
-				++count[0][w[0]][e[0][0]];
+		g.vitr(function(u){
+			g.eitr(u, function(_, v){
+				++count[0][u[0]][v[0]];
 			});
 		});
 
@@ -62,9 +62,9 @@ var check = function(label, n, E, m){
 			}
 		}
 
-		h.vitr(function(w){
-			h.eitr(w, function(e){
-				++count[1][w[0]][e[0][0]];
+		h.vitr(function(u){
+			h.eitr(u, function(_, v){
+				++count[1][u[0]][v[0]];
 			});
 		});
 

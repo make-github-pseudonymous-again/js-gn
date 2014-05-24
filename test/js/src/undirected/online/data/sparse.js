@@ -24,7 +24,7 @@ test('sparse', function(assert){
 	e[0][3] = g.eadd(v[0], v[1], 456);
 	e[0][4] = g.eadd(v[0], v[7], 5);
 	e[0][5] = g.eadd(v[0], v[0], 5);
-	e[1][1] = [e[0][3][1], e[0][3][0]];
+	e[1][1] = e[0][3];
 	e[4] = [];
 	e[4][0] = g.eadd(v[4], v[7], 5);
 
@@ -42,7 +42,8 @@ test('sparse', function(assert){
 		k = e[m].length;
 		ok(k > 0, m + ' : check edge count before itr');
 		g.eitr(v[m], function(x){
-			deepEqual(x, e[m][--k][0], 'eitr ' + m + ' ' + k);
+			--k;
+			deepEqual(x, e[m][k], 'eitr ' + m + ' ' + k);
 		});
 		deepEqual(k, 0, m + ' : check edge count before del');
 	};
@@ -58,7 +59,8 @@ test('sparse', function(assert){
 		var m = r[l];
 		k = e[m].length;
 		g.eitr(v[m], function(x){
-			deepEqual(x, e[m][--k][0], 'eitr ' + m + ' ' + k);
+			--k;
+			deepEqual(x, e[m][k], 'eitr ' + m + ' ' + k);
 		});
 		deepEqual(k, 0, m + ' : check edge count after del');
 	};
@@ -137,7 +139,7 @@ test('sparse 2', function(assert){
 	e[0][3] = g.eadd(v[0], v[1], 456);
 	e[0][4] = g.eadd(v[0], v[7], 5);
 	e[0][5] = g.eadd(v[0], v[0], 5);
-	e[1][1] = [e[0][3][1], e[0][3][0]];
+	e[1][1] = e[0][3];
 	e[4] = [];
 	e[4][0] = g.eadd(v[4], v[7], 5);
 
@@ -155,7 +157,8 @@ test('sparse 2', function(assert){
 		k = e[m].length;
 		ok(k > 0, m + ' : check edge count before itr');
 		g.eitr(v[m], function(x){
-			deepEqual(x, e[m][--k][0], 'eitr ' + m + ' ' + k);
+			--k;
+			deepEqual(x, e[m][k], 'eitr ' + m + ' ' + k);
 		});
 		deepEqual(k, 0, m + ' : check edge count before del');
 	};
@@ -171,7 +174,8 @@ test('sparse 2', function(assert){
 		var m = r[l];
 		k = e[m].length;
 		g.eitr(v[m], function(x){
-			deepEqual(x, e[m][--k][0], 'eitr ' + m + ' ' + k);
+			--k;
+			deepEqual(x, e[m][k], 'eitr ' + m + ' ' + k);
 		});
 		deepEqual(k, 0, m + ' : check edge count after del');
 	};

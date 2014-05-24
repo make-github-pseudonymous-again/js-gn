@@ -8,8 +8,8 @@ var oddgraph_t = function(){
 
 		g.vitr(function(v){
 			var i = 0;
-			g.eitr(v, function(e){
-				i += (e[0] !== v);
+			g.eitr(v, function(_, u){
+				i += (u !== v);
 			});
 
 			if(i % 2 === 1){

@@ -11,10 +11,10 @@ var dijkstra_t = function(priority_queue_t){
 		used[s[0]] = true;
 		busy[s[0]] = true;
 
-		g.eitr(s, function(e){
-			dist[e[0][0]] = e[1];
-			busy[e[0][0]] = true;
-			left.push(e[0]);
+		g.eitr(s, function(_, u, w){
+			dist[u[0]] = w;
+			busy[u[0]] = true;
+			left.push(u);
 		});
 
 		while(left.length){
@@ -22,12 +22,12 @@ var dijkstra_t = function(priority_queue_t){
 			var m = left.pop();
 			used[m[0]] = true;
 				
-			g.eitr(m, function(e){
-				var y = e[0];
+			g.eitr(m, function(_, u, w){
+				var y = u;
 				
 				if(!used[y[0]]){
 
-					var v = dist[m[0]] + e[1];
+					var v = dist[m[0]] + w;
 
 					if(v < dist[y[0]]){
 						dist[y[0]] = v;

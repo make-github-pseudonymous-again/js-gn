@@ -51,6 +51,10 @@ var sparse_graph_t = function(){
 		this.end = [null, this.beg, null];
 		this.beg[2] = this.end;
 
+		this.ebeg = [null, null, -1, null, null];
+		this.eend = [null, null, -1, this.ebeg, null];
+		this.ebeg[4] = this.eend;
+
 	};
 
 	/**
@@ -69,7 +73,7 @@ var sparse_graph_t = function(){
 		//   > [end][1][1] is the previous [end][1]
 		//   > [end] and [end][1] are sane
 		//   > [end][1][1][2] is still pointing to [end]
-		this.end[1] = [h, this.end[1], this.end, [-1, -1, null, null]];
+		this.end[1] = [h, this.end[1], this.end, [null, -1, null, null]];
 
 		// update [end][1][1][2] to fix the invariant break
 		this.end[1][1][2] = this.end[1];
@@ -80,14 +84,7 @@ var sparse_graph_t = function(){
 
 	graph.prototype.vdel = function(i){
 
-		this.eitr(i, function(e) {
-			e[2][3] = e[3];
-			if(e[3] !== null) e[3][2] = e[2];
-			e = e[4];
-			if(e === null) return;
-			e[2][3] = e[3];
-			if(e[3] !== null) e[3][2] = e[2];
-		});
+		this.eitr(i, function(e) { this.edel(e); });
 
 		
 		i[1][2] = i[2]; // next of pref becomes next
@@ -101,26 +98,34 @@ var sparse_graph_t = function(){
 		if(i[3][3][3] !== null) i[3][3][3][2] = i[3][3];
 
 		if(j !== i){
-			j[3][3] = [i, w, j[3], j[3][3], i[3][3]];
+			j[3][3] = [i, w, j[3], j[3][3], null];
 			if(j[3][3][3] !== null) j[3][3][3][2] = j[3][3];
-
-			i[3][3][4] = j[3][3];
 		}
 
-		return [i[3][3], j[3][3]];
+		this.eend[3] = [i, j, w, this.eend[3], this.eend, i[3][3], j[3][3]];
+
+		this.eend[3][3][4] = this.eend[3];
+
+		i[3][3][4] = j[3][3][4] = this.eend[3];
+
+		return this.eend[3];
 
 	};
 
 	graph.prototype.edel = function(e){
 
-		e[0][2][3] = e[0][3];
-		if(e[0][3] !== null) e[0][3][2] = e[0][2];
+		e[5][2][3] = e[5][3];
+		if(e[5][3] !== null) e[5][3][2] = e[5][2];
 
 
-		if(e[1] !== e[0]){
-			e[1][2][3] = e[1][3];
-			if(e[1][3] !== null) e[1][3][2] = e[1][2];
+		if(e[6] !== e[5]){
+			e[6][2][3] = e[6][3];
+			if(e[6][3] !== null) e[6][3][2] = e[6][2];
 		}
+
+
+		e[3][4] = e[4]; // next of pref becomes next
+		e[4][3] = e[3]; // prev of next becomes prev
 
 	};
 
@@ -144,7 +149,7 @@ var sparse_graph_t = function(){
 
 		while(e !== null){
 
-			if(fn.call(this, e)) return e[3];
+			if(fn.call(this, e[4], e[0], e[1])) return e[3];
 
 			e = e[3];
 		}
