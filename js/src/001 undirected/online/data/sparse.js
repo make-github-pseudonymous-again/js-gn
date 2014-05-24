@@ -164,7 +164,7 @@ var sparse_graph_t = function(){
 
 		while(e !== this.eend){
 
-			if(fn.call(this, e[4], e[0], e[1], e[2])) return e[4];
+			if(fn.call(this, e, e[0], e[1], e[2])) return e[4];
 
 			e = e[4];
 		}
