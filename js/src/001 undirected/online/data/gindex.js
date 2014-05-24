@@ -41,8 +41,16 @@ var index_t = function(){
 		return this.G.vitr(fn);
 	};
 
-	index.prototype.eitr = function(i, fn){
-		return this.G.eitr(i, fn);
+	index.prototype.eitr = function(i, fn, e){
+		return this.G.eitr(i, fn, e);
+	};
+
+	index.prototype.aeitr = function(fn, e){
+		return this.G.aeitr(fn, e);
+	};
+
+	index.prototype.aeend = function(){
+		return this.G.aeend();
 	};
 
 	return index;

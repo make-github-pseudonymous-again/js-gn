@@ -154,9 +154,27 @@ var sparse_graph_t = function(){
 			e = e[3];
 		}
 
-		return null;
+		return e;
 
 	};
+
+	graph.prototype.aeitr = function(fn, e){
+
+		if(e === undefined) e = this.ebeg[4];
+
+		while(e !== this.eend){
+
+			if(fn.call(this, e[4], e[0], e[1], e[2])) return e[4];
+
+			e = e[4];
+		}
+
+		return e;
+
+	};
+
+	
+	graph.prototype.aeend = function(){ return this.eend; };
 
 
 

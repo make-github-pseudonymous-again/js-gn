@@ -88,6 +88,34 @@ var dense_graph_t = function(){
 	};
 
 
+	graph.prototype.aeitr = function(fn, e){
+
+		var len = this.ad.length, i, j;
+
+		if (e === undefined) e = 0;
+
+		j = e % len;
+		i = (e - j) / len;
+
+
+		for(; i < len; j = ++i){
+			for(; j < len; ++j){
+
+				if(this.pt[i][j][0] === null) continue;
+
+				if(fn.call(this, this.pt[i][j], this.ad[i], this.ad[j], this.pt[i][j][2]))
+					return i * len + j + 1 + (j + 1 === len) * (i + 1);
+			}
+		}
+
+		return len * len;
+
+	};
+
+
+	graph.prototype.aeend = function(){ return this.ad.length * this.ad.length; };
+
+
 
 	return graph;
 
