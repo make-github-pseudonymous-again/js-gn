@@ -1,0 +1,7 @@
+{
+  "name": "gn",
+  "version": "0.1.1",
+  "description" : "gn (graphs and networks) algorithm / adt templates for JavaScript",
+  "homepage": "https://github.com/aureooms/gn",
+  "license": "GPL v2"
+}
