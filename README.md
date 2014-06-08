@@ -7,3 +7,4 @@ gn (graphs and networks) algorithm / adt templates for JavaScript
 [![Coverage Status](https://coveralls.io/repos/aureooms/gn/badge.png)](https://coveralls.io/r/aureooms/gn)
 [![Dependencies Status](https://david-dm.org/aureooms/gn.png)](https://david-dm.org/aureooms/gn#info=dependencies)
 [![devDependencies Status](https://david-dm.org/aureooms/gn/dev-status.png)](https://david-dm.org/aureooms/gn#info=devDependencies)
+[![Code Climate](https://codeclimate.com/github/aureooms/gn.png)](https://codeclimate.com/github/aureooms/gn)
