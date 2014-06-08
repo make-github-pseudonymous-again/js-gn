@@ -1,4 +1,10 @@
-
+/**
+ * Fuse multiple graph data structure allowing to
+ * repeat the same write operations on all of them.
+ * Adds a pt member to all edges and vertices of each
+ * graph allowing direct reference of twin edges and
+ * vertices in other fused graphs.
+ */
 
 var fuse_t = function(){
 
