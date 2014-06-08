@@ -1,3 +1,10 @@
+/**
+ * Sparse graph wrapper indexing vertices allowing
+ * direct reference to a matrix (dense) structure.
+ * 
+ */
+
+
 var index_t = function(){
 
 	var index = function(G, attr){
