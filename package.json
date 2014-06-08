@@ -3,8 +3,7 @@
   "version": "0.1.1",
   "description": "gn (graphs and networks) algorithm / adt templates for JavaScript",
   "main": "js/dist/gn.js",
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
     "qunit": "git://github.com/gotwarlost/node-qunit.git#istanbul-coverage",
     "coveralls": "^2.10.0",
@@ -12,7 +11,8 @@
     "algo": "^0.1.1",
     "uglify-js": "^2.4.13",
     "recquire": "^0.1.0",
-    "recbuild": "^0.0.3"
+    "recbuild": "^0.0.3",
+    "codeclimate-test-reporter": "0.0.3"
   },
   "scripts": {
     "build": "node js/build.js",
