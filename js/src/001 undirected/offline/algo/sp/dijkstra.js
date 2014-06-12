@@ -33,7 +33,9 @@ var dijkstra_t = function(priority_queue_t){
 						dist[y[0]] = v;
 						prev[y[0]] = m[0];
 					}
-
+					// /!\ FLAWED : if updated element y already in the queue
+					// the priority queue doesn't guarantee that the predicate will hold
+					// true --> should use a pq allowing updating operations.
 					if(!busy[y[0]]){
 						left.push(y);
 						busy[y[0]] = true;
