@@ -1,10 +1,10 @@
-[gn](http://aureooms.github.io/gn)
+[js-gn](http://aureooms.github.io/js-gn)
 ==
 
-gn (graphs and networks) algorithm / adt templates for JavaScript
+graphs and networks code bricks for JavaScript
 
-[![Build Status](https://drone.io/github.com/aureooms/gn/status.png)](https://drone.io/github.com/aureooms/gn/latest)
-[![Coverage Status](https://coveralls.io/repos/aureooms/gn/badge.png)](https://coveralls.io/r/aureooms/gn)
-[![Dependencies Status](https://david-dm.org/aureooms/gn.png)](https://david-dm.org/aureooms/gn#info=dependencies)
-[![devDependencies Status](https://david-dm.org/aureooms/gn/dev-status.png)](https://david-dm.org/aureooms/gn#info=devDependencies)
-[![Code Climate](https://codeclimate.com/github/aureooms/gn.png)](https://codeclimate.com/github/aureooms/gn)
+[![Build Status](https://travis-ci.org/aureooms/js-gn.svg)](https://travis-ci.org/aureooms/js-gn)
+[![Coverage Status](https://coveralls.io/repos/aureooms/js-gn/badge.png)](https://coveralls.io/r/aureooms/js-gn)
+[![Dependencies Status](https://david-dm.org/aureooms/js-gn.png)](https://david-dm.org/aureooms/js-gn#info=dependencies)
+[![devDependencies Status](https://david-dm.org/aureooms/js-gn/dev-status.png)](https://david-dm.org/aureooms/js-gn#info=devDependencies)
+[![Code Climate](https://codeclimate.com/github/aureooms/js-gn.png)](https://codeclimate.com/github/aureooms/js-gn)
