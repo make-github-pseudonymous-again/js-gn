@@ -1,7 +1,19 @@
 {
-  "name": "gn",
-  "version": "0.1.1",
-  "description" : "gn (graphs and networks) algorithm / adt templates for JavaScript",
-  "homepage": "https://github.com/aureooms/gn",
-  "license": "GPL v2"
+	"name": "aureooms-js-gn",
+	"version": "0.1.1",
+	"description" : "graphs and networks code bricks for JavaScript",
+	"homepage": "https://aureooms.github.io/js-gn",
+	"license": "AGPL-3.0",
+	"main": "js/dist/gn.js",
+	"ignore": [
+		"js/index.js",
+		"js/src",
+		"test",
+		"pkg.json",
+		"package.json",
+		".groc.json",
+		".travis.yml",
+		".gitignore",
+		"README.md"
+	]
 }

@@ -1,26 +1,21 @@
 {
-  "name": "gn",
+  "name": "aureooms-js-gn",
+  "description": "graphs and networks code bricks for JavaScript",
   "version": "0.1.1",
-  "description": "gn (graphs and networks) algorithm / adt templates for JavaScript",
   "main": "js/dist/gn.js",
   "dependencies": {},
   "devDependencies": {
-    "qunit": "git://github.com/gotwarlost/node-qunit.git#istanbul-coverage",
-    "coveralls": "^2.10.0",
-    "optimist": "^0.6.1",
-    "algo": "^0.1.1",
-    "uglify-js": "^2.4.13",
-    "recquire": "^0.1.0",
-    "recbuild": "^0.0.3",
-    "codeclimate-test-reporter": "0.0.3"
+    "aureooms-node-package": "^1.0.0",
+    "aureooms-js-algo": "^0.2.0"
   },
   "scripts": {
-    "build": "node js/build.js",
-    "test": "export DIR=node_modules/qunit/support/qunit/qunit && mkdir -p $DIR && cp support/qunit.js $DIR/ && node test/js/run.js"
+    "build": "./node_modules/.bin/aureooms-node-package-build",
+    "test": "./node_modules/.bin/aureooms-node-package-test",
+    "doc": "./node_modules/.bin/groc"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/aureooms/gn.git"
+    "url": "https://github.com/aureooms/js-gn.git"
   },
   "keywords": [
     "js",
@@ -34,9 +29,9 @@
     "gn"
   ],
   "author": "aureooms",
-  "license": "GPL v2",
+  "license": "AGPL-3.0",
   "bugs": {
-    "url": "https://github.com/aureooms/gn/issues"
+    "url": "https://github.com/aureooms/js-gn/issues"
   },
-  "homepage": "https://aureooms.github.io/gn"
+  "homepage": "https://aureooms.github.io/js-gn"
 }

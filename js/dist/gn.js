@@ -1,13 +1,13 @@
-(function(exports){
+(function(exports, undefined){
 
 	'use strict';
 
 
-/* /home/genius/Bureau/gn/js/src/001 undirected */
-/* /home/genius/Bureau/gn/js/src/001 undirected/offline */
-/* /home/genius/Bureau/gn/js/src/001 undirected/offline/algo */
-/* /home/genius/Bureau/gn/js/src/001 undirected/offline/algo/eulerian */
-/* /home/genius/Bureau/gn/js/src/001 undirected/offline/algo/eulerian/dup.js */
+/* js/src/001 undirected */
+/* js/src/001 undirected/offline */
+/* js/src/001 undirected/offline/algo */
+/* js/src/001 undirected/offline/algo/eulerian */
+/* js/src/001 undirected/offline/algo/eulerian/dup.js */
 
 
 
@@ -41,7 +41,7 @@ var dup_t = function(){
 
 
 exports.dup_t = dup_t;
-/* /home/genius/Bureau/gn/js/src/001 undirected/offline/algo/eulerian/eventour.js */
+/* js/src/001 undirected/offline/algo/eulerian/eventour.js */
 
 
 var eventour_t = function(){
@@ -104,7 +104,7 @@ var eventour_t = function(){
 };
 
 exports.eventour_t = eventour_t;
-/* /home/genius/Bureau/gn/js/src/001 undirected/offline/algo/eulerian/oddgraph.js */
+/* js/src/001 undirected/offline/algo/eulerian/oddgraph.js */
 
 
 var oddgraph_t = function(){
@@ -134,7 +134,7 @@ var oddgraph_t = function(){
 };
 
 exports.oddgraph_t = oddgraph_t;
-/* /home/genius/Bureau/gn/js/src/001 undirected/offline/algo/eulerian/simplegraph.js */
+/* js/src/001 undirected/offline/algo/eulerian/simplegraph.js */
 //ajoute arretes de poids min et retire cycle 
 
 
@@ -178,7 +178,7 @@ var simplegraph_t = function(){
 };
 
 exports.simplegraph_t = simplegraph_t;
-/* /home/genius/Bureau/gn/js/src/001 undirected/offline/algo/eulerian/wblossom_n3.js */
+/* js/src/001 undirected/offline/algo/eulerian/wblossom_n3.js */
 // Adapted from http://jorisvr.nl/maximummatching.html
 // All credit for the implementation goes to Joris van Rantwijk [http://jorisvr.nl].
 
@@ -911,7 +911,7 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
 
 		// Verify that the optimum solution has been reached.
 		var verifyOptimum = function() {
-			var i, j, wt, v, b, p, k, s, vdualoffset;
+			var i, j, wt, v, b, p, k, s, vdualoffset, iblossoms, jblossoms;
 			if (maxcardinality) {
 				// Vertices may have negative dual;
 				// find a constant non-negative number to add to all vertex duals.
@@ -1333,7 +1333,7 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
 
 
 exports.wblossom_n3_t = wblossom_n3_t;
-/* /home/genius/Bureau/gn/js/src/001 undirected/offline/algo/eulerian/wblossom_n4.js */
+/* js/src/001 undirected/offline/algo/eulerian/wblossom_n4.js */
 //
 //
 ///**
@@ -1421,10 +1421,8 @@ exports.wblossom_n3_t = wblossom_n3_t;
 //};
 //
 //exports.wblossom_n4_t = wblossom_n4_t;
-/* /home/genius/Bureau/gn/js/src/001 undirected/offline/algo/hamiltonian */
-/* /home/genius/Bureau/gn/js/src/001 undirected/offline/algo/mst */
-/* /home/genius/Bureau/gn/js/src/001 undirected/offline/algo/sp */
-/* /home/genius/Bureau/gn/js/src/001 undirected/offline/algo/sp/dijkstra.js */
+/* js/src/001 undirected/offline/algo/sp */
+/* js/src/001 undirected/offline/algo/sp/dijkstra.js */
 
 
 var dijkstra_t = function(priority_queue_t){
@@ -1460,7 +1458,9 @@ var dijkstra_t = function(priority_queue_t){
 						dist[y[0]] = v;
 						prev[y[0]] = m[0];
 					}
-
+					// /!\ FLAWED : if updated element y already in the queue
+					// the priority queue doesn't guarantee that the predicate will hold
+					// true --> should use a pq allowing updating operations.
 					if(!busy[y[0]]){
 						left.push(y);
 						busy[y[0]] = true;
@@ -1478,7 +1478,8 @@ var dijkstra_t = function(priority_queue_t){
 
 
 exports.dijkstra_t = dijkstra_t;
-/* /home/genius/Bureau/gn/js/src/001 undirected/offline/algo/sp/floyd.js */
+
+/* js/src/001 undirected/offline/algo/sp/floyd.js */
 
 
 var floyd_t = function(){
@@ -1501,7 +1502,7 @@ var floyd_t = function(){
 };
 
 exports.floyd_t = floyd_t;
-/* /home/genius/Bureau/gn/js/src/001 undirected/offline/algo/sp/sptreedfs.js */
+/* js/src/001 undirected/offline/algo/sp/sptreedfs.js */
 
 
 var sptreedfs_t = function(){
@@ -1533,8 +1534,8 @@ var sptreedfs_t = function(){
 };
 
 exports.sptreedfs_t = sptreedfs_t;
-/* /home/genius/Bureau/gn/js/src/001 undirected/offline/algo/util */
-/* /home/genius/Bureau/gn/js/src/001 undirected/offline/algo/util/amat.js */
+/* js/src/001 undirected/offline/algo/util */
+/* js/src/001 undirected/offline/algo/util/amat.js */
 
 
 var amat_t = function(){
@@ -1554,7 +1555,7 @@ var amat_t = function(){
 };
 
 exports.amat_t = amat_t;
-/* /home/genius/Bureau/gn/js/src/001 undirected/offline/algo/util/copy.js */
+/* js/src/001 undirected/offline/algo/util/copy.js */
 
 
 var copy_t = function(){
@@ -1577,7 +1578,7 @@ var copy_t = function(){
 };
 
 exports.copy_t = copy_t;
-/* /home/genius/Bureau/gn/js/src/001 undirected/offline/algo/util/d2s.js */
+/* js/src/001 undirected/offline/algo/util/d2s.js */
 
 
 var d2s = function(g, h, V){
@@ -1595,7 +1596,7 @@ var d2s = function(g, h, V){
 };
 
 exports.d2s = d2s;
-/* /home/genius/Bureau/gn/js/src/001 undirected/offline/algo/util/pmat.js */
+/* js/src/001 undirected/offline/algo/util/pmat.js */
 
 
 // var pmat_t = function(){
@@ -1615,7 +1616,7 @@ exports.d2s = d2s;
 // };
 
 // exports.pmat_t = pmat_t;
-/* /home/genius/Bureau/gn/js/src/001 undirected/offline/algo/util/smat.js */
+/* js/src/001 undirected/offline/algo/util/smat.js */
 
 
 // var smat_t = function(){
@@ -1635,7 +1636,7 @@ exports.d2s = d2s;
 // };
 
 // exports.smat_t = smat_t;
-/* /home/genius/Bureau/gn/js/src/001 undirected/offline/algo/util/sqmat.js */
+/* js/src/001 undirected/offline/algo/util/sqmat.js */
 
 
 var sqmat = function(d, n, v){
@@ -1652,9 +1653,9 @@ var sqmat = function(d, n, v){
 
 
 exports.sqmat = sqmat;
-/* /home/genius/Bureau/gn/js/src/001 undirected/online */
-/* /home/genius/Bureau/gn/js/src/001 undirected/online/data */
-/* /home/genius/Bureau/gn/js/src/001 undirected/online/data/dense.js */
+/* js/src/001 undirected/online */
+/* js/src/001 undirected/online/data */
+/* js/src/001 undirected/online/data/dense.js */
 
 var dense_graph_t = function(){
 
@@ -1779,8 +1780,14 @@ var dense_graph_t = function(){
 };
 
 exports.dense_graph_t = dense_graph_t;
-/* /home/genius/Bureau/gn/js/src/001 undirected/online/data/fuse.js */
-
+/* js/src/001 undirected/online/data/fuse.js */
+/**
+ * Fuse multiple graph data structure allowing to
+ * repeat the same write operations on all of them.
+ * Adds a pt member to all edges and vertices of each
+ * graph allowing direct reference of twin edges and
+ * vertices in other fused graphs.
+ */
 
 var fuse_t = function(){
 
@@ -1838,7 +1845,15 @@ var fuse_t = function(){
 };
 
 exports.fuse_t = fuse_t;
-/* /home/genius/Bureau/gn/js/src/001 undirected/online/data/gindex.js */
+
+/* js/src/001 undirected/online/data/gindex.js */
+/**
+ * Sparse graph wrapper indexing vertices allowing
+ * direct reference to a matrix (dense) structure.
+ * 
+ */
+
+
 var index_t = function(){
 
 	var index = function(G, attr){
@@ -1899,7 +1914,8 @@ var index_t = function(){
 };
 
 exports.index_t = index_t;
-/* /home/genius/Bureau/gn/js/src/001 undirected/online/data/sparse.js */
+
+/* js/src/001 undirected/online/data/sparse.js */
 
 // TODO should take a linked list prototype as template parameter
 //      in order to simplify the implementation and allow better

@@ -1,0 +1,17 @@
+{
+	"ns": "gn",
+	"code": {
+		"main": [
+			"js",
+			"dist",
+			"gn.js"
+		],
+		"test": [
+			"test",
+			"js"
+		]
+	},
+	"src": "js/src/",
+	"debug": false,
+	"out": "js/dist/"
+}

@@ -730,7 +730,7 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
 
 		// Verify that the optimum solution has been reached.
 		var verifyOptimum = function() {
-			var i, j, wt, v, b, p, k, s, vdualoffset;
+			var i, j, wt, v, b, p, k, s, vdualoffset, iblossoms, jblossoms;
 			if (maxcardinality) {
 				// Vertices may have negative dual;
 				// find a constant non-negative number to add to all vertex duals.

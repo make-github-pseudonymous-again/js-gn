@@ -1,5 +1,5 @@
 
-var algo = require('algo');
+var algo = require('aureooms-js-algo');
 
 var check = function(label, n, edges){
 
