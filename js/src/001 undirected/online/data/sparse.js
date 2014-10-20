@@ -15,11 +15,11 @@ var sparse_graph_t = function(){
 	/**
 	 * Object constructor
 	 *
-	 * 
+	 *
 	 * The main entry points in the graph object are the two dummy nodes [beg] and [end].
 	 * Those allow us to write more generic code by handling corner cases implicitly.
 	 * They allow the addition of a single vertex to the graph in O(1).
-	 * Remark : Indeed the behaviour we want to get is the behaviour of a dll (doubly linked list). 
+	 * Remark : Indeed the behaviour we want to get is the behaviour of a dll (doubly linked list).
 	 *
 	 *
 	 * vertices are small arrays where
@@ -32,14 +32,14 @@ var sparse_graph_t = function(){
 	 * For the set vertices that have not been removed from the graph,
 	 * we define the 'youngest' vertex as the most recently added vertex of this set
 	 * and we define the 'oldest' vertex as the least recently added vertex of this set
-	 * 
+	 *
 	 * Invariants
 	 * ==
 	 *
 	 * Given the graph is not empty:
 	 *   > [end][1] = pred of end = the youngest vertex
 	 *   > [beg][2] = succ of beg = the oldest vertex
-	 * 
+	 *
 	 * Given a vertex v
 	 *   > v[1][2] = succ of pred of v = v
 	 *   > v[2][1] = pred of succ of v = v
@@ -60,11 +60,11 @@ var sparse_graph_t = function(){
 	/**
 	 * Prototype method to add a vertex to the graph with label h.
 	 * <p>
-	 * The graph is extended 
-	 * @param h is the label
+	 * The graph is extended
+	 * @param {label} h is the label
 	 */
 
-	graph.prototype.vadd = function(h){
+	graph.prototype.vadd = function ( h ) {
 
 		// First the vertex is created and appended at the end of the dll.
 		// Remember [end][1] was the previous last element
@@ -86,7 +86,7 @@ var sparse_graph_t = function(){
 
 		this.eitr(i, function(e) { this.edel(e); });
 
-		
+
 		i[1][2] = i[2]; // next of pref becomes next
 		i[2][1] = i[1]; // prev of next becomes prev
 
@@ -173,7 +173,7 @@ var sparse_graph_t = function(){
 
 	};
 
-	
+
 	graph.prototype.aeend = function(){ return this.eend; };
 
 
