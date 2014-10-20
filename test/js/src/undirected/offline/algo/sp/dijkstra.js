@@ -1,46 +1,57 @@
 
-var algo = require('aureooms-js-algo');
+var one, algo, functools;
 
-var check = function(label, n, s, edges, prev, dist){
+algo = require( "aureooms-js-algo" );
+functools = require( "aureooms-js-functools" );
 
-	test('dijkstra #' + label, function(assert){
+one = function ( label, n, s, edges, prev, dist ) {
 
-		var Graph = gn.dense_graph_t();
-		
-		var priority_queue_t = function(pred){
-			return algo.lazy_binomial_queue_t(pred, algo.opt_t);
-		};
+	test( "dijkstra #" + label, function () {
 
-		var dijkstra = gn.dijkstra_t(priority_queue_t);
+		var Graph, PriorityQueue;
+		var g, i, v, e, j, p, d, used, ref, left, predicate;
 
-		var g = new Graph();
-		var i = n;
+		PriorityQueue = algo.__BinomialHeap__( algo.BinomialTreeWithParent );
 
-		var v = new Array(i);
+		Graph = gn.dense_graph_t();
 
-		while(i--) v[n-i-1] = g.vadd();
+		g = new Graph();
+		i = n;
 
-		for(var j = 0; j < edges.length; ++j){
-			var e = edges[j];
-			g.eadd(v[e[0]], v[e[1]], e[2]);
+		v = new Array(i);
+
+		while ( i-- ) {
+			v[n-i-1] = g.vadd();
 		}
 
-		var p = gn.sqmat(1, n, v[s][0]);
-		var d = gn.sqmat(1, n, Infinity);
-		var u = gn.sqmat(1, n, false);
-		var b = gn.sqmat(1, n, false);
+		for ( j = 0 ; j < edges.length ; ++j ){
+			e = edges[j];
+			g.eadd( v[e[0]], v[e[1]], e[2] );
+		}
 
-		dijkstra(g, n, v[s], p, d, u, b);
+		p = gn.sqmat( 1, n, v[s][0] );
+		d = gn.sqmat( 1, n, Infinity );
+		used = gn.sqmat( 1, n, false );
+		ref = gn.sqmat( 1, n, null );
 
-		deepEqual(p, prev, 'prev');
-		deepEqual(d, dist, 'dist');
+		predicate = function ( u, v ) {
+			return d[u[0]] - d[v[0]];
+		};
+
+		left = new PriorityQueue( predicate );
+
+		gn.dijkstra( g, n, v[s], p, d, used, ref, left );
+
+		deepEqual( p, prev, "prev" );
+		deepEqual( d, dist, "dist" );
 
 	});
 
 };
 
 
-var I = [
+[
+
 [
 	'1',
 	10,
@@ -56,7 +67,7 @@ var I = [
 		[4, 7, 6]
 	],
 	[1, 3, 9, 2, 3, 4, 1, 4, 9, 9],
-	[10, 9, 6, 7, 11, 14, 14, 17, Infinity, Infinity]
+	[10, 9, 6, 7, 11, 14, 14, 17, Infinity, 0]
 ],
 
 [
@@ -70,7 +81,7 @@ var I = [
 		[0, 3, 7]
 	],
 	[0, 0, 3, 0],
-	[Infinity, 6, 9, 7]
+	[0, 6, 9, 7]
 ],
 
 [
@@ -89,14 +100,9 @@ var I = [
 		[8, 3, 2]
 	],
 	[2, 2, 2, 2, 3, 3, 2, 8, 3],
-	[Infinity, 7, Infinity, 2, 3, 4, Infinity, 6, 4]
+	[Infinity, 7, 0, 2, 3, 4, Infinity, 6, 4]
 ]
 
 
 
-];
-
-
-for(var i = 0; i < I.length; ++i){
-	check.apply(undefined, I[i]);
-}
+].forEach( functools.partial( functools.star, null, [one] ) );

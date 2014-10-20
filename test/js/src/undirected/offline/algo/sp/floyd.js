@@ -1,65 +1,86 @@
 
-var algo = require('aureooms-js-algo');
+var one, algo, functools;
 
-var check = function(label, n, edges){
+algo = require( "aureooms-js-algo" );
+functools = require( "aureooms-js-functools" );
 
-	test('floyd #' + label, function(assert){
+one = function ( label, n, edges ) {
 
-		var p, d, u, b;
+	test( "floyd #" + label, function () {
 
-		var Graph = gn.dense_graph_t();
+		var prev, dist, used, ref, left, predicate;
 
-		var amat = gn.amat_t();
+		var d, g, i, v, e, j;
 
-		var floyd = gn.floyd_t();
+		var Graph, PriorityQueue, amat, floyd;
 
-		var priority_queue_t = function(pred){
-			return algo.lazy_binomial_queue_t(pred, algo.opt_t);
-		};
+		PriorityQueue = algo.__BinomialHeap__( algo.BinomialTreeWithParent );
 
-		var dijkstra = gn.dijkstra_t(priority_queue_t);
+		Graph = gn.dense_graph_t();
 
-		var g = new Graph();
-		var i = n;
+		amat = gn.amat_t();
 
-		var v = new Array(i);
+		floyd = gn.floyd_t();
 
-		while(i--) v[n-i-1] = g.vadd();
-
-		for(var j = 0; j < edges.length; ++j){
-			var e = edges[j];
-			g.eadd(v[e[0]], v[e[1]], e[2]);
-		}
-
-		var dist = new Array(n);
+		g = new Graph();
 		i = n;
-		while(i--){
-			p = gn.sqmat(1, n, v[i][0]);
-			dist[i] = gn.sqmat(1, n, Infinity);
-			u = gn.sqmat(1, n, false);
-			b = gn.sqmat(1, n, false);
-			dijkstra(g, n, v[i], p, dist[i], u, b);
-			dist[i][i] = Infinity;
-			g.eitr([i], function(_, _, w){
-				dist[i][i] = Math.min(dist[i][i], w*2);
-			});
+
+		v = new Array( i );
+
+		while ( i-- ) {
+			v[n-i-1] = g.vadd();
 		}
 
+		for ( j = 0 ; j < edges.length ; ++j ) {
+			e = edges[j];
+			g.eadd( v[e[0]], v[e[1]], e[2] );
+		}
 
-		d = gn.sqmat(2, n, Infinity);
-		amat(g, n, d);
-		floyd(n, d);
+		dist = new Array( n );
+		i = n;
 
-		deepEqual(d, dist, 'dist');
+		while ( i-- ) {
+
+			prev = gn.sqmat( 1, n, v[i][0] );
+			dist[i] = gn.sqmat( 1, n, Infinity );
+			used = gn.sqmat( 1, n, false );
+			ref = gn.sqmat( 1, n, null );
+
+			predicate = function ( u, v ) {
+				return dist[i][u[0]] - dist[i][v[0]];
+			};
+
+			left = new PriorityQueue( predicate );
+
+			gn.dijkstra( g, n, v[i], prev, dist[i], used, ref, left );
+
+			// here we reset dist[i][i] to the
+			// shortest go and return for i to an
+			// other vertex
+
+			dist[i][i] = Infinity;
+
+			g.eitr( [i], function ( _, _, w ) {
+				dist[i][i] = Math.min( dist[i][i], w * 2 );
+			});
+
+		}
+
+		d = gn.sqmat( 2, n, Infinity );
+		amat( g, n, d );
+		floyd( n, d );
+
+		deepEqual( d, dist, "dist" );
 
 	});
 
 };
 
 
-var I = [
 [
-	'1',
+
+[
+	"1",
 	10,
 	[
 		[0, 1, 1],
@@ -74,7 +95,7 @@ var I = [
 ],
 
 [
-	'http://stackoverflow.com/questions/14159424/dijkstras-algorithm-why-is-it-needed-to-find-minimum-distance-element-in-the-q#1',
+	"http://stackoverflow.com/questions/14159424/dijkstras-algorithm-why-is-it-needed-to-find-minimum-distance-element-in-the-q#1",
 	4,
 	[
 		[0, 1, 6],
@@ -85,7 +106,7 @@ var I = [
 ],
 
 [
-	'http://stackoverflow.com/questions/14159424/dijkstras-algorithm-why-is-it-needed-to-find-minimum-distance-element-in-the-q#2',
+	"http://stackoverflow.com/questions/14159424/dijkstras-algorithm-why-is-it-needed-to-find-minimum-distance-element-in-the-q#2",
 	9,
 	[
 		[1, 5, 6],
@@ -101,10 +122,4 @@ var I = [
 ]
 
 
-
-];
-
-
-for(var i = 0; i < I.length; ++i){
-	check.apply(undefined, I[i]);
-}
+].forEach( functools.partial( functools.star, null, [one] ) );

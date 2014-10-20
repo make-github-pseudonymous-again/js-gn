@@ -1,70 +1,94 @@
 
-var algo = require('aureooms-js-algo');
+var one, algo, functools;
 
-var check = function(label, n, edges){
+algo = require( "aureooms-js-algo" );
+functools = require( "aureooms-js-functools" );
 
-	test('sptreedfs #' + label, function(assert){
+one = function ( label, n, edges ) {
 
-		var p, d, u, b;
+	test( "sptreedfs #" + label, function () {
 
-		var Graph = gn.dense_graph_t();
+		var g, i, v, e, j, prev, dist, used, ref, left, predicate;
 
-		var amat = gn.amat_t();
+		var next, successors, d;
 
-		var floyd = gn.floyd_t();
-		var sptreedfs = gn.sptreedfs_t();
+		var Graph, PriorityQueue, amat, floyd, sptreedfs;
 
-		var priority_queue_t = function(pred){
-			return algo.lazy_binomial_queue_t(pred, algo.opt_t);
-		};
+		PriorityQueue = algo.__BinomialHeap__( algo.BinomialTreeWithParent );
 
-		var dijkstra = gn.dijkstra_t(priority_queue_t);
+		Graph = gn.dense_graph_t();
 
-		var g = new Graph();
-		var i = n;
+		amat = gn.amat_t();
 
-		var v = new Array(i);
+		floyd = gn.floyd_t();
+		sptreedfs = gn.sptreedfs_t();
 
-		while(i--) v[n-i-1] = g.vadd();
+		g = new Graph();
+		i = n;
 
-		for(var j = 0; j < edges.length; ++j){
-			var e = edges[j];
-			g.eadd(v[e[0]], v[e[1]], e[2]);
+		v = new Array( i );
+
+		while ( i-- ) {
+			v[n-i-1] = g.vadd();
 		}
 
-		var next = new Array(n);
+		for ( j = 0 ; j < edges.length ; ++j ){
+			e = edges[j];
+			g.eadd( v[e[0]], v[e[1]], e[2] );
+		}
+
+		next = new Array( n );
+
 		i = n;
-		while(i--) next[i] = new Array(n);
+		while ( i-- ) {
+			next[i] = new Array( n );
+		}
+
 		i = n;
-		while(i--){
-			p = gn.sqmat(1, n, v[i][0]);
-			d = gn.sqmat(1, n, Infinity);
-			u = gn.sqmat(1, n, false);
-			b = gn.sqmat(1, n, false);
-			dijkstra(g, n, v[i], p, d, u, b);
-			var j = n;
-			while(j--) next[j][i] = d[j] === Infinity ? -1 : p[j];
+		while ( i-- ) {
+			prev = gn.sqmat( 1, n, v[i][0] );
+			dist = gn.sqmat( 1, n, Infinity );
+			used = gn.sqmat( 1, n, false );
+			ref = gn.sqmat( 1, n, null );
+
+			predicate = function ( u, v ) {
+				return dist[u[0]] - dist[v[0]];
+			};
+
+			left = new PriorityQueue( predicate );
+
+			gn.dijkstra( g, n, v[i], prev, dist, used, ref, left );
+
+			// here we set next[j][i] to -1 or prev[j] depending
+			// on dist[j]
+
+			j = n;
+			while ( j-- ) {
+				next[j][i] = dist[j] === Infinity ? -1 : prev[j];
+			}
+
 			next[i][i] = -1;
 		}
 
-		d = gn.sqmat(2, n, Infinity);
-		amat(g, n, d);
-		floyd(n, d);
+		d = gn.sqmat( 2, n, Infinity );
+		amat( g, n, d );
+		floyd( n, d );
 
-		var s = gn.sqmat(2, n, -1);
-		sptreedfs(g, n, s, d);
+		successors = gn.sqmat( 2, n, -1 );
+		sptreedfs( g, n, successors, d );
 
 
-		deepEqual(s, next, 'next');
+		deepEqual( successors, next, "next" );
 
 	});
 
 };
 
 
-var I = [
 [
-	'1',
+
+[
+	"1",
 	10,
 	[
 		[0, 1, 1],
@@ -79,7 +103,7 @@ var I = [
 ],
 
 [
-	'http://stackoverflow.com/questions/14159424/dijkstras-algorithm-why-is-it-needed-to-find-minimum-distance-element-in-the-q#1',
+	"http://stackoverflow.com/questions/14159424/dijkstras-algorithm-why-is-it-needed-to-find-minimum-distance-element-in-the-q#1",
 	4,
 	[
 		[0, 1, 6],
@@ -90,7 +114,7 @@ var I = [
 ],
 
 [
-	'http://stackoverflow.com/questions/14159424/dijkstras-algorithm-why-is-it-needed-to-find-minimum-distance-element-in-the-q#2',
+	"http://stackoverflow.com/questions/14159424/dijkstras-algorithm-why-is-it-needed-to-find-minimum-distance-element-in-the-q#2",
 	9,
 	[
 		[1, 5, 6],
@@ -107,9 +131,4 @@ var I = [
 
 
 
-];
-
-
-for(var i = 0; i < I.length; ++i){
-	check.apply(undefined, I[i]);
-}
+].forEach( functools.partial( functools.star, null, [one] ) );

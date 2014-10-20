@@ -6,6 +6,7 @@
 	"dependencies": {},
 	"devDependencies": {
 		"aureooms-node-package": "^1.0.0",
+		"aureooms-js-functools": "^0.0.5",
 		"aureooms-js-algo": "^0.4.1"
 	},
 	"scripts": {

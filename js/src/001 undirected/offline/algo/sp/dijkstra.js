@@ -1,55 +1,64 @@
 
 
-var dijkstra_t = function(priority_queue_t){
+/**
+ * @param {graph} g the graph
+ * @param {int} order number of vertices in the graph
+ *
+ * @param {vertex} source the source vertex from where to start the search
+ *
+ * @param {array} prev a list of predecessor
+ *                     initialized to id(source)
+ * @param {array} dist a list of distance for the source to each vertex
+ *                     initialized to Infinity
+ *
+ * @param {bool[]} used an array to keep track of visited vertices
+ *                      initialized to false
+ * @param {array} ref an array used to reference nodes from the priority queue
+ *                    initialized to null
+ * @param {PriorityQueue} left a priority queue used to order neighbours
+ *                             according to their distance to the source
+ *
+ */
 
-	var dijkstra = function(g, order, s, prev, dist, used, busy){
+var dijkstra = function ( g, order, source, prev, dist, used, ref, left ) {
 
-		var pred = function(a, b){ return dist[a[0]] < dist[b[0]]; };
-		var priority_queue = priority_queue_t(pred);
-		var left = new priority_queue();
+	var current;
 
-		used[s[0]] = true;
-		busy[s[0]] = true;
+	dist[source[0]] = 0;
+	ref[source[0]] = left.push( source );
 
-		g.eitr(s, function(_, u, w){
-			dist[u[0]] = w;
-			busy[u[0]] = true;
-			left.push(u);
-		});
+	while ( left.length ) {
 
-		while(left.length){
+		current = left.pop();
+		used[current[0]] = true;
 
-			var m = left.pop();
-			used[m[0]] = true;
-				
-			g.eitr(m, function(_, u, w){
-				var y = u;
-				
-				if(!used[y[0]]){
+		g.eitr( current, function ( _, other, weight ) {
 
-					var v = dist[m[0]] + w;
+			var distance, improved;
 
-					if(v < dist[y[0]]){
-						dist[y[0]] = v;
-						prev[y[0]] = m[0];
-					}
-					// /!\ FLAWED : if updated element y already in the queue
-					// the priority queue doesn't guarantee that the predicate will hold
-					// true --> should use a pq allowing updating operations.
-					if(!busy[y[0]]){
-						left.push(y);
-						busy[y[0]] = true;
-					}
+			if ( ! used[other[0]] ) {
 
+				distance = dist[current[0]] + weight;
+
+				improved = distance < dist[other[0]];
+
+				if ( improved ) {
+					dist[other[0]] = distance;
+					prev[other[0]] = current[0];
 				}
-			});
-		}
 
-	};
+				if ( ref[other[0]] === null ) {
+					ref[other[0]] = left.push( other );
+				}
+				else if ( improved ) {
+					left.decreasekey( ref[other[0]], other );
+				}
 
-	return dijkstra;
+			}
+		});
+	}
 
 };
 
 
-exports.dijkstra_t = dijkstra_t;
+exports.dijkstra = dijkstra;
