@@ -49,7 +49,7 @@ var dense_graph_t = function(){
 		this.pt[i][j][0] = u;
 		this.pt[i][j][1] = v;
 		this.pt[i][j][2] = w;
-		
+
 		return this.pt[i][j];
 
 	};
@@ -67,7 +67,7 @@ var dense_graph_t = function(){
 	graph.prototype.vitr = function(fn){
 
 		for(var i = 0, len = this.ad.length; i < len; ++i){
-			
+
 			if(fn.call(this, this.ad[i])) break;
 
 		}
