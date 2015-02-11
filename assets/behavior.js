@@ -13,7 +13,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
           "commentsOnly": true,
           "name": "Markdown"
         },
-        "sourcePath": "/home/genius/dev/js/js-gn/README.md",
+        "sourcePath": "/home/aureooms/dev/js/js-gn/README.md",
         "projectPath": "README.md",
         "targetPath": "index",
         "pageTitle": "index",
@@ -24,15 +24,15 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
     }, {
       "type": "folder",
       "data": {
-        "path": "001 undirected",
-        "title": "001 undirected"
+        "path": "undirected",
+        "title": "undirected"
       },
       "depth": 1,
       "children": [
         {
           "type": "folder",
           "data": {
-            "path": "001 undirected/offline",
+            "path": "undirected/offline",
             "title": "offline"
           },
           "depth": 2,
@@ -40,7 +40,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             {
               "type": "folder",
               "data": {
-                "path": "001 undirected/offline/algo",
+                "path": "undirected/offline/algo",
                 "title": "algo"
               },
               "depth": 3,
@@ -48,7 +48,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                 {
                   "type": "folder",
                   "data": {
-                    "path": "001 undirected/offline/algo/eulerian",
+                    "path": "undirected/offline/algo/eulerian",
                     "title": "eulerian"
                   },
                   "depth": 4,
@@ -65,10 +65,10 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                           "foldPrefix": "^",
                           "name": "JavaScript"
                         },
-                        "sourcePath": "/home/genius/dev/js/js-gn/js/src/001 undirected/offline/algo/eulerian/dup.js",
-                        "projectPath": "js/src/001 undirected/offline/algo/eulerian/dup.js",
-                        "targetPath": "001 undirected/offline/algo/eulerian/dup",
-                        "pageTitle": "001 undirected/offline/algo/eulerian/dup",
+                        "sourcePath": "/home/aureooms/dev/js/js-gn/js/src/undirected/offline/algo/eulerian/dup.js",
+                        "projectPath": "js/src/undirected/offline/algo/eulerian/dup.js",
+                        "targetPath": "undirected/offline/algo/eulerian/dup",
+                        "pageTitle": "undirected/offline/algo/eulerian/dup",
                         "title": "dup"
                       },
                       "depth": 5,
@@ -85,10 +85,10 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                           "foldPrefix": "^",
                           "name": "JavaScript"
                         },
-                        "sourcePath": "/home/genius/dev/js/js-gn/js/src/001 undirected/offline/algo/eulerian/eventour.js",
-                        "projectPath": "js/src/001 undirected/offline/algo/eulerian/eventour.js",
-                        "targetPath": "001 undirected/offline/algo/eulerian/eventour",
-                        "pageTitle": "001 undirected/offline/algo/eulerian/eventour",
+                        "sourcePath": "/home/aureooms/dev/js/js-gn/js/src/undirected/offline/algo/eulerian/eventour.js",
+                        "projectPath": "js/src/undirected/offline/algo/eulerian/eventour.js",
+                        "targetPath": "undirected/offline/algo/eulerian/eventour",
+                        "pageTitle": "undirected/offline/algo/eulerian/eventour",
                         "title": "eventour"
                       },
                       "depth": 5,
@@ -105,10 +105,10 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                           "foldPrefix": "^",
                           "name": "JavaScript"
                         },
-                        "sourcePath": "/home/genius/dev/js/js-gn/js/src/001 undirected/offline/algo/eulerian/oddgraph.js",
-                        "projectPath": "js/src/001 undirected/offline/algo/eulerian/oddgraph.js",
-                        "targetPath": "001 undirected/offline/algo/eulerian/oddgraph",
-                        "pageTitle": "001 undirected/offline/algo/eulerian/oddgraph",
+                        "sourcePath": "/home/aureooms/dev/js/js-gn/js/src/undirected/offline/algo/eulerian/oddgraph.js",
+                        "projectPath": "js/src/undirected/offline/algo/eulerian/oddgraph.js",
+                        "targetPath": "undirected/offline/algo/eulerian/oddgraph",
+                        "pageTitle": "undirected/offline/algo/eulerian/oddgraph",
                         "title": "oddgraph"
                       },
                       "depth": 5,
@@ -125,10 +125,10 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                           "foldPrefix": "^",
                           "name": "JavaScript"
                         },
-                        "sourcePath": "/home/genius/dev/js/js-gn/js/src/001 undirected/offline/algo/eulerian/simplegraph.js",
-                        "projectPath": "js/src/001 undirected/offline/algo/eulerian/simplegraph.js",
-                        "targetPath": "001 undirected/offline/algo/eulerian/simplegraph",
-                        "pageTitle": "001 undirected/offline/algo/eulerian/simplegraph",
+                        "sourcePath": "/home/aureooms/dev/js/js-gn/js/src/undirected/offline/algo/eulerian/simplegraph.js",
+                        "projectPath": "js/src/undirected/offline/algo/eulerian/simplegraph.js",
+                        "targetPath": "undirected/offline/algo/eulerian/simplegraph",
+                        "pageTitle": "undirected/offline/algo/eulerian/simplegraph",
                         "title": "simplegraph"
                       },
                       "depth": 5,
@@ -145,10 +145,10 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                           "foldPrefix": "^",
                           "name": "JavaScript"
                         },
-                        "sourcePath": "/home/genius/dev/js/js-gn/js/src/001 undirected/offline/algo/eulerian/wblossom_n3.js",
-                        "projectPath": "js/src/001 undirected/offline/algo/eulerian/wblossom_n3.js",
-                        "targetPath": "001 undirected/offline/algo/eulerian/wblossom_n3",
-                        "pageTitle": "001 undirected/offline/algo/eulerian/wblossom_n3",
+                        "sourcePath": "/home/aureooms/dev/js/js-gn/js/src/undirected/offline/algo/eulerian/wblossom_n3.js",
+                        "projectPath": "js/src/undirected/offline/algo/eulerian/wblossom_n3.js",
+                        "targetPath": "undirected/offline/algo/eulerian/wblossom_n3",
+                        "pageTitle": "undirected/offline/algo/eulerian/wblossom_n3",
                         "title": "wblossom_n3"
                       },
                       "depth": 5,
@@ -165,10 +165,10 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                           "foldPrefix": "^",
                           "name": "JavaScript"
                         },
-                        "sourcePath": "/home/genius/dev/js/js-gn/js/src/001 undirected/offline/algo/eulerian/wblossom_n4.js",
-                        "projectPath": "js/src/001 undirected/offline/algo/eulerian/wblossom_n4.js",
-                        "targetPath": "001 undirected/offline/algo/eulerian/wblossom_n4",
-                        "pageTitle": "001 undirected/offline/algo/eulerian/wblossom_n4",
+                        "sourcePath": "/home/aureooms/dev/js/js-gn/js/src/undirected/offline/algo/eulerian/wblossom_n4.js",
+                        "projectPath": "js/src/undirected/offline/algo/eulerian/wblossom_n4.js",
+                        "targetPath": "undirected/offline/algo/eulerian/wblossom_n4",
+                        "pageTitle": "undirected/offline/algo/eulerian/wblossom_n4",
                         "title": "wblossom_n4"
                       },
                       "depth": 5,
@@ -178,7 +178,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                 }, {
                   "type": "folder",
                   "data": {
-                    "path": "001 undirected/offline/algo/sp",
+                    "path": "undirected/offline/algo/sp",
                     "title": "sp"
                   },
                   "depth": 4,
@@ -195,10 +195,10 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                           "foldPrefix": "^",
                           "name": "JavaScript"
                         },
-                        "sourcePath": "/home/genius/dev/js/js-gn/js/src/001 undirected/offline/algo/sp/dijkstra.js",
-                        "projectPath": "js/src/001 undirected/offline/algo/sp/dijkstra.js",
-                        "targetPath": "001 undirected/offline/algo/sp/dijkstra",
-                        "pageTitle": "001 undirected/offline/algo/sp/dijkstra",
+                        "sourcePath": "/home/aureooms/dev/js/js-gn/js/src/undirected/offline/algo/sp/dijkstra.js",
+                        "projectPath": "js/src/undirected/offline/algo/sp/dijkstra.js",
+                        "targetPath": "undirected/offline/algo/sp/dijkstra",
+                        "pageTitle": "undirected/offline/algo/sp/dijkstra",
                         "title": "dijkstra"
                       },
                       "depth": 5,
@@ -215,10 +215,10 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                           "foldPrefix": "^",
                           "name": "JavaScript"
                         },
-                        "sourcePath": "/home/genius/dev/js/js-gn/js/src/001 undirected/offline/algo/sp/floyd.js",
-                        "projectPath": "js/src/001 undirected/offline/algo/sp/floyd.js",
-                        "targetPath": "001 undirected/offline/algo/sp/floyd",
-                        "pageTitle": "001 undirected/offline/algo/sp/floyd",
+                        "sourcePath": "/home/aureooms/dev/js/js-gn/js/src/undirected/offline/algo/sp/floyd.js",
+                        "projectPath": "js/src/undirected/offline/algo/sp/floyd.js",
+                        "targetPath": "undirected/offline/algo/sp/floyd",
+                        "pageTitle": "undirected/offline/algo/sp/floyd",
                         "title": "floyd"
                       },
                       "depth": 5,
@@ -235,10 +235,10 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                           "foldPrefix": "^",
                           "name": "JavaScript"
                         },
-                        "sourcePath": "/home/genius/dev/js/js-gn/js/src/001 undirected/offline/algo/sp/sptreedfs.js",
-                        "projectPath": "js/src/001 undirected/offline/algo/sp/sptreedfs.js",
-                        "targetPath": "001 undirected/offline/algo/sp/sptreedfs",
-                        "pageTitle": "001 undirected/offline/algo/sp/sptreedfs",
+                        "sourcePath": "/home/aureooms/dev/js/js-gn/js/src/undirected/offline/algo/sp/sptreedfs.js",
+                        "projectPath": "js/src/undirected/offline/algo/sp/sptreedfs.js",
+                        "targetPath": "undirected/offline/algo/sp/sptreedfs",
+                        "pageTitle": "undirected/offline/algo/sp/sptreedfs",
                         "title": "sptreedfs"
                       },
                       "depth": 5,
@@ -248,7 +248,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                 }, {
                   "type": "folder",
                   "data": {
-                    "path": "001 undirected/offline/algo/util",
+                    "path": "undirected/offline/algo/util",
                     "title": "util"
                   },
                   "depth": 4,
@@ -265,10 +265,10 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                           "foldPrefix": "^",
                           "name": "JavaScript"
                         },
-                        "sourcePath": "/home/genius/dev/js/js-gn/js/src/001 undirected/offline/algo/util/amat.js",
-                        "projectPath": "js/src/001 undirected/offline/algo/util/amat.js",
-                        "targetPath": "001 undirected/offline/algo/util/amat",
-                        "pageTitle": "001 undirected/offline/algo/util/amat",
+                        "sourcePath": "/home/aureooms/dev/js/js-gn/js/src/undirected/offline/algo/util/amat.js",
+                        "projectPath": "js/src/undirected/offline/algo/util/amat.js",
+                        "targetPath": "undirected/offline/algo/util/amat",
+                        "pageTitle": "undirected/offline/algo/util/amat",
                         "title": "amat"
                       },
                       "depth": 5,
@@ -285,10 +285,10 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                           "foldPrefix": "^",
                           "name": "JavaScript"
                         },
-                        "sourcePath": "/home/genius/dev/js/js-gn/js/src/001 undirected/offline/algo/util/copy.js",
-                        "projectPath": "js/src/001 undirected/offline/algo/util/copy.js",
-                        "targetPath": "001 undirected/offline/algo/util/copy",
-                        "pageTitle": "001 undirected/offline/algo/util/copy",
+                        "sourcePath": "/home/aureooms/dev/js/js-gn/js/src/undirected/offline/algo/util/copy.js",
+                        "projectPath": "js/src/undirected/offline/algo/util/copy.js",
+                        "targetPath": "undirected/offline/algo/util/copy",
+                        "pageTitle": "undirected/offline/algo/util/copy",
                         "title": "copy"
                       },
                       "depth": 5,
@@ -305,10 +305,10 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                           "foldPrefix": "^",
                           "name": "JavaScript"
                         },
-                        "sourcePath": "/home/genius/dev/js/js-gn/js/src/001 undirected/offline/algo/util/d2s.js",
-                        "projectPath": "js/src/001 undirected/offline/algo/util/d2s.js",
-                        "targetPath": "001 undirected/offline/algo/util/d2s",
-                        "pageTitle": "001 undirected/offline/algo/util/d2s",
+                        "sourcePath": "/home/aureooms/dev/js/js-gn/js/src/undirected/offline/algo/util/d2s.js",
+                        "projectPath": "js/src/undirected/offline/algo/util/d2s.js",
+                        "targetPath": "undirected/offline/algo/util/d2s",
+                        "pageTitle": "undirected/offline/algo/util/d2s",
                         "title": "d2s"
                       },
                       "depth": 5,
@@ -325,10 +325,10 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                           "foldPrefix": "^",
                           "name": "JavaScript"
                         },
-                        "sourcePath": "/home/genius/dev/js/js-gn/js/src/001 undirected/offline/algo/util/pmat.js",
-                        "projectPath": "js/src/001 undirected/offline/algo/util/pmat.js",
-                        "targetPath": "001 undirected/offline/algo/util/pmat",
-                        "pageTitle": "001 undirected/offline/algo/util/pmat",
+                        "sourcePath": "/home/aureooms/dev/js/js-gn/js/src/undirected/offline/algo/util/pmat.js",
+                        "projectPath": "js/src/undirected/offline/algo/util/pmat.js",
+                        "targetPath": "undirected/offline/algo/util/pmat",
+                        "pageTitle": "undirected/offline/algo/util/pmat",
                         "title": "pmat"
                       },
                       "depth": 5,
@@ -345,10 +345,10 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                           "foldPrefix": "^",
                           "name": "JavaScript"
                         },
-                        "sourcePath": "/home/genius/dev/js/js-gn/js/src/001 undirected/offline/algo/util/smat.js",
-                        "projectPath": "js/src/001 undirected/offline/algo/util/smat.js",
-                        "targetPath": "001 undirected/offline/algo/util/smat",
-                        "pageTitle": "001 undirected/offline/algo/util/smat",
+                        "sourcePath": "/home/aureooms/dev/js/js-gn/js/src/undirected/offline/algo/util/smat.js",
+                        "projectPath": "js/src/undirected/offline/algo/util/smat.js",
+                        "targetPath": "undirected/offline/algo/util/smat",
+                        "pageTitle": "undirected/offline/algo/util/smat",
                         "title": "smat"
                       },
                       "depth": 5,
@@ -365,10 +365,10 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                           "foldPrefix": "^",
                           "name": "JavaScript"
                         },
-                        "sourcePath": "/home/genius/dev/js/js-gn/js/src/001 undirected/offline/algo/util/sqmat.js",
-                        "projectPath": "js/src/001 undirected/offline/algo/util/sqmat.js",
-                        "targetPath": "001 undirected/offline/algo/util/sqmat",
-                        "pageTitle": "001 undirected/offline/algo/util/sqmat",
+                        "sourcePath": "/home/aureooms/dev/js/js-gn/js/src/undirected/offline/algo/util/sqmat.js",
+                        "projectPath": "js/src/undirected/offline/algo/util/sqmat.js",
+                        "targetPath": "undirected/offline/algo/util/sqmat",
+                        "pageTitle": "undirected/offline/algo/util/sqmat",
                         "title": "sqmat"
                       },
                       "depth": 5,
@@ -382,7 +382,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
         }, {
           "type": "folder",
           "data": {
-            "path": "001 undirected/online",
+            "path": "undirected/online",
             "title": "online"
           },
           "depth": 2,
@@ -390,7 +390,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
             {
               "type": "folder",
               "data": {
-                "path": "001 undirected/online/data",
+                "path": "undirected/online/data",
                 "title": "data"
               },
               "depth": 3,
@@ -407,10 +407,10 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                       "foldPrefix": "^",
                       "name": "JavaScript"
                     },
-                    "sourcePath": "/home/genius/dev/js/js-gn/js/src/001 undirected/online/data/dense.js",
-                    "projectPath": "js/src/001 undirected/online/data/dense.js",
-                    "targetPath": "001 undirected/online/data/dense",
-                    "pageTitle": "001 undirected/online/data/dense",
+                    "sourcePath": "/home/aureooms/dev/js/js-gn/js/src/undirected/online/data/dense.js",
+                    "projectPath": "js/src/undirected/online/data/dense.js",
+                    "targetPath": "undirected/online/data/dense",
+                    "pageTitle": "undirected/online/data/dense",
                     "title": "dense"
                   },
                   "depth": 4,
@@ -427,10 +427,10 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                       "foldPrefix": "^",
                       "name": "JavaScript"
                     },
-                    "sourcePath": "/home/genius/dev/js/js-gn/js/src/001 undirected/online/data/fuse.js",
-                    "projectPath": "js/src/001 undirected/online/data/fuse.js",
-                    "targetPath": "001 undirected/online/data/fuse",
-                    "pageTitle": "001 undirected/online/data/fuse",
+                    "sourcePath": "/home/aureooms/dev/js/js-gn/js/src/undirected/online/data/fuse.js",
+                    "projectPath": "js/src/undirected/online/data/fuse.js",
+                    "targetPath": "undirected/online/data/fuse",
+                    "pageTitle": "undirected/online/data/fuse",
                     "title": "fuse"
                   },
                   "depth": 4,
@@ -447,10 +447,10 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                       "foldPrefix": "^",
                       "name": "JavaScript"
                     },
-                    "sourcePath": "/home/genius/dev/js/js-gn/js/src/001 undirected/online/data/gindex.js",
-                    "projectPath": "js/src/001 undirected/online/data/gindex.js",
-                    "targetPath": "001 undirected/online/data/gindex",
-                    "pageTitle": "001 undirected/online/data/gindex",
+                    "sourcePath": "/home/aureooms/dev/js/js-gn/js/src/undirected/online/data/gindex.js",
+                    "projectPath": "js/src/undirected/online/data/gindex.js",
+                    "targetPath": "undirected/online/data/gindex",
+                    "pageTitle": "undirected/online/data/gindex",
                     "title": "gindex"
                   },
                   "depth": 4,
@@ -467,10 +467,10 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
                       "foldPrefix": "^",
                       "name": "JavaScript"
                     },
-                    "sourcePath": "/home/genius/dev/js/js-gn/js/src/001 undirected/online/data/sparse.js",
-                    "projectPath": "js/src/001 undirected/online/data/sparse.js",
-                    "targetPath": "001 undirected/online/data/sparse",
-                    "pageTitle": "001 undirected/online/data/sparse",
+                    "sourcePath": "/home/aureooms/dev/js/js-gn/js/src/undirected/online/data/sparse.js",
+                    "projectPath": "js/src/undirected/online/data/sparse.js",
+                    "targetPath": "undirected/online/data/sparse",
+                    "pageTitle": "undirected/online/data/sparse",
                     "title": "sparse"
                   },
                   "depth": 4,
@@ -715,7 +715,7 @@ f.event={add:function(a,c,d,e,g){var h,i,j,k,l,m,n,o,p,q,r,s;if(!(a.nodeType===3
       if (metaInfo.documentPath === 'index') {
         sourceURL = metaInfo.githubURL;
       } else {
-        sourceURL = "" + metaInfo.githubURL + "/blob/master/" + metaInfo.projectPath;
+        sourceURL = metaInfo.githubURL + "/blob/master/" + metaInfo.projectPath;
       }
       nav$.find('.tools').prepend("<li class=\"github\">\n  <a href=\"" + sourceURL + "\" title=\"View source on GitHub\">\n    View source on GitHub\n  </a>\n</li>");
     }

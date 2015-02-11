@@ -1,0 +1,84 @@
+<!DOCTYPE html><html lang="en"><head><title>undirected/offline/algo/eulerian/eventour</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../../"><meta name="groc-document-path" content="undirected/offline/algo/eulerian/eventour"><meta name="groc-project-path" content="js/src/undirected/offline/algo/eulerian/eventour.js"><meta name="groc-github-url" content="https://github.com/aureooms/js-gn"><link rel="stylesheet" type="text/css" media="all" href="../../../../assets/style.css"><script type="text/javascript" src="../../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/aureooms/js-gn/blob/master/js/src/undirected/offline/algo/eulerian/eventour.js">js/src/undirected/offline/algo/eulerian/eventour.js</a></div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="hljs-keyword">var</span> eventour_t = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">()</span> {</span></div></div></div><div class="segment"><div class="comments doc-section"><div class="wrapper"><p>Parameters:</p>
+<ul>
+<li><p><strong>fjfj must be an int.</strong><br/>(dkdj)</p>
+</li>
+<li><p><strong>g must be a graph.</strong></p>
+</li>
+<li><p><strong>V must be a vertices.</strong></p>
+</li>
+<li><p><strong>i must be an index.</strong><br/>(node from where to start the search)</p>
+</li>
+<li><p><strong>done must be a flag list.</strong><br/>(to label saturated edges)</p>
+</li>
+<li><p><strong>it must be an iterator list.</strong><br/>(that stores info on already processed edges)</p>
+</li>
+<li><p><strong>tour must be a list.</strong><br/>(the output tour vertex sequence)</p>
+</li>
+<li><p><strong>edges must be a list.</strong><br/>(the output tour edges)</p>
+</li>
+</ul></div></div><div class="code"><div class="wrapper">	<span class="hljs-keyword">var</span> eventour = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">( g, V, i, done, it, tour, edges )</span> {</span>
+
+		<span class="hljs-keyword">var</span> u, j, z, r, end;
+
+		z = [i, <span class="hljs-number">0</span>];
+
+		r = [];
+
+		<span class="hljs-keyword">while</span> ( <span class="hljs-literal">true</span> ) {
+
+			<span class="hljs-keyword">while</span> ( done[z[<span class="hljs-number">0</span>]] ) {
+
+				<span class="hljs-keyword">if</span> ( r.length === <span class="hljs-number">0</span> ) {
+					<span class="hljs-keyword">return</span>;
+				}
+
+				z = r.pop();
+			}
+
+			i = z[<span class="hljs-number">0</span>];
+			j = z[<span class="hljs-number">1</span>];
+			u = V[i];
+			done[i] = <span class="hljs-literal">true</span>;
+
+			<span class="hljs-keyword">while</span> ( <span class="hljs-literal">true</span> ) {
+
+				end = <span class="hljs-literal">true</span>;
+
+				it[i] = g.eitr( u, <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">( e, v )</span> {</span>
+
+					<span class="hljs-keyword">if</span> ( e.free ) {
+
+						tour.splice(j, <span class="hljs-number">0</span>, i);
+						edges.splice(j, <span class="hljs-number">0</span>, e);
+
+						u = v;
+
+						++j;
+
+						<span class="hljs-keyword">if</span> ( ! done[u[<span class="hljs-number">0</span>]] ) {
+							r.push( [u[<span class="hljs-number">0</span>], j] );
+						}
+
+						e.free = <span class="hljs-literal">false</span>;
+						end = <span class="hljs-literal">false</span>;
+						i = u[<span class="hljs-number">0</span>];
+
+						<span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+
+					}
+
+				}, it[i] );
+
+				<span class="hljs-keyword">if</span> ( end ) {
+					<span class="hljs-keyword">break</span>;
+				}
+
+			}
+		}
+	};
+
+	<span class="hljs-keyword">return</span> eventour;
+
+};
+
+exports.eventour_t = eventour_t;</div></div></div></div></body></html>

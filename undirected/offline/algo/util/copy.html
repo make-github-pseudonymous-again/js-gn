@@ -1,0 +1,20 @@
+<!DOCTYPE html><html lang="en"><head><title>undirected/offline/algo/util/copy</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../../"><meta name="groc-document-path" content="undirected/offline/algo/util/copy"><meta name="groc-project-path" content="js/src/undirected/offline/algo/util/copy.js"><meta name="groc-github-url" content="https://github.com/aureooms/js-gn"><link rel="stylesheet" type="text/css" media="all" href="../../../../assets/style.css"><script type="text/javascript" src="../../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/aureooms/js-gn/blob/master/js/src/undirected/offline/algo/util/copy.js">js/src/undirected/offline/algo/util/copy.js</a></div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="hljs-keyword">var</span> copy_t = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+
+	<span class="hljs-keyword">var</span> copy = <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(g, h)</span>{</span>
+
+
+		g.vitr(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(v)</span>{</span>
+			v.copy = h.vadd(v);
+		});
+
+		g.aeitr(<span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(_, u, v, w)</span>{</span>
+			h.eadd(u.copy, v.copy, w);
+		});
+
+	};
+
+	<span class="hljs-keyword">return</span> copy;
+
+};
+
+exports.copy_t = copy_t;</div></div></div></div></body></html>
