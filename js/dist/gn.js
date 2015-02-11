@@ -3,11 +3,11 @@
 	'use strict';
 
 
-/* js/src/001 undirected */
-/* js/src/001 undirected/offline */
-/* js/src/001 undirected/offline/algo */
-/* js/src/001 undirected/offline/algo/eulerian */
-/* js/src/001 undirected/offline/algo/eulerian/dup.js */
+/* js/src/undirected */
+/* js/src/undirected/offline */
+/* js/src/undirected/offline/algo */
+/* js/src/undirected/offline/algo/eulerian */
+/* js/src/undirected/offline/algo/eulerian/dup.js */
 
 
 
@@ -41,7 +41,7 @@ var dup_t = function(){
 
 
 exports.dup_t = dup_t;
-/* js/src/001 undirected/offline/algo/eulerian/eventour.js */
+/* js/src/undirected/offline/algo/eulerian/eventour.js */
 
 
 var eventour_t = function () {
@@ -124,7 +124,7 @@ var eventour_t = function () {
 
 exports.eventour_t = eventour_t;
 
-/* js/src/001 undirected/offline/algo/eulerian/oddgraph.js */
+/* js/src/undirected/offline/algo/eulerian/oddgraph.js */
 
 
 var oddgraph_t = function(){
@@ -154,7 +154,7 @@ var oddgraph_t = function(){
 };
 
 exports.oddgraph_t = oddgraph_t;
-/* js/src/001 undirected/offline/algo/eulerian/simplegraph.js */
+/* js/src/undirected/offline/algo/eulerian/simplegraph.js */
 //ajoute arretes de poids min et retire cycle 
 
 
@@ -198,7 +198,7 @@ var simplegraph_t = function(){
 };
 
 exports.simplegraph_t = simplegraph_t;
-/* js/src/001 undirected/offline/algo/eulerian/wblossom_n3.js */
+/* js/src/undirected/offline/algo/eulerian/wblossom_n3.js */
 // Adapted from http://jorisvr.nl/maximummatching.html
 // All credit for the implementation goes to Joris van Rantwijk [http://jorisvr.nl].
 
@@ -1353,7 +1353,7 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
 
 
 exports.wblossom_n3_t = wblossom_n3_t;
-/* js/src/001 undirected/offline/algo/eulerian/wblossom_n4.js */
+/* js/src/undirected/offline/algo/eulerian/wblossom_n4.js */
 //
 //
 ///**
@@ -1441,8 +1441,8 @@ exports.wblossom_n3_t = wblossom_n3_t;
 //};
 //
 //exports.wblossom_n4_t = wblossom_n4_t;
-/* js/src/001 undirected/offline/algo/sp */
-/* js/src/001 undirected/offline/algo/sp/dijkstra.js */
+/* js/src/undirected/offline/algo/sp */
+/* js/src/undirected/offline/algo/sp/dijkstra.js */
 
 
 /**
@@ -1508,7 +1508,7 @@ var dijkstra = function ( g, order, source, prev, dist, used, ref, left ) {
 
 exports.dijkstra = dijkstra;
 
-/* js/src/001 undirected/offline/algo/sp/floyd.js */
+/* js/src/undirected/offline/algo/sp/floyd.js */
 
 
 var floyd_t = function(){
@@ -1531,7 +1531,7 @@ var floyd_t = function(){
 };
 
 exports.floyd_t = floyd_t;
-/* js/src/001 undirected/offline/algo/sp/sptreedfs.js */
+/* js/src/undirected/offline/algo/sp/sptreedfs.js */
 
 
 var sptreedfs_t = function(){
@@ -1563,8 +1563,8 @@ var sptreedfs_t = function(){
 };
 
 exports.sptreedfs_t = sptreedfs_t;
-/* js/src/001 undirected/offline/algo/util */
-/* js/src/001 undirected/offline/algo/util/amat.js */
+/* js/src/undirected/offline/algo/util */
+/* js/src/undirected/offline/algo/util/amat.js */
 
 
 var amat_t = function(){
@@ -1584,7 +1584,7 @@ var amat_t = function(){
 };
 
 exports.amat_t = amat_t;
-/* js/src/001 undirected/offline/algo/util/copy.js */
+/* js/src/undirected/offline/algo/util/copy.js */
 
 
 var copy_t = function(){
@@ -1607,7 +1607,7 @@ var copy_t = function(){
 };
 
 exports.copy_t = copy_t;
-/* js/src/001 undirected/offline/algo/util/d2s.js */
+/* js/src/undirected/offline/algo/util/d2s.js */
 
 
 var d2s = function(g, h, V){
@@ -1625,7 +1625,7 @@ var d2s = function(g, h, V){
 };
 
 exports.d2s = d2s;
-/* js/src/001 undirected/offline/algo/util/pmat.js */
+/* js/src/undirected/offline/algo/util/pmat.js */
 
 
 // var pmat_t = function(){
@@ -1645,7 +1645,7 @@ exports.d2s = d2s;
 // };
 
 // exports.pmat_t = pmat_t;
-/* js/src/001 undirected/offline/algo/util/smat.js */
+/* js/src/undirected/offline/algo/util/smat.js */
 
 
 // var smat_t = function(){
@@ -1665,7 +1665,7 @@ exports.d2s = d2s;
 // };
 
 // exports.smat_t = smat_t;
-/* js/src/001 undirected/offline/algo/util/sqmat.js */
+/* js/src/undirected/offline/algo/util/sqmat.js */
 
 
 var sqmat = function(d, n, v){
@@ -1682,9 +1682,9 @@ var sqmat = function(d, n, v){
 
 
 exports.sqmat = sqmat;
-/* js/src/001 undirected/online */
-/* js/src/001 undirected/online/data */
-/* js/src/001 undirected/online/data/dense.js */
+/* js/src/undirected/online */
+/* js/src/undirected/online/data */
+/* js/src/undirected/online/data/dense.js */
 
 var dense_graph_t = function(){
 
@@ -1736,7 +1736,7 @@ var dense_graph_t = function(){
 		this.pt[i][j][0] = u;
 		this.pt[i][j][1] = v;
 		this.pt[i][j][2] = w;
-		
+
 		return this.pt[i][j];
 
 	};
@@ -1754,7 +1754,7 @@ var dense_graph_t = function(){
 	graph.prototype.vitr = function(fn){
 
 		for(var i = 0, len = this.ad.length; i < len; ++i){
-			
+
 			if(fn.call(this, this.ad[i])) break;
 
 		}
@@ -1809,7 +1809,8 @@ var dense_graph_t = function(){
 };
 
 exports.dense_graph_t = dense_graph_t;
-/* js/src/001 undirected/online/data/fuse.js */
+
+/* js/src/undirected/online/data/fuse.js */
 /**
  * Fuse multiple graph data structure allowing to
  * repeat the same write operations on all of them.
@@ -1875,7 +1876,7 @@ var fuse_t = function(){
 
 exports.fuse_t = fuse_t;
 
-/* js/src/001 undirected/online/data/gindex.js */
+/* js/src/undirected/online/data/gindex.js */
 /**
  * Sparse graph wrapper indexing vertices allowing
  * direct reference to a matrix (dense) structure.
@@ -1944,7 +1945,7 @@ var index_t = function(){
 
 exports.index_t = index_t;
 
-/* js/src/001 undirected/online/data/sparse.js */
+/* js/src/undirected/online/data/sparse.js */
 
 // TODO should take a linked list prototype as template parameter
 //      in order to simplify the implementation and allow better
