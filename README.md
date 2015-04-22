@@ -13,3 +13,4 @@ graphs and networks code bricks for JavaScript
 [![Code Climate](http://img.shields.io/codeclimate/github/aureooms/js-gn.svg?style=flat)](https://codeclimate.com/github/aureooms/js-gn)
 [![NPM downloads per month](http://img.shields.io/npm/dm/aureooms-js-gn.svg?style=flat)](https://www.npmjs.org/package/aureooms-js-gn)
 [![GitHub issues](http://img.shields.io/github/issues/aureooms/js-gn.svg?style=flat)](https://github.com/aureooms/js-gn/issues)
+[![Inline docs](http://inch-ci.org/github/aureooms/js-gn.svg?branch=master&style=shields)](http://inch-ci.org/github/aureooms/js-gn)
