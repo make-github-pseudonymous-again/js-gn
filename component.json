@@ -4,7 +4,7 @@
 	"scripts": [
 		"js/dist/gn.js"
 	],
-	"version": "1.0.4",
+	"version": "1.0.5",
 	"description": "graphs and networks code bricks for JavaScript",
 	"main": "js/dist/gn.js",
 	"license": "AGPL-3.0"
