@@ -1,6 +1,8 @@
-(function(exports, undefined){
+( function ( ) {
 
-	'use strict';
+'use strict' ;
+
+var definition = function ( exports , undefined ) {
 
 
 /* js/src/undirected */
@@ -2132,4 +2134,16 @@ var sparse_graph_t = function(){
 
 exports.sparse_graph_t = sparse_graph_t;
 
-})(typeof exports === 'undefined' ? this['gn'] = {} : exports);
+return exports ;
+} ;
+if ( typeof exports === "object" ) {
+	definition( exports ) ;
+}
+else if ( typeof define === "function" && define.amd ) {
+	define( "aureooms-js-gn" , [ ] , function ( ) { return definition( { } ) ; } ) ;
+}
+else if ( typeof window === "object" && typeof window.document === "object" ) {
+	definition( window["gn"] = { } ) ;
+}
+else console.error( "unable to detect type of module to define for aureooms-js-gn") ;
+} )( ) ;

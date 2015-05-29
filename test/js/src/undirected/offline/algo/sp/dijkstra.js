@@ -1,7 +1,7 @@
 
-var one, algo, functools;
+var one, binomialheap, functools;
 
-algo = require( "aureooms-js-algo" );
+binomialheap = require( "aureooms-js-binomial-heap" );
 functools = require( "aureooms-js-functools" );
 
 one = function ( label, n, s, edges, prev, dist ) {
@@ -11,7 +11,7 @@ one = function ( label, n, s, edges, prev, dist ) {
 		var Graph, PriorityQueue;
 		var g, i, v, e, j, p, d, used, ref, left, predicate;
 
-		PriorityQueue = algo.__BinomialHeap__( algo.BinomialTreeWithParent );
+		PriorityQueue = binomialheap.BinomialHeap( binomialheap.BinomialTreeWithParent );
 
 		Graph = gn.dense_graph_t();
 
@@ -105,4 +105,4 @@ one = function ( label, n, s, edges, prev, dist ) {
 
 
 
-].forEach( functools.partial( functools.star, null, [one] ) );
+].forEach( functools.partial( functools.star, [one] ) );
