@@ -1,0 +1,15 @@
+<!DOCTYPE html><html lang="en"><head><title>undirected/offline/algo/util/d2s</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../../"><meta name="groc-document-path" content="undirected/offline/algo/util/d2s"><meta name="groc-project-path" content="js/src/undirected/offline/algo/util/d2s.js"><meta name="groc-github-url" content="https://github.com/aureooms/js-gn"><link rel="stylesheet" type="text/css" media="all" href="../../../../assets/style.css"><script type="text/javascript" src="../../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/aureooms/js-gn/blob/master/js/src/undirected/offline/algo/util/d2s.js">js/src/undirected/offline/algo/util/d2s.js</a></div></div><div id="document"><div class="segment"><div class="code"><div class="wrapper"><span class="hljs-keyword">var</span> d2s = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">g, h, V</span>)</span>{
+
+	g.vitr(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">v</span>)</span>{
+		V[v[<span class="hljs-number">0</span>]] = h.vadd(v[<span class="hljs-number">0</span>]);
+	});
+
+	g.vitr(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">u</span>)</span>{
+		g.eitr(u, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">_, v, w</span>)</span>{
+			<span class="hljs-keyword">if</span>(u[<span class="hljs-number">0</span>] &lt;= v[<span class="hljs-number">0</span>]) h.eadd(V[u[<span class="hljs-number">0</span>]], V[v[<span class="hljs-number">0</span>]], w);
+		});
+	});
+
+};
+
+exports.d2s = d2s;</div></div></div></div></body></html>

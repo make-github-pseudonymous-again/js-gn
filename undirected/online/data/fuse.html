@@ -1,0 +1,60 @@
+<!DOCTYPE html><html lang="en"><head><title>undirected/online/data/fuse</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content="../../../"><meta name="groc-document-path" content="undirected/online/data/fuse"><meta name="groc-project-path" content="js/src/undirected/online/data/fuse.js"><meta name="groc-github-url" content="https://github.com/aureooms/js-gn"><link rel="stylesheet" type="text/css" media="all" href="../../../assets/style.css"><script type="text/javascript" src="../../../assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/aureooms/js-gn/blob/master/js/src/undirected/online/data/fuse.js">js/src/undirected/online/data/fuse.js</a></div></div><div id="document"><div class="segment"><div class="comments "><div class="wrapper"><p>Fuse multiple graph data structure allowing to
+repeat the same write operations on all of them.
+Adds a pt member to all edges and vertices of each
+graph allowing direct reference of twin edges and
+vertices in other fused graphs.</p></div></div><div class="code"><div class="wrapper"><span class="hljs-keyword">var</span> fuse_t = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+
+	<span class="hljs-keyword">var</span> fuse = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)</span>{
+
+		<span class="hljs-keyword">this</span>.obj = <span class="hljs-built_in">Array</span>.prototype.slice.call(<span class="hljs-built_in">arguments</span>);
+
+	};
+
+
+	fuse.prototype.vadd = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">h</span>)</span>{
+		<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>, len = <span class="hljs-keyword">this</span>.obj.length;
+		<span class="hljs-keyword">var</span> pt = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span>(len);
+		
+		<span class="hljs-keyword">for</span>(; i &lt; len; ++i){
+			pt[i] = <span class="hljs-keyword">this</span>.obj[i].vadd(h);
+			pt[i].pt = pt;
+		}
+
+		pt.pt = pt;
+
+		<span class="hljs-keyword">return</span> pt;
+	};
+
+	fuse.prototype.eadd = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">u, v, w</span>)</span>{
+		<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>, len = <span class="hljs-keyword">this</span>.obj.length;
+		<span class="hljs-keyword">var</span> pt = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Array</span>(len);
+		<span class="hljs-keyword">for</span>(; i &lt; len; ++i){
+			pt[i] = <span class="hljs-keyword">this</span>.obj[i].eadd(u.pt[i], v.pt[i], w);
+			pt[i].pt = pt;
+		}
+		
+		pt.pt = pt;
+
+		<span class="hljs-keyword">return</span> pt;
+	};
+
+
+	fuse.prototype.vdel = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">v</span>)</span>{
+		<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>, len = <span class="hljs-keyword">this</span>.obj.length;
+		<span class="hljs-keyword">for</span>(; i &lt; len; ++i){
+			<span class="hljs-keyword">this</span>.obj[i].vdel(v.pt[i]);
+		}
+	};
+
+	fuse.prototype.edel = <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>)</span>{
+		<span class="hljs-keyword">var</span> i = <span class="hljs-number">0</span>, len = <span class="hljs-keyword">this</span>.obj.length;
+		<span class="hljs-keyword">for</span>(; i &lt; len; ++i){
+			<span class="hljs-keyword">this</span>.obj[i].edel(e.pt[i]);
+		}
+	};
+
+	<span class="hljs-keyword">return</span> fuse;
+
+};
+
+exports.fuse_t = fuse_t;</div></div></div></div></body></html>
