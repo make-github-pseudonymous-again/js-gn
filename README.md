@@ -1,7 +1,10 @@
 [js-gn](http://aureooms.github.io/js-gn)
 ==
 
-graphs and networks code bricks for JavaScript
+Graphs and networks code bricks for JavaScript. Parents are
+[aureooms/js-algo](https://github.com/aureooms/js-algo)
+and
+[aureooms/js-data-structures](https://github.com/aureooms/js-data-structures).
 
 [![NPM license](http://img.shields.io/npm/l/aureooms-js-gn.svg?style=flat)](https://raw.githubusercontent.com/aureooms/js-gn/master/LICENSE)
 [![NPM version](http://img.shields.io/npm/v/aureooms-js-gn.svg?style=flat)](https://www.npmjs.org/package/aureooms-js-gn)
