@@ -1,3 +1,4 @@
+
 /**
  * Fuse multiple graph data structure allowing to
  * repeat the same write operations on all of them.
@@ -6,59 +7,60 @@
  * vertices in other fused graphs.
  */
 
-var fuse_t = function(){
 
-	var fuse = function(){
+const fuse = function ( map , graphs ) {
 
-		this.obj = Array.prototype.slice.call(arguments);
+	return new Fused( map , graphs ) ;
 
-	};
-
-
-	fuse.prototype.vadd = function(h){
-		var i = 0, len = this.obj.length;
-		var pt = new Array(len);
-		
-		for(; i < len; ++i){
-			pt[i] = this.obj[i].vadd(h);
-			pt[i].pt = pt;
-		}
-
-		pt.pt = pt;
-
-		return pt;
-	};
-
-	fuse.prototype.eadd = function(u, v, w){
-		var i = 0, len = this.obj.length;
-		var pt = new Array(len);
-		for(; i < len; ++i){
-			pt[i] = this.obj[i].eadd(u.pt[i], v.pt[i], w);
-			pt[i].pt = pt;
-		}
-		
-		pt.pt = pt;
-
-		return pt;
-	};
+} ;
 
 
-	fuse.prototype.vdel = function(v){
-		var i = 0, len = this.obj.length;
-		for(; i < len; ++i){
-			this.obj[i].vdel(v.pt[i]);
-		}
-	};
+const Fused = function ( map , graphs ) {
 
-	fuse.prototype.edel = function(e){
-		var i = 0, len = this.obj.length;
-		for(; i < len; ++i){
-			this.obj[i].edel(e.pt[i]);
-		}
-	};
+	this.map = map ;
+	this.graphs = graphs ;
 
-	return fuse;
+} ;
 
+Fused.prototype.vadd = function ( h ) {
+
+	const vertices = [ for ( g of this.graphs ) g.vadd( h ) ] ;
+
+	for( let v of vertices ) this.map.set( v , vertices ) ;
+
+	this.map.set( vertices , vertices ) ;
+
+	return vertices ;
+
+} ;
+
+Fused.prototype.eadd = function(u, v, w){
+	var i = 0, len = this.graphs.length;
+	var pt = new Array(len);
+	for(; i < len; ++i){
+		pt[i] = this.graphs[i].eadd(u.pt[i], v.pt[i], w);
+		pt[i].pt = pt;
+	}
+
+	pt.pt = pt;
+
+	return pt;
 };
+
+
+Fused.prototype.vdel = function(v){
+	var i = 0, len = this.graphs.length;
+	for(; i < len; ++i){
+		this.graphs[i].vdel(v.pt[i]);
+	}
+};
+
+Fused.prototype.edel = function(e){
+	var i = 0, len = this.graphs.length;
+	for(; i < len; ++i){
+		this.graphs[i].edel(e.pt[i]);
+	}
+};
+
 
 exports.fuse_t = fuse_t;
