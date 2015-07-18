@@ -14,5 +14,5 @@
 	"src": "js/src/",
 	"debug": false,
 	"out": "js/dist/",
-	"babel": true
+	"babel": { "stage" : 0}
 }
