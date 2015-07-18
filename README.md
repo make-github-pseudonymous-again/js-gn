@@ -17,3 +17,16 @@ and
 [![NPM downloads per month](http://img.shields.io/npm/dm/aureooms-js-gn.svg?style=flat)](https://www.npmjs.org/package/aureooms-js-gn)
 [![GitHub issues](http://img.shields.io/github/issues/aureooms/js-gn.svg?style=flat)](https://github.com/aureooms/js-gn/issues)
 [![Inline docs](http://inch-ci.org/github/aureooms/js-gn.svg?branch=master&style=shields)](http://inch-ci.org/github/aureooms/js-gn)
+
+## Children
+
+This package has several children:
+
+  - [aureooms/js-adjacency-list](https://github.com/aureooms/js-adjacency-list) : adjacency list code bricks for JavaScript
+  - [aureooms/js-adjacency-matrix](https://github.com/aureooms/js-adjacency-matrix) : adjacency matrix code bricks for JavaScript
+  - [aureooms/js-graph-indexed](https://github.com/aureooms/js-graph-indexed) : indexed graph code bricks for JavaScript
+  - [aureooms/js-graph-labeled](https://github.com/aureooms/js-graph-labeled) : labeled graph code bricks for JavaScript
+  - [aureooms/js-graph-spec](https://github.com/aureooms/js-graph-spec) : graph specification code bricks for JavaScript
+  - [aureooms/js-graph-theory-notation](https://github.com/aureooms/js-graph-theory-notation) : Graph theory notation code bricks for JavaScript
+  - [aureooms/js-graph-tools](https://github.com/aureooms/js-graph-tools) : graph tools code bricks for JavaScript
+  - [aureooms/js-graph-weighted](https://github.com/aureooms/js-graph-weighted) : Weighted graph code bricks for JavaScript
