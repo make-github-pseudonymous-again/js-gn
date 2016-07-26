@@ -7,7 +7,7 @@
 	"devDependencies": {
 		"aureooms-js-binomial-heap": "^10.0.0",
 		"aureooms-js-functools": "^2.0.3",
-		"aureooms-node-package": "^4.2.5"
+		"aureooms-node-package": "^6.0.1"
 	},
 	"scripts": {
 		"build": "./node_modules/.bin/aureooms-node-package-build",
