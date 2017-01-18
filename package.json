@@ -5,7 +5,7 @@
 	"main": "js/dist/gn.js",
 	"dependencies": {},
 	"devDependencies": {
-		"aureooms-js-binomial-heap": "^10.0.0",
+		"aureooms-js-binomial-heap": "^11.0.0",
 		"aureooms-js-functools": "^2.0.3",
 		"aureooms-node-package": "^6.0.1"
 	},
