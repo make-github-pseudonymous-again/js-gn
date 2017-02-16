@@ -1,12 +1,12 @@
 {
-	"name": "aureooms-js-gn",
+	"name": "@aureooms/js-gn",
 	"description": "graphs and networks code bricks for JavaScript",
 	"version": "1.0.5",
 	"main": "js/dist/gn.js",
 	"dependencies": {},
 	"devDependencies": {
-		"aureooms-js-binomial-heap": "^11.0.0",
-		"aureooms-js-functools": "^2.0.3",
+		"@aureooms/js-binomial-heap": "^11.0.0",
+		"@aureooms/js-functools": "^2.0.3",
 		"aureooms-node-package": "^6.0.1"
 	},
 	"scripts": {
