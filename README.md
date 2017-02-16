@@ -6,7 +6,7 @@ Graphs and networks code bricks for JavaScript. Parents are
 and
 [aureooms/js-data-structures](https://github.com/aureooms/js-data-structures).
 
-[![NPM license](https://img.shields.io/npm/l/@aureooms/js-gn.svg?style=flat)](https://raw.githubusercontent.com/aureooms/js-gn/master/LICENSE)
+[![License](https://img.shields.io/github/license/aureooms/js-gn.svg?style=flat)](https://raw.githubusercontent.com/aureooms/js-gn/master/LICENSE)
 [![NPM version](https://img.shields.io/npm/v/@aureooms/js-gn.svg?style=flat)](https://www.npmjs.org/package/@aureooms/js-gn)
 [![Bower version](https://img.shields.io/bower/v/@aureooms/js-gn.svg?style=flat)](http://bower.io/search/?q=@aureooms/js-gn)
 [![Build Status](https://img.shields.io/travis/aureooms/js-gn.svg?style=flat)](https://travis-ci.org/aureooms/js-gn)
