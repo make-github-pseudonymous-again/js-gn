@@ -1,8 +1,8 @@
 
 var one, binomialheap, functools;
 
-binomialheap = require( "aureooms-js-binomial-heap" );
-functools = require( "aureooms-js-functools" );
+binomialheap = require( "@aureooms/js-binomial-heap" );
+functools = require( "@aureooms/js-functools" );
 
 one = function ( label, n, edges ) {
 
