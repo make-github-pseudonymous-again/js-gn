@@ -25,7 +25,8 @@
   "scripts": {
     "build": "rm -rf lib && babel src -d lib",
     "test": "ava",
-    "esdoc": "esdoc"
+    "esdoc": "esdoc",
+    "prepare": "npm run build"
   },
   "repository": {
     "type": "git",
