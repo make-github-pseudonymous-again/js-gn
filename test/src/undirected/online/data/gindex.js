@@ -1,8 +1,8 @@
 import test from 'ava';
 
+import * as gn from '../../../../../src' ;
 
-
-test('sparse index', function(assert){
+test('sparse index', t => {
 	var Graph = gn.sparse_graph_t();
 	var index = gn.index_t();
 
@@ -57,7 +57,7 @@ test('sparse index', function(assert){
 
 	g.edel(e[4].splice(0, 1)[0]);
 
-	
+
 	for(var l = 0; l < r.length; ++l){
 		var m = r[l];
 		k = e[m].length;
@@ -120,7 +120,7 @@ test('sparse index', function(assert){
 
 
 
-test('sparse index 0', function(assert){
+test('sparse index 0', t => {
 	var Graph = gn.sparse_graph_t();
 	var index = gn.index_t();
 
@@ -175,7 +175,7 @@ test('sparse index 0', function(assert){
 
 	g.edel(e[4].splice(0, 1)[0]);
 
-	
+
 	for(var l = 0; l < r.length; ++l){
 		var m = r[l];
 		k = e[m].length;

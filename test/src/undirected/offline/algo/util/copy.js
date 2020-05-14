@@ -1,76 +1,75 @@
 import test from 'ava';
 
-var check = function(label, n, edges){
+import * as gn from '../../../../../../src' ;
 
-test( 'copy', t => {
+function macro (t, label, n, edges){
 
-		var DGraph = gn.dense_graph_t();
-		var SGraph = gn.sparse_graph_t();
-		var index = gn.index_t();
-		var amat = gn.amat_t();
-		var copy = gn.copy_t();
-
-
-		var G = new index(new SGraph());
-		var H = new DGraph();
-
-		var i = n;
-
-		var v = new Array(i);
+	var DGraph = gn.dense_graph_t();
+	var SGraph = gn.sparse_graph_t();
+	var index = gn.index_t();
+	var amat = gn.amat_t();
+	var copy = gn.copy_t();
 
 
-		while(i--) v[n-i-1] = G.vadd();
+	var G = new index(new SGraph());
+	var H = new DGraph();
 
-		for(var j = 0; j < edges.length; ++j){
-			var e = edges[j];
-			G.eadd(v[e[0]], v[e[1]], e[2]);
-		}
+	var i = n;
 
-		copy(G, H);
+	var v = new Array(i);
 
 
-		var dist_G = gn.sqmat(2, n);
-		var dist_H = gn.sqmat(2, n);
+	while(i--) v[n-i-1] = G.vadd();
 
-		amat(G, n, dist_G);
-		amat(H, n, dist_H);
+	for(var j = 0; j < edges.length; ++j){
+		var e = edges[j];
+		G.eadd(v[e[0]], v[e[1]], e[2]);
+	}
 
-		t.deepEqual(dist_G, dist_H, 'H === copy(G)');
+	copy(G, H);
 
 
+	var dist_G = gn.sqmat(2, n);
+	var dist_H = gn.sqmat(2, n);
+
+	amat(G, n, dist_G);
+	amat(H, n, dist_H);
+
+	t.deepEqual(dist_G, dist_H, 'H === copy(G)');
 
 
 
-		G = new DGraph();
-		H = new index(new SGraph());
-
-		i = n;
-
-		while(i--) v[n-i-1] = G.vadd();
-
-		for(var j = 0; j < edges.length; ++j){
-			var e = edges[j];
-			G.eadd(v[e[0]], v[e[1]], e[2]);
-		}
-
-		copy(G, H);
 
 
-		dist_G = gn.sqmat(2, n);
-		dist_H = gn.sqmat(2, n);
+	G = new DGraph();
+	H = new index(new SGraph());
 
-		amat(G, n, dist_G);
-		amat(H, n, dist_H);
+	i = n;
 
-		t.deepEqual(dist_G, dist_H, 'H === copy(G)');
+	while(i--) v[n-i-1] = G.vadd();
+
+	for(var j = 0; j < edges.length; ++j){
+		var e = edges[j];
+		G.eadd(v[e[0]], v[e[1]], e[2]);
+	}
+
+	copy(G, H);
 
 
-	});
+	dist_G = gn.sqmat(2, n);
+	dist_H = gn.sqmat(2, n);
 
-};
+	amat(G, n, dist_G);
+	amat(H, n, dist_H);
+
+	t.deepEqual(dist_G, dist_H, 'H === copy(G)');
+
+}
+
+macro.title = (_, label, n, edges) => `copy <${label}>` ;
 
 
-var I = [
+const I = [
 [
 	'1',
 	10,
@@ -118,6 +117,4 @@ var I = [
 ];
 
 
-for(var i = 0; i < I.length; ++i){
-	check.apply(undefined, I[i]);
-}
+for (const i of I) test(macro, ...i) ;

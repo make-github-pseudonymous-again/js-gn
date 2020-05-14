@@ -1,9 +1,10 @@
 import test from 'ava';
 
+import * as gn from '../../../../../../src' ;
 
 var check = function(label, n, E){
 
-	test('oddgraph #' + label, function(assert){
+	test('oddgraph #' + label, t => {
 
 		var Graph = gn.dense_graph_t();
 

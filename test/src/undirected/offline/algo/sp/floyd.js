@@ -1,8 +1,9 @@
 import test from 'ava';
 
-
-import binomialheap from "@aureooms/js-binomial-heap" ;
+import { BinomialHeap , BinomialTreeWithParent } from "@aureooms/js-binomial-heap" ;
 import functools from "@aureooms/js-functools" ;
+
+import * as gn from '../../../../../../src' ;
 
 function one ( label, n, edges ) {
 
@@ -12,11 +13,11 @@ test( "floyd #" + label, t => {
 
 		var d, g, i, v, e, j;
 
-		var Graph, PriorityQueue, amat, floyd;
+		var amat, floyd;
 
-		PriorityQueue = binomialheap.BinomialHeap( binomialheap.BinomialTreeWithParent );
+		const PriorityQueue = BinomialHeap( BinomialTreeWithParent );
 
-		Graph = gn.dense_graph_t();
+		const Graph = gn.dense_graph_t();
 
 		amat = gn.amat_t();
 
@@ -60,7 +61,7 @@ test( "floyd #" + label, t => {
 
 			dist[i][i] = Infinity;
 
-			g.eitr( [i], function ( _, _, w ) {
+			g.eitr( [i], function ( _1, _2, w ) {
 				dist[i][i] = Math.min( dist[i][i], w * 2 );
 			});
 

@@ -1,19 +1,19 @@
 import test from 'ava';
 
-
-import binomialheap from "@aureooms/js-binomial-heap" ;
+import { BinomialHeap , BinomialTreeWithParent } from "@aureooms/js-binomial-heap" ;
 import functools from "@aureooms/js-functools" ;
+
+import * as gn from '../../../../../../src' ;
 
 function one ( label, n, s, edges, prev, dist ) {
 
 test( "dijkstra #" + label, t => {
 
-		var Graph, PriorityQueue;
 		var g, i, v, e, j, p, d, used, ref, left, predicate;
 
-		PriorityQueue = binomialheap.BinomialHeap( binomialheap.BinomialTreeWithParent );
+		const PriorityQueue = BinomialHeap( BinomialTreeWithParent );
 
-		Graph = gn.dense_graph_t();
+		const Graph = gn.dense_graph_t();
 
 		g = new Graph();
 		i = n;

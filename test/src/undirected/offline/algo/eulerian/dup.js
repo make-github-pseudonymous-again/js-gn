@@ -1,10 +1,10 @@
 import test from 'ava';
 
-
+import * as gn from '../../../../../../src' ;
 
 var check = function(label, n, E, m){
 
-	test('dup #' + label, function(assert){
+	test('dup #' + label, t => {
 
 		var DGraph = gn.dense_graph_t();
 		var SGraph = gn.sparse_graph_t();
@@ -54,9 +54,9 @@ var check = function(label, n, E, m){
 
 		i = m.length;
 		while(i--){
-			var u = m[i][0], w = m[i][1];
+			const u = m[i][0], w = m[i][1];
 			while(u !== w){
-				var t = s[u][w];
+				const t = s[u][w];
 				++count[0][u][t];
 				++count[0][t][u];
 				u = t;
@@ -70,7 +70,7 @@ var check = function(label, n, E, m){
 		});
 
 		t.deepEqual(count[1], count[0], 'check edge count');
-		
+
 
 	});
 

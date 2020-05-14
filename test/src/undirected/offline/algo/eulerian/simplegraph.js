@@ -1,8 +1,11 @@
 import test from 'ava';
+
+import * as gn from '../../../../../../src' ;
+
 var check = function(name, order, E){
 
 
-	test("simplegraph #" + name, function(assert){
+	test("simplegraph #" + name, function(t){
 
 
 		var SGraph = gn.sparse_graph_t();
@@ -27,10 +30,10 @@ var check = function(name, order, E){
 			g.eadd(V[e[0]], V[e[1]], e[2]);
 		}
 
-		
+
 
 		var d = gn.sqmat(2, order, Infinity);
-	
+
 		simplegraph(g, order, d, h);
 
 

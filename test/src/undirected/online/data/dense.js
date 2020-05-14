@@ -1,7 +1,8 @@
 import test from 'ava';
 
+import * as gn from '../../../../../src' ;
 
-test('dense', function(assert){
+test('dense', t => {
 	var Graph = gn.dense_graph_t();
 
 	var g = new Graph();

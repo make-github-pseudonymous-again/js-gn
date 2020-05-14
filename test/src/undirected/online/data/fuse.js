@@ -1,5 +1,6 @@
 import test from 'ava';
 
+import * as gn from '../../../../../src' ;
 
 test( 'fuse', t => {
 

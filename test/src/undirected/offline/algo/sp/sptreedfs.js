@@ -1,8 +1,9 @@
 import test from 'ava';
 
-
-import binomialheap from "@aureooms/js-binomial-heap" ;
+import { BinomialHeap , BinomialTreeWithParent } from "@aureooms/js-binomial-heap" ;
 import functools from "@aureooms/js-functools" ;
+
+import * as gn from '../../../../../../src' ;
 
 function one ( label, n, edges ) {
 
@@ -12,11 +13,11 @@ test( "sptreedfs #" + label, t => {
 
 		var next, successors, d;
 
-		var Graph, PriorityQueue, amat, floyd, sptreedfs;
+		var amat, floyd, sptreedfs;
 
-		PriorityQueue = binomialheap.BinomialHeap( binomialheap.BinomialTreeWithParent );
+		const PriorityQueue = BinomialHeap( BinomialTreeWithParent );
 
-		Graph = gn.dense_graph_t();
+		const Graph = gn.dense_graph_t();
 
 		amat = gn.amat_t();
 

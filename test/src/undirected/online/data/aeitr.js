@@ -1,8 +1,10 @@
 import test from 'ava';
 
+import * as gn from '../../../../../src' ;
+
 var check = function(label, n, edges){
 
-test( 'aeitr', t => {
+test( `aeitr ${label}`, t => {
 
 		var DGraph = gn.dense_graph_t();
 		var SGraph = gn.sparse_graph_t();

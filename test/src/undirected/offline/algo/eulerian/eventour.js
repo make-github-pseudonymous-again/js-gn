@@ -1,11 +1,12 @@
 import test from 'ava';
 
+import * as gn from '../../../../../../src' ;
 
 var check = function(label, n, x, E, _E){
 
 	if (_E === undefined) _E = [];
 
-	test('eventour #' + label, function(assert){
+	test('eventour #' + label, t => {
 
 		var Graph = gn.sparse_graph_t();
 
@@ -52,7 +53,7 @@ var check = function(label, n, x, E, _E){
 		edges.forEach(function(e){
 			free.push(e.free);
 		});
-		
+
 		t.deepEqual(free, gn.sqmat(1, E.length, false), 'check free');
 
 
@@ -63,7 +64,7 @@ var check = function(label, n, x, E, _E){
 		}
 
 
-		
+
 
 	});
 
@@ -165,7 +166,7 @@ var I = [
 ],
 
 [
-	'disconected 2 + 0-1 * 4 + 0-8 * 2',
+	'disconnected 2 + 0-1 * 4 + 0-8 * 2',
 	11,
 	0,
 	[
