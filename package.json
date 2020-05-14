@@ -2,7 +2,33 @@
   "name": "@aureooms/js-gn",
   "description": "graphs and networks code bricks for JavaScript",
   "version": "1.0.5",
-  "main": "lib/index.js",
+  "author": "aureooms",
+  "ava": {
+    "files": [
+      "test/src/**/*"
+    ],
+    "require": [
+      "@babel/polyfill",
+      "@babel/register"
+    ],
+    "timeout": "1m"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ],
+    "plugins": [
+      "@babel/plugin-proposal-async-generator-functions"
+    ],
+    "env": {
+      "development": {
+        "sourceMaps": "inline"
+      }
+    }
+  },
+  "bugs": {
+    "url": "https://github.com/aureooms/js-gn/issues"
+  },
   "dependencies": {},
   "devDependencies": {
     "@aureooms/js-binomial-heap": "^11.0.0",
@@ -21,59 +47,33 @@
     "np": "6.2.3",
     "nyc": "15.0.1"
   },
-  "scripts": {
-    "build": "rm -rf lib && babel src -d lib",
-    "test": "ava",
-    "esdoc": "esdoc",
-    "prepare": "npm run build",
-    "cover": "nyc --reporter=lcov npm test",
-    "release": "np"
-  },
+  "files": [
+    "lib"
+  ],
+  "homepage": "https://aureooms.github.io/js-gn",
+  "keywords": [
+    "adt",
+    "algorithm",
+    "complexity",
+    "gn",
+    "graphs",
+    "javascript",
+    "js",
+    "networks",
+    "template"
+  ],
+  "license": "AGPL-3.0",
+  "main": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/aureooms/js-gn.git"
   },
-  "keywords": [
-    "js",
-    "javascript",
-    "algorithm",
-    "adt",
-    "template",
-    "complexity",
-    "graphs",
-    "networks",
-    "gn"
-  ],
-  "author": "aureooms",
-  "license": "AGPL-3.0",
-  "bugs": {
-    "url": "https://github.com/aureooms/js-gn/issues"
-  },
-  "homepage": "https://aureooms.github.io/js-gn",
-  "babel": {
-    "presets": [
-      "@babel/preset-env"
-    ],
-    "plugins": [
-      "@babel/plugin-proposal-async-generator-functions"
-    ],
-    "env": {
-      "development": {
-        "sourceMaps": "inline"
-      }
-    }
-  },
-  "ava": {
-    "files": [
-      "test/src/**/*"
-    ],
-    "require": [
-      "@babel/polyfill",
-      "@babel/register"
-    ],
-    "timeout": "1m"
-  },
-  "files": [
-    "lib"
-  ]
+  "scripts": {
+    "build": "rm -rf lib && babel src -d lib",
+    "cover": "nyc --reporter=lcov npm test",
+    "esdoc": "esdoc",
+    "prepare": "npm run build",
+    "release": "np",
+    "test": "ava"
+  }
 }
