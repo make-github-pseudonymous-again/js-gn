@@ -13,7 +13,7 @@
     "@babel/polyfill": "7.8.7",
     "@babel/preset-env": "7.9.6",
     "@babel/register": "7.9.0",
-    "ava": "3.7.0",
+    "ava": "3.8.2",
     "coveralls": "3.0.11",
     "esdoc": "1.1.0",
     "esdoc-inject-script-plugin": "1.0.0",
@@ -24,7 +24,7 @@
   },
   "scripts": {
     "build": "./node_modules/.bin/aureooms-node-package-build",
-    "test": "./node_modules/.bin/aureooms-node-package-test",
+    "test": "ava",
     "esdoc": "esdoc"
   },
   "repository": {
