@@ -47,5 +47,18 @@
   "bugs": {
     "url": "https://github.com/aureooms/js-gn/issues"
   },
-  "homepage": "https://aureooms.github.io/js-gn"
+  "homepage": "https://aureooms.github.io/js-gn",
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ],
+    "plugins": [
+      "@babel/plugin-proposal-async-generator-functions"
+    ],
+    "env": {
+      "development": {
+        "sourceMaps": "inline"
+      }
+    }
+  }
 }
