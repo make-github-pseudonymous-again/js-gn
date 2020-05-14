@@ -27,7 +27,8 @@
     "test": "ava",
     "esdoc": "esdoc",
     "prepare": "npm run build",
-    "cover": "nyc --reporter=lcov npm test"
+    "cover": "nyc --reporter=lcov npm test",
+    "release": "np"
   },
   "repository": {
     "type": "git",
