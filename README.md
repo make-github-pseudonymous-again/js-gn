@@ -1,4 +1,4 @@
-[@aureooms/js-gn](http://aureooms.github.io/js-gn)
+[@aureooms/js-gn](https://aureooms.github.io/js-gn)
 ==
 
 Graphs and networks code bricks for JavaScript.
