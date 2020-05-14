@@ -1,38 +1,51 @@
 {
-	"name": "@aureooms/js-gn",
-	"description": "graphs and networks code bricks for JavaScript",
-	"version": "1.0.5",
-	"main": "js/dist/gn.js",
-	"dependencies": {},
-	"devDependencies": {
-		"@aureooms/js-binomial-heap": "^11.0.0",
-		"@aureooms/js-functools": "^2.0.3",
-		"aureooms-node-package": "^6.0.1"
-	},
-	"scripts": {
-		"build": "./node_modules/.bin/aureooms-node-package-build",
-		"test": "./node_modules/.bin/aureooms-node-package-test",
-		"doc": "./node_modules/.bin/groc"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/aureooms/js-gn.git"
-	},
-	"keywords": [
-		"js",
-		"javascript",
-		"algorithm",
-		"adt",
-		"template",
-		"complexity",
-		"graphs",
-		"networks",
-		"gn"
-	],
-	"author": "aureooms",
-	"license": "AGPL-3.0",
-	"bugs": {
-		"url": "https://github.com/aureooms/js-gn/issues"
-	},
-	"homepage": "https://aureooms.github.io/js-gn"
+  "name": "@aureooms/js-gn",
+  "description": "graphs and networks code bricks for JavaScript",
+  "version": "1.0.5",
+  "main": "js/dist/gn.js",
+  "dependencies": {},
+  "devDependencies": {
+    "@aureooms/js-binomial-heap": "^11.0.0",
+    "@aureooms/js-functools": "^2.0.3",
+    "aureooms-node-package": "^6.0.1",
+    "@babel/cli": "7.8.4",
+    "@babel/core": "7.9.0",
+    "@babel/polyfill": "7.8.7",
+    "@babel/preset-env": "7.9.5",
+    "@babel/register": "7.9.0",
+    "ava": "3.7.0",
+    "coveralls": "3.0.11",
+    "esdoc": "1.1.0",
+    "esdoc-inject-script-plugin": "1.0.0",
+    "esdoc-inject-style-plugin": "1.0.0",
+    "esdoc-standard-plugin": "1.0.0",
+    "np": "6.2.1",
+    "nyc": "15.0.1"
+  },
+  "scripts": {
+    "build": "./node_modules/.bin/aureooms-node-package-build",
+    "test": "./node_modules/.bin/aureooms-node-package-test",
+    "doc": "./node_modules/.bin/groc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aureooms/js-gn.git"
+  },
+  "keywords": [
+    "js",
+    "javascript",
+    "algorithm",
+    "adt",
+    "template",
+    "complexity",
+    "graphs",
+    "networks",
+    "gn"
+  ],
+  "author": "aureooms",
+  "license": "AGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/aureooms/js-gn/issues"
+  },
+  "homepage": "https://aureooms.github.io/js-gn"
 }
