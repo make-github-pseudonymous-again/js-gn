@@ -7,7 +7,6 @@
   "devDependencies": {
     "@aureooms/js-binomial-heap": "^11.0.0",
     "@aureooms/js-functools": "^2.0.3",
-    "aureooms-node-package": "^6.0.1",
     "@babel/cli": "7.8.4",
     "@babel/core": "7.9.6",
     "@babel/polyfill": "7.8.7",
