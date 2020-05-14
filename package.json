@@ -26,7 +26,8 @@
     "build": "rm -rf lib && babel src -d lib",
     "test": "ava",
     "esdoc": "esdoc",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "cover": "nyc --reporter=lcov npm test"
   },
   "repository": {
     "type": "git",
