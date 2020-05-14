@@ -2,7 +2,7 @@
   "name": "@aureooms/js-gn",
   "description": "graphs and networks code bricks for JavaScript",
   "version": "1.0.5",
-  "main": "js/dist/gn.js",
+  "main": "lib/index.js",
   "dependencies": {},
   "devDependencies": {
     "@aureooms/js-binomial-heap": "^11.0.0",
@@ -23,7 +23,7 @@
     "nyc": "15.0.1"
   },
   "scripts": {
-    "build": "./node_modules/.bin/aureooms-node-package-build",
+    "build": "rm -rf lib && babel src -d lib",
     "test": "ava",
     "esdoc": "esdoc"
   },
