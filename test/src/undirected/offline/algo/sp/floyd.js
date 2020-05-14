@@ -1,12 +1,12 @@
+import test from 'ava';
 
-var one, binomialheap, functools;
 
-binomialheap = require( "@aureooms/js-binomial-heap" );
-functools = require( "@aureooms/js-functools" );
+import binomialheap from "@aureooms/js-binomial-heap" ;
+import functools from "@aureooms/js-functools" ;
 
-one = function ( label, n, edges ) {
+function one ( label, n, edges ) {
 
-	test( "floyd #" + label, function () {
+test( "floyd #" + label, t => {
 
 		var prev, dist, used, ref, left, predicate;
 
@@ -70,7 +70,7 @@ one = function ( label, n, edges ) {
 		amat( g, n, d );
 		floyd( n, d );
 
-		deepEqual( d, dist, "dist" );
+		t.deepEqual( d, dist, "dist" );
 
 	});
 

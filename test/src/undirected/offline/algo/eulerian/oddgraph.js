@@ -1,3 +1,4 @@
+import test from 'ava';
 
 
 var check = function(label, n, E){
@@ -45,16 +46,16 @@ var check = function(label, n, E){
 		oddgraph(g, d, h);
 
 		h.vitr(function(v){
-			ok(degree[v[1][0]] % 2, v[1][0] + ' odd');
+			t.truthy(degree[v[1][0]] % 2, v[1][0] + ' odd');
 			ainside[v[1][0]] = 1;
 			if(degree[v[1][0]] % 2){
 				h.eitr(v, function(_, u, w){
-					deepEqual(w, d[v[1][0]][u[1][0]], 'd['+v[1][0]+']['+u[1][0]+'] check');
+					t.deepEqual(w, d[v[1][0]][u[1][0]], 'd['+v[1][0]+']['+u[1][0]+'] check');
 				});
 			}
 		});
 
-		deepEqual(ainside, einside, 'count all check')
+		t.deepEqual(ainside, einside, 'count all check')
 
 	});
 

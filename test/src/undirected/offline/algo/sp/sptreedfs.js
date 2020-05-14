@@ -1,12 +1,12 @@
+import test from 'ava';
 
-var one, binomialheap, functools;
 
-binomialheap = require( "@aureooms/js-binomial-heap" );
-functools = require( "@aureooms/js-functools" );
+import binomialheap from "@aureooms/js-binomial-heap" ;
+import functools from "@aureooms/js-functools" ;
 
-one = function ( label, n, edges ) {
+function one ( label, n, edges ) {
 
-	test( "sptreedfs #" + label, function () {
+test( "sptreedfs #" + label, t => {
 
 		var g, i, v, e, j, prev, dist, used, ref, left, predicate;
 
@@ -78,7 +78,7 @@ one = function ( label, n, edges ) {
 		sptreedfs( g, n, successors, d );
 
 
-		deepEqual( successors, next, "next" );
+		t.deepEqual( successors, next, "next" );
 
 	});
 

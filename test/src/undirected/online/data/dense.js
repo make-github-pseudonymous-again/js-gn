@@ -1,3 +1,4 @@
+import test from 'ava';
 
 
 test('dense', function(assert){
@@ -29,10 +30,10 @@ test('dense', function(assert){
 
 	var k = 0;
 	g.vitr(function(j){
-		deepEqual(j, v[k], 'vitr ' + k);
+		t.deepEqual(j, v[k], 'vitr ' + k);
 		++k;
 	});
-	deepEqual(k, v.length, 'check vertex count before del');
+	t.deepEqual(k, v.length, 'check vertex count before del');
 
 
 	var r = [0, 1, 4];
@@ -41,7 +42,7 @@ test('dense', function(assert){
 		k = e[m].length;
 		g.eitr(v[m], function(x){
 			--k;
-			deepEqual(x, e[m][k], 'eitr ' + m + ' ' + k);
+			t.deepEqual(x, e[m][k], 'eitr ' + m + ' ' + k);
 		});
 	};
 
@@ -57,7 +58,7 @@ test('dense', function(assert){
 		k = e[m].length;
 		g.eitr(v[m], function(x){
 			--k;
-			deepEqual(x, e[m][k], 'eitr ' + m + ' ' + k);
+			t.deepEqual(x, e[m][k], 'eitr ' + m + ' ' + k);
 		});
 	};
 
@@ -65,18 +66,18 @@ test('dense', function(assert){
 
 	k = 0;
 	g.vitr(function(j){
-		deepEqual(j, v[k], 'vitr ' + k);
+		t.deepEqual(j, v[k], 'vitr ' + k);
 		++k;
 	});
 
 
 	k = -1;
-	g.vitr(function(j){deepEqual(0, ++k, 'vitr stop'); return true;});
+	g.vitr(function(j){t.deepEqual(0, ++k, 'vitr stop'); return true;});
 
 
 	k = -1;
 	g.eitr(v[0], function(x){
-		deepEqual(0, ++k, 'eitr stop');
+		t.deepEqual(0, ++k, 'eitr stop');
 		return true;
 	});
 
@@ -91,7 +92,7 @@ test('dense', function(assert){
 
 	g.vitr(function(i){
 		g.eitr(i, function(e){
-			ok(false, 'eitr never go here');
+			t.truthy(false, 'eitr never go here');
 		});
 	});
 
@@ -100,7 +101,7 @@ test('dense', function(assert){
 	}
 
 	g.vitr(function(i){
-		ok(false, 'vitr never go here');
+		t.truthy(false, 'vitr never go here');
 	});
 
 });

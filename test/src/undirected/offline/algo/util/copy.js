@@ -1,7 +1,8 @@
+import test from 'ava';
 
 var check = function(label, n, edges){
 
-	test('copy', function(){
+test( 'copy', t => {
 
 		var DGraph = gn.dense_graph_t();
 		var SGraph = gn.sparse_graph_t();
@@ -34,7 +35,7 @@ var check = function(label, n, edges){
 		amat(G, n, dist_G);
 		amat(H, n, dist_H);
 
-		deepEqual(dist_G, dist_H, 'H === copy(G)');
+		t.deepEqual(dist_G, dist_H, 'H === copy(G)');
 
 
 
@@ -61,7 +62,7 @@ var check = function(label, n, edges){
 		amat(G, n, dist_G);
 		amat(H, n, dist_H);
 
-		deepEqual(dist_G, dist_H, 'H === copy(G)');
+		t.deepEqual(dist_G, dist_H, 'H === copy(G)');
 
 
 	});

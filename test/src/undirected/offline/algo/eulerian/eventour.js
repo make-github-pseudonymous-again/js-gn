@@ -1,3 +1,4 @@
+import test from 'ava';
 
 
 var check = function(label, n, x, E, _E){
@@ -45,20 +46,20 @@ var check = function(label, n, x, E, _E){
 
 		eventour(g, v, x, done, it, tour, []);
 
-		deepEqual(tour.length, E.length, 'check length');
+		t.deepEqual(tour.length, E.length, 'check length');
 
 		var free = [];
 		edges.forEach(function(e){
 			free.push(e.free);
 		});
 		
-		deepEqual(free, gn.sqmat(1, E.length, false), 'check free');
+		t.deepEqual(free, gn.sqmat(1, E.length, false), 'check free');
 
 
 		i = tour.length;
 		if(i){
 			tour.push(tour[0]);
-			while(i--) ok(d[tour[i]][tour[i+1]] < Infinity, 'check path component ' + i);
+			while(i--) t.truthy(d[tour[i]][tour[i+1]] < Infinity, 'check path component ' + i);
 		}
 
 

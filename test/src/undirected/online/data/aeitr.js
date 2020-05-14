@@ -1,7 +1,8 @@
+import test from 'ava';
 
 var check = function(label, n, edges){
 
-	test('aeitr', function(){
+test( 'aeitr', t => {
 
 		var DGraph = gn.dense_graph_t();
 		var SGraph = gn.sparse_graph_t();
@@ -49,7 +50,7 @@ var check = function(label, n, edges){
 		G.aeitr(push_expected);
 
 
-		deepEqual(seq[0], seq[1], 'sparse aeitr consistent');
+		t.deepEqual(seq[0], seq[1], 'sparse aeitr consistent');
 
 
 		e = undefined;
@@ -63,7 +64,7 @@ var check = function(label, n, edges){
 		H.aeitr(push_expected);
 
 
-		deepEqual(seq[0], seq[1], 'dense aeitr consistent');
+		t.deepEqual(seq[0], seq[1], 'dense aeitr consistent');
 
 
 	});

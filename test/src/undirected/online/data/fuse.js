@@ -1,6 +1,7 @@
+import test from 'ava';
 
 
-test('fuse', function(){
+test( 'fuse', t => {
 
 	var DGraph = gn.dense_graph_t();
 	var SGraph = gn.sparse_graph_t();
@@ -33,7 +34,7 @@ test('fuse', function(){
 	amat(G, n, dist_G);
 	amat(H, n, dist_H);
 
-	deepEqual(dist_G, dist_H, 'test equality of fused components');
+	t.deepEqual(dist_G, dist_H, 'test equality of fused components');
 
 
 	var m = Math.floor(n/3);
@@ -46,7 +47,7 @@ test('fuse', function(){
 	amat(G, n, dist_G);
 	amat(H, n, dist_H);
 
-	deepEqual(dist_G, dist_H, 'test equality after edge delete');
+	t.deepEqual(dist_G, dist_H, 'test equality after edge delete');
 
 	for(i = m; i < n; ++i) F.vdel(v[i]);
 
@@ -56,7 +57,7 @@ test('fuse', function(){
 	amat(G, m, dist_G);
 	amat(H, m, dist_H);
 
-	deepEqual(dist_G, dist_H, 'test equality after vertices delete');
+	t.deepEqual(dist_G, dist_H, 'test equality after vertices delete');
 
 
 

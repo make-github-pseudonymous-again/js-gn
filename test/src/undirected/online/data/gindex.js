@@ -1,3 +1,4 @@
+import test from 'ava';
 
 
 
@@ -31,23 +32,23 @@ test('sparse index', function(assert){
 
 	var k = 0;
 	g.vitr(function(j){
-		deepEqual(j, v[k], 'vitr ' + k);
-		deepEqual(k, v[k][0], 'vitr index' + k);
+		t.deepEqual(j, v[k], 'vitr ' + k);
+		t.deepEqual(k, v[k][0], 'vitr index' + k);
 		++k;
 	});
-	deepEqual(k, v.length, 'check vertex count before del');
+	t.deepEqual(k, v.length, 'check vertex count before del');
 
 	var r = [0, 1, 4];
 
 	for(var l = 0; l < r.length; ++l){
 		var m = r[l];
 		k = e[m].length;
-		ok(k > 0, m + ' : check edge count before itr');
+		t.truthy(k > 0, m + ' : check edge count before itr');
 		g.eitr(v[m], function(x){
 			--k;
-			deepEqual(x, e[m][k], 'eitr ' + m + ' ' + k);
+			t.deepEqual(x, e[m][k], 'eitr ' + m + ' ' + k);
 		});
-		deepEqual(k, 0, m + ' : check edge count before del');
+		t.deepEqual(k, 0, m + ' : check edge count before del');
 	};
 
 	g.edel(e[1].splice(0, 1)[0]);
@@ -62,28 +63,28 @@ test('sparse index', function(assert){
 		k = e[m].length;
 		g.eitr(v[m], function(x){
 			--k;
-			deepEqual(x, e[m][k], 'eitr ' + m + ' ' + k);
+			t.deepEqual(x, e[m][k], 'eitr ' + m + ' ' + k);
 		});
-		deepEqual(k, 0, m + ' : check edge count after del');
+		t.deepEqual(k, 0, m + ' : check edge count after del');
 	};
 
 	g.vdel(v.splice(3, 1)[0]);
 
 	k = 0;
 	g.vitr(function(j){
-		deepEqual(j, v[k], 'vitr ' + k);
-		deepEqual(k, v[k][0], 'vitr index' + k);
+		t.deepEqual(j, v[k], 'vitr ' + k);
+		t.deepEqual(k, v[k][0], 'vitr index' + k);
 		++k;
 	});
 
 
 	k = -1;
-	g.vitr(function(j){deepEqual(0, ++k, 'vitr stop'); return true;});
+	g.vitr(function(j){t.deepEqual(0, ++k, 'vitr stop'); return true;});
 
 
 	k = -1;
 	g.eitr(v[0], function(x){
-		deepEqual(0, ++k, 'eitr stop');
+		t.deepEqual(0, ++k, 'eitr stop');
 		return true;
 	});
 
@@ -98,7 +99,7 @@ test('sparse index', function(assert){
 
 	g.vitr(function(i){
 		g.eitr(i, function(e){
-			ok(false, 'eitr never go here');
+			t.truthy(false, 'eitr never go here');
 		});
 	});
 
@@ -107,7 +108,7 @@ test('sparse index', function(assert){
 	}
 
 	g.vitr(function(i){
-		ok(false, 'vitr never go here');
+		t.truthy(false, 'vitr never go here');
 	});
 
 });
@@ -149,23 +150,23 @@ test('sparse index 0', function(assert){
 
 	var k = 0;
 	g.vitr(function(j){
-		deepEqual(j, v[k], 'vitr ' + k);
-		deepEqual(k, v[k][0], 'vitr index' + k);
+		t.deepEqual(j, v[k], 'vitr ' + k);
+		t.deepEqual(k, v[k][0], 'vitr index' + k);
 		++k;
 	});
-	deepEqual(k, v.length, 'check vertex count before del');
+	t.deepEqual(k, v.length, 'check vertex count before del');
 
 	var r = [0, 1, 4];
 
 	for(var l = 0; l < r.length; ++l){
 		var m = r[l];
 		k = e[m].length;
-		ok(k > 0, m + ' : check edge count before itr');
+		t.truthy(k > 0, m + ' : check edge count before itr');
 		g.eitr(v[m], function(x){
 			--k;
-			deepEqual(x, e[m][k], 'eitr ' + m + ' ' + k);
+			t.deepEqual(x, e[m][k], 'eitr ' + m + ' ' + k);
 		});
-		deepEqual(k, 0, m + ' : check edge count before del');
+		t.deepEqual(k, 0, m + ' : check edge count before del');
 	};
 
 	g.edel(e[1].splice(0, 1)[0]);
@@ -180,28 +181,28 @@ test('sparse index 0', function(assert){
 		k = e[m].length;
 		g.eitr(v[m], function(x){
 			--k;
-			deepEqual(x, e[m][k], 'eitr ' + m + ' ' + k);
+			t.deepEqual(x, e[m][k], 'eitr ' + m + ' ' + k);
 		});
-		deepEqual(k, 0, m + ' : check edge count after del');
+		t.deepEqual(k, 0, m + ' : check edge count after del');
 	};
 
 	g.vdel(v.splice(3, 1)[0]);
 
 	k = 0;
 	g.vitr(function(j){
-		deepEqual(j, v[k], 'vitr ' + k);
-		deepEqual(k, v[k][0], 'vitr index' + k);
+		t.deepEqual(j, v[k], 'vitr ' + k);
+		t.deepEqual(k, v[k][0], 'vitr index' + k);
 		++k;
 	});
 
 
 	k = -1;
-	g.vitr(function(j){deepEqual(0, ++k, 'vitr stop'); return true;});
+	g.vitr(function(j){t.deepEqual(0, ++k, 'vitr stop'); return true;});
 
 
 	k = -1;
 	g.eitr(v[0], function(x){
-		deepEqual(0, ++k, 'eitr stop');
+		t.deepEqual(0, ++k, 'eitr stop');
 		return true;
 	});
 
@@ -218,7 +219,7 @@ test('sparse index 0', function(assert){
 	}
 
 	g.vitr(function(i){
-		ok(false, 'vitr never go here');
+		t.truthy(false, 'vitr never go here');
 	});
 
 });

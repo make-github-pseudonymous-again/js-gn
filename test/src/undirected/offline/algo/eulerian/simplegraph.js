@@ -1,3 +1,4 @@
+import test from 'ava';
 var check = function(name, order, E){
 
 
@@ -56,14 +57,14 @@ var check = function(name, order, E){
 
 				if(i !== j){
 					edgecountg[i][j] = 1;
-					ok(edgevalh[i][j] <= w, 'check (' + i + ', ' + j + ')');
+					t.truthy(edgevalh[i][j] <= w, 'check (' + i + ', ' + j + ')');
 				}
 
 			});
 		});
 
 
-		deepEqual(edgecounth, edgecountg, "check simplegraph");
+		t.deepEqual(edgecounth, edgecountg, "check simplegraph");
 
 	});
 

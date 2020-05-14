@@ -1,12 +1,12 @@
+import test from 'ava';
 
-var one, binomialheap, functools;
 
-binomialheap = require( "@aureooms/js-binomial-heap" );
-functools = require( "@aureooms/js-functools" );
+import binomialheap from "@aureooms/js-binomial-heap" ;
+import functools from "@aureooms/js-functools" ;
 
-one = function ( label, n, s, edges, prev, dist ) {
+function one ( label, n, s, edges, prev, dist ) {
 
-	test( "dijkstra #" + label, function () {
+test( "dijkstra #" + label, t => {
 
 		var Graph, PriorityQueue;
 		var g, i, v, e, j, p, d, used, ref, left, predicate;
@@ -42,8 +42,8 @@ one = function ( label, n, s, edges, prev, dist ) {
 
 		gn.dijkstra( g, n, v[s], p, d, used, ref, left );
 
-		deepEqual( p, prev, "prev" );
-		deepEqual( d, dist, "dist" );
+		t.deepEqual( p, prev, "prev" );
+		t.deepEqual( d, dist, "dist" );
 
 	});
 

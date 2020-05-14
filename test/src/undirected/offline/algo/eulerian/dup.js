@@ -1,3 +1,4 @@
+import test from 'ava';
 
 
 
@@ -68,7 +69,7 @@ var check = function(label, n, E, m){
 			});
 		});
 
-		deepEqual(count[1], count[0], 'check edge count');
+		t.deepEqual(count[1], count[0], 'check edge count');
 		
 
 	});
