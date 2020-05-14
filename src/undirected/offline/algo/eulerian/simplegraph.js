@@ -2,7 +2,7 @@
 
 
 
-var simplegraph_t = function(){
+export function simplegraph_t(){
 
 	var simplegraph = function(g, order, dist, h){
 		var V = [], i, j; // link between g and h
@@ -38,6 +38,5 @@ var simplegraph_t = function(){
 
 	return simplegraph;
 
-};
+}
 
-exports.simplegraph_t = simplegraph_t;

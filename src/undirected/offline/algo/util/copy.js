@@ -1,6 +1,6 @@
 
 
-var copy_t = function(){
+export function copy_t(){
 
 	var copy = function(g, h){
 
@@ -17,6 +17,5 @@ var copy_t = function(){
 
 	return copy;
 
-};
+}
 
-exports.copy_t = copy_t;

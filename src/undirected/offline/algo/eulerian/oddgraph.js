@@ -1,6 +1,6 @@
 
 
-var oddgraph_t = function(){
+export function oddgraph_t(){
 
 	var oddgraph = function(g, dist, h){
 
@@ -24,6 +24,5 @@ var oddgraph_t = function(){
 
 	return oddgraph;
 
-};
+}
 
-exports.oddgraph_t = oddgraph_t;

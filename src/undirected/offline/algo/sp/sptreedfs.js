@@ -1,6 +1,6 @@
 
 
-var sptreedfs_t = function(){
+export function sptreedfs_t(){
 
 	var dfs = function(g, next, dist, s, t){
 
@@ -26,6 +26,5 @@ var sptreedfs_t = function(){
 
 	return sptreedfs;
 
-};
+}
 
-exports.sptreedfs_t = sptreedfs_t;

@@ -6,7 +6,7 @@
  * vertices in other fused graphs.
  */
 
-var fuse_t = function(){
+export function fuse_t(){
 
 	var fuse = function(){
 
@@ -59,6 +59,5 @@ var fuse_t = function(){
 
 	return fuse;
 
-};
+}
 
-exports.fuse_t = fuse_t;

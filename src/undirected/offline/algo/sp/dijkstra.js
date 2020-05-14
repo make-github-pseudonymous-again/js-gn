@@ -20,7 +20,7 @@
  *
  */
 
-var dijkstra = function ( g, order, source, prev, dist, used, ref, left ) {
+export function dijkstra ( g, order, source, prev, dist, used, ref, left ) {
 
 	var current;
 
@@ -58,7 +58,6 @@ var dijkstra = function ( g, order, source, prev, dist, used, ref, left ) {
 		});
 	}
 
-};
+}
 
 
-exports.dijkstra = dijkstra;

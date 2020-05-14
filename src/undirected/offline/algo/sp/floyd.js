@@ -1,6 +1,6 @@
 
 
-var floyd_t = function(){
+export function floyd_t(){
 
 	var floyd = function(order, dist){
 		var i, j, k;
@@ -17,6 +17,5 @@ var floyd_t = function(){
 
 	return floyd;
 
-};
+}
 
-exports.floyd_t = floyd_t;

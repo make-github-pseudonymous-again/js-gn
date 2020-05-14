@@ -17,7 +17,7 @@
 // to validate this new code.
 
 
-var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
+export function wblossom_n3_t (debug, CHECK_OPTIMUM, CHECK_DELTA) {
 
 	// If assigned, DEBUG(str) is called with lots of debug messages.
 	var DEBUG = debug ? function(s){ console.log('DEBUG:', s); } : null;
@@ -1147,8 +1147,7 @@ var wblossom_n3_t = function (debug, CHECK_OPTIMUM, CHECK_DELTA) {
 	return maxWeightMatching;
 
 
-};
+}
 
 
 
-exports.wblossom_n3_t = wblossom_n3_t;

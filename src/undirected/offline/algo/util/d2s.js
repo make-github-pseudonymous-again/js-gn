@@ -1,6 +1,6 @@
 
 
-var d2s = function(g, h, V){
+export function d2s(g, h, V){
 
 	g.vitr(function(v){
 		V[v[0]] = h.vadd(v[0]);
@@ -12,6 +12,5 @@ var d2s = function(g, h, V){
 		});
 	});
 
-};
+}
 
-exports.d2s = d2s;

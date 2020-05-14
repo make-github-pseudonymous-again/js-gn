@@ -1,5 +1,5 @@
 
-var dense_graph_t = function(){
+export function dense_graph_t(){
 
 	var graph = function(){
 
@@ -119,6 +119,5 @@ var dense_graph_t = function(){
 
 	return graph;
 
-};
+}
 
-exports.dense_graph_t = dense_graph_t;

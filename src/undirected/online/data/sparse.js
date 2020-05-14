@@ -10,7 +10,7 @@
 
 
 
-var sparse_graph_t = function(){
+export function sparse_graph_t(){
 
 	/**
 	 * Object constructor
@@ -180,6 +180,5 @@ var sparse_graph_t = function(){
 
 	return graph;
 
-};
+}
 
-exports.sparse_graph_t = sparse_graph_t;

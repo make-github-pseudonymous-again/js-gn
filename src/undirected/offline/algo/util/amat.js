@@ -1,6 +1,6 @@
 
 
-var amat_t = function(){
+export function amat_t(){
 
 	var amat = function(g, order, dist){
 
@@ -14,6 +14,5 @@ var amat_t = function(){
 
 	return amat;
 
-};
+}
 
-exports.amat_t = amat_t;

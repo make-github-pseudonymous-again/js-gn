@@ -1,6 +1,6 @@
 
 
-var sqmat = function(d, n, v){
+export function sqmat(d, n, v){
 
 	var i = n;
 	var m = new Array(i);
@@ -10,7 +10,6 @@ var sqmat = function(d, n, v){
 
 	return m;
 
-};
+}
 
 
-exports.sqmat = sqmat;

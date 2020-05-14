@@ -1,6 +1,6 @@
 
 
-var eventour_t = function () {
+export function eventour_t () {
 
 	/**
 	 * @param {int} fjfj dkdj
@@ -76,6 +76,5 @@ var eventour_t = function () {
 
 	return eventour;
 
-};
+}
 
-exports.eventour_t = eventour_t;

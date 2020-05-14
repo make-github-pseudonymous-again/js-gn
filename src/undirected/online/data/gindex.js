@@ -5,7 +5,7 @@
  */
 
 
-var index_t = function(){
+export function index_t(){
 
 	var index = function(G, attr){
 
@@ -62,6 +62,5 @@ var index_t = function(){
 
 	return index;
 
-};
+}
 
-exports.index_t = index_t;

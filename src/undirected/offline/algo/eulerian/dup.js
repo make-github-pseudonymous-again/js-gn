@@ -1,7 +1,7 @@
 
 
 
-var dup_t = function(){
+export function dup_t(){
 
 	var dup = function(g, V, m, next, dist, e){
 
@@ -27,7 +27,6 @@ var dup_t = function(){
 
 	return dup;
 
-};
+}
 
 
-exports.dup_t = dup_t;
