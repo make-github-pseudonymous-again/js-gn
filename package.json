@@ -8,7 +8,7 @@
       "test/src/**/*"
     ],
     "require": [
-      "@babel/polyfill",
+      "regenerator-runtime/runtime",
       "@babel/register"
     ],
     "timeout": "1m"
